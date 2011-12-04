@@ -1,0 +1,1216 @@
+1
+00:00:00,310 --> 00:00:01,700
+In the previous video, we gave
+
+2
+00:00:01,710 --> 00:00:04,620
+a mathematical definition of the cost option.
+
+3
+00:00:04,630 --> 00:00:05,870
+In this video, let's look at
+
+4
+00:00:05,880 --> 00:00:07,260
+some examples to get that
+
+5
+00:00:07,270 --> 00:00:08,610
+intuition about what the
+
+6
+00:00:08,620 --> 00:00:12,190
+cost option is doing, and why we want to use it.
+
+7
+00:00:14,120 --> 00:00:16,750
+To recap, here's where we had lost time.
+
+8
+00:00:16,760 --> 00:00:20,010
+We want to illustrate our theater
+
+9
+00:00:20,020 --> 00:00:21,310
+so we had this form as a hypothesis
+
+10
+00:00:21,320 --> 00:00:23,930
+with these parameters, theta zero and theta one.
+
+11
+00:00:23,940 --> 00:00:25,400
+And, with different choices of the
+
+12
+00:00:25,410 --> 00:00:27,050
+parameters, we end up with
+
+13
+00:00:27,060 --> 00:00:28,770
+different straight lines that's in
+
+14
+00:00:28,780 --> 00:00:30,270
+the data, which are about
+
+15
+00:00:30,280 --> 00:00:32,020
+like so, and there's our
+
+16
+00:00:32,030 --> 00:00:36,000
+cost function and that was our optimization objective.
+
+17
+00:00:36,580 --> 00:00:38,100
+For this video in order
+
+18
+00:00:38,110 --> 00:00:39,640
+to better visualize the cost
+
+19
+00:00:39,650 --> 00:00:40,990
+function j, I'm going to
+
+20
+00:00:41,000 --> 00:00:42,090
+work with a simplified hypothesis function
+
+21
+00:00:42,100 --> 00:00:45,170
+like that shown on the right.
+
+22
+00:00:45,180 --> 00:00:46,970
+So, I'm going to use my simplify
+
+23
+00:00:46,980 --> 00:00:48,560
+hypothesis which is just theta
+
+24
+00:00:48,570 --> 00:00:50,750
+one times x.  We can,
+
+25
+00:00:50,760 --> 00:00:51,970
+number one, think of this as
+
+26
+00:00:51,980 --> 00:00:54,660
+setting the parameter theta 0 equal to 0.
+
+27
+00:00:54,670 --> 00:00:56,190
+So, I have only
+
+28
+00:00:56,200 --> 00:00:58,200
+parameter of theta 1 and
+
+29
+00:00:58,210 --> 00:01:00,130
+my cost function is somewhat
+
+30
+00:01:00,140 --> 00:01:01,520
+four accepted now h of
+
+31
+00:01:01,530 --> 00:01:03,270
+x. That is now
+
+32
+00:01:03,280 --> 00:01:05,020
+equal to just theta one times
+
+33
+00:01:05,030 --> 00:01:07,090
+x. And I have
+
+34
+00:01:07,100 --> 00:01:08,920
+only one parameter, theta one, and
+
+35
+00:01:08,930 --> 00:01:10,970
+so my optimization objective is
+
+36
+00:01:10,980 --> 00:01:13,510
+to minimize j of theta one.
+
+37
+00:01:13,520 --> 00:01:15,600
+In pictures, what this means
+
+38
+00:01:15,610 --> 00:01:17,340
+is that if theta zero
+
+39
+00:01:17,350 --> 00:01:19,890
+equals zero, that response
+
+40
+00:01:19,900 --> 00:01:22,130
+to choosing over the hypothesis
+
+41
+00:01:22,140 --> 00:01:23,750
+functions that pass through the
+
+42
+00:01:23,760 --> 00:01:27,220
+origin, that pass through the .00 over there.
+
+43
+00:01:27,900 --> 00:01:29,510
+Using the simplified definition of
+
+44
+00:01:29,520 --> 00:01:31,420
+the hypothesis in cost function,
+
+45
+00:01:31,430 --> 00:01:33,060
+let's try to understand the cost
+
+46
+00:01:33,070 --> 00:01:35,740
+function concept better.
+
+47
+00:01:36,520 --> 00:01:39,320
+It turn out that two key functions we want to understand.
+
+48
+00:01:39,330 --> 00:01:41,350
+The first is the hypothesis
+
+49
+00:01:41,360 --> 00:01:44,640
+function; the second is the cost function.
+
+50
+00:01:44,650 --> 00:01:47,030
+So notice that the hypothesis,
+
+51
+00:01:47,040 --> 00:01:49,270
+right, h of x, for a
+
+52
+00:01:49,280 --> 00:01:50,600
+fixed value of theta one, this is
+
+53
+00:01:50,610 --> 00:01:53,120
+a function of x.
+
+54
+00:01:53,130 --> 00:01:54,620
+So the hypothesis is a
+
+55
+00:01:54,630 --> 00:01:56,170
+function of what is the
+
+56
+00:01:56,180 --> 00:01:58,260
+size of the house x. In
+
+57
+00:01:58,270 --> 00:02:01,400
+contrast The cost function, j,
+
+58
+00:02:01,410 --> 00:02:02,640
+that's the function of the
+
+59
+00:02:02,650 --> 00:02:04,890
+parameter theta 1, which
+
+60
+00:02:04,900 --> 00:02:08,210
+controls the slope of the straight line.
+
+61
+00:02:08,220 --> 00:02:10,280
+Let's plot these functions and
+
+62
+00:02:10,290 --> 00:02:13,170
+try to understand them both better.
+
+63
+00:02:13,410 --> 00:02:14,450
+Let's start with a hypothesis.
+
+64
+00:02:14,460 --> 00:02:16,110
+On the left, let's say
+
+65
+00:02:16,120 --> 00:02:18,800
+here's my training set with three points at 11, 22 and 33.
+
+66
+00:02:18,810 --> 00:02:20,990
+Let's pick a
+
+67
+00:02:21,000 --> 00:02:23,670
+value of theta 1, and we'll say theta 1 equals 1.
+
+68
+00:02:23,680 --> 00:02:25,090
+And if that's my choice for
+
+69
+00:02:25,100 --> 00:02:27,660
+theta 1, then my hypothesis
+
+70
+00:02:27,670 --> 00:02:30,320
+is going to look like this straight line over here.
+
+71
+00:02:30,330 --> 00:02:30,990
+OK?
+
+72
+00:02:31,000 --> 00:02:32,140
+And I'll point out, when
+
+73
+00:02:32,150 --> 00:02:34,740
+I'm plotting my hypothesis function, my
+
+74
+00:02:34,750 --> 00:02:36,610
+x-axis, my horizontal axis,
+
+75
+00:02:36,620 --> 00:02:37,990
+is labeled x, is labeled the
+
+76
+00:02:38,000 --> 00:02:40,410
+size of the holes over here.
+
+77
+00:02:40,550 --> 00:02:42,680
+Now, I have temporarily
+
+78
+00:02:42,690 --> 00:02:44,650
+set theta 1 equals 1.
+
+79
+00:02:44,660 --> 00:02:45,650
+What I want to do
+
+80
+00:02:45,660 --> 00:02:47,300
+is figure out is, what
+
+81
+00:02:47,310 --> 00:02:48,880
+is j of theta
+
+82
+00:02:48,890 --> 00:02:51,540
+1 when theta 1 equals 1.
+
+83
+00:02:51,550 --> 00:02:52,800
+So, let's go ahead
+
+84
+00:02:52,810 --> 00:02:54,290
+and compute the cost function
+
+85
+00:02:54,300 --> 00:02:57,800
+is for the value one.
+
+86
+00:02:57,810 --> 00:02:59,510
+Well as usual my cost function
+
+87
+00:02:59,520 --> 00:03:02,250
+is defined as follows right,
+
+88
+00:03:02,260 --> 00:03:04,200
+some from, someone with
+
+89
+00:03:04,210 --> 00:03:05,770
+my training sense of this
+
+90
+00:03:05,780 --> 00:03:08,790
+usual squared error term
+
+91
+00:03:08,800 --> 00:03:10,570
+and this is therefore
+
+92
+00:03:10,580 --> 00:03:15,590
+equal to this of
+
+93
+00:03:15,600 --> 00:03:18,310
+theta one xi minus
+
+94
+00:03:18,320 --> 00:03:20,690
+yi and if
+
+95
+00:03:20,700 --> 00:03:22,220
+you simplify, this turns out
+
+96
+00:03:22,230 --> 00:03:26,180
+to be that 0
+
+97
+00:03:26,190 --> 00:03:27,450
+square to 0 square to 0
+
+98
+00:03:27,460 --> 00:03:28,850
+square, which is of
+
+99
+00:03:28,860 --> 00:03:31,190
+course just equals to 0.
+
+100
+00:03:31,200 --> 00:03:32,770
+Now, inside the cost function,
+
+101
+00:03:32,780 --> 00:03:34,060
+it turns out each of this
+
+102
+00:03:34,070 --> 00:03:36,180
+terms here is equals to
+
+103
+00:03:36,190 --> 00:03:37,920
+0 because for the specific
+
+104
+00:03:37,930 --> 00:03:39,610
+training sets I have where my three
+
+105
+00:03:39,620 --> 00:03:40,800
+training examples are at one
+
+106
+00:03:40,810 --> 00:03:42,440
+one two two three three, if
+
+107
+00:03:42,450 --> 00:03:44,400
+theta one is equal to
+
+108
+00:03:44,410 --> 00:03:46,050
+one then h of
+
+109
+00:03:46,060 --> 00:03:47,190
+x, my h of xi
+
+110
+00:03:47,200 --> 00:03:52,440
+is equal yi exactly.
+
+111
+00:03:52,600 --> 00:03:55,990
+Let's put this together.
+
+112
+00:03:57,000 --> 00:03:57,600
+Right?
+
+113
+00:03:57,610 --> 00:03:59,440
+And so, h of
+
+114
+00:03:59,450 --> 00:04:01,720
+x minus y; each of
+
+115
+00:04:01,730 --> 00:04:03,750
+these terms is equal to zero
+
+116
+00:04:03,760 --> 00:04:05,730
+which is why I find that
+
+117
+00:04:05,740 --> 00:04:07,620
+j of one is equal
+
+118
+00:04:07,630 --> 00:04:09,890
+to zero, so we
+
+119
+00:04:09,900 --> 00:04:12,330
+now know that j of
+
+120
+00:04:12,340 --> 00:04:15,200
+one is equal
+
+121
+00:04:15,210 --> 00:04:18,200
+to zero, that's all that.
+
+122
+00:04:18,210 --> 00:04:18,920
+What I am going to do on
+
+123
+00:04:18,930 --> 00:04:20,480
+the right is plot my
+
+124
+00:04:20,490 --> 00:04:23,000
+cost function J, and notice
+
+125
+00:04:23,010 --> 00:04:24,390
+because my cost function is
+
+126
+00:04:24,400 --> 00:04:26,950
+a function of my parameter theta one.
+
+127
+00:04:26,960 --> 00:04:28,750
+When I plot my cost function,
+
+128
+00:04:28,760 --> 00:04:30,290
+the horizontal axis is now
+
+129
+00:04:30,300 --> 00:04:32,570
+labeled with theta one.
+
+130
+00:04:32,580 --> 00:04:34,150
+So I have j of one 00.
+
+131
+00:04:34,160 --> 00:04:35,580
+So, let's go ahead and
+
+132
+00:04:35,590 --> 00:04:37,490
+plot that to
+
+133
+00:04:37,500 --> 00:04:41,360
+hand off your and x over there.
+
+134
+00:04:41,810 --> 00:04:43,940
+Now, let's look at some other examples.
+
+135
+00:04:43,950 --> 00:04:47,040
+If theta 1 can take on arrange of different values, right?
+
+136
+00:04:47,050 --> 00:04:48,670
+So, if theta 1 can take
+
+137
+00:04:48,680 --> 00:04:51,190
+on the negative value, zero, positive values.
+
+138
+00:04:51,200 --> 00:04:53,130
+So, what if theta one is
+
+139
+00:04:53,140 --> 00:04:56,040
+equal to o point five?
+
+140
+00:04:56,050 --> 00:04:57,460
+What happens then?
+
+141
+00:04:57,470 --> 00:04:58,540
+Let's go ahead and plot that.
+
+142
+00:04:58,550 --> 00:05:00,060
+I'm now going to set
+
+143
+00:05:00,070 --> 00:05:02,170
+eight theta one equals zero point
+
+144
+00:05:02,180 --> 00:05:03,640
+five and in that case my hypothesis
+
+145
+00:05:03,650 --> 00:05:05,200
+now looks like this as the
+
+146
+00:05:05,210 --> 00:05:06,960
+line was sloped equals to
+
+147
+00:05:06,970 --> 00:05:09,550
+o point five and let's
+
+148
+00:05:09,560 --> 00:05:11,640
+compute j of 0.5.
+
+149
+00:05:11,650 --> 00:05:14,010
+So that is going
+
+150
+00:05:14,020 --> 00:05:15,630
+to be one over two
+
+151
+00:05:15,640 --> 00:05:18,710
+m of my usual cross function.
+
+152
+00:05:18,720 --> 00:05:19,670
+It turns out that the cross
+
+153
+00:05:19,680 --> 00:05:21,260
+function is going to be
+
+154
+00:05:21,270 --> 00:05:22,770
+the sum of square
+
+155
+00:05:22,780 --> 00:05:25,610
+values of the height
+
+156
+00:05:25,620 --> 00:05:27,880
+of this line, plus
+
+157
+00:05:27,890 --> 00:05:28,950
+the sum of square of the
+
+158
+00:05:28,960 --> 00:05:30,650
+height of that line, plus the
+
+159
+00:05:30,660 --> 00:05:32,230
+sum of square of the height of that line.
+
+160
+00:05:32,240 --> 00:05:32,490
+Right.
+
+161
+00:05:32,500 --> 00:05:34,860
+Because this virtual difference, that's
+
+162
+00:05:34,870 --> 00:05:37,320
+the difference between, you know,
+
+163
+00:05:37,330 --> 00:05:41,040
+y, i and the
+
+164
+00:05:41,050 --> 00:05:45,260
+predicted value h of the xi, right?
+
+165
+00:05:45,530 --> 00:05:47,020
+So the first example is going
+
+166
+00:05:47,030 --> 00:05:50,140
+to be 0.5 minus 1 squared,
+
+167
+00:05:50,220 --> 00:05:52,570
+because my hypothesis predicted
+
+168
+00:05:52,580 --> 00:05:54,260
+0.5, whereas the actual
+
+169
+00:05:54,270 --> 00:05:55,890
+value was 1.
+
+170
+00:05:55,900 --> 00:05:57,800
+So, my second example
+
+171
+00:05:57,810 --> 00:06:00,080
+I get 1 minus 2
+
+172
+00:06:00,090 --> 00:06:02,560
+squared because my hypothesis
+
+173
+00:06:02,570 --> 00:06:04,270
+predicted 1 where the actual housing price
+
+174
+00:06:04,280 --> 00:06:07,730
+was 2 and then finally,
+
+175
+00:06:08,880 --> 00:06:12,000
+plus 1.5 minus 3 there
+
+176
+00:06:12,230 --> 00:06:13,680
+and so that's equal to
+
+177
+00:06:13,690 --> 00:06:15,890
+one over two times three
+
+178
+00:06:15,900 --> 00:06:17,970
+because m, my
+
+179
+00:06:17,980 --> 00:06:19,880
+training set size have three
+
+180
+00:06:19,890 --> 00:06:22,550
+training examples, and then
+
+181
+00:06:22,560 --> 00:06:24,610
+that's times, simplifying the thing
+
+182
+00:06:24,620 --> 00:06:26,840
+in parenthesis is 3.5, so
+
+183
+00:06:26,850 --> 00:06:29,500
+that's 3.5 over 6 which is
+
+184
+00:06:29,510 --> 00:06:30,730
+about 0.68.
+
+185
+00:06:30,740 --> 00:06:34,080
+So now we
+
+186
+00:06:34,090 --> 00:06:37,700
+know about j of 0.5 is about 0.68.
+
+187
+00:06:37,710 --> 00:06:40,200
+Let's go and
+
+188
+00:06:40,210 --> 00:06:43,450
+plot that, oh excuse me math error.
+
+189
+00:06:43,460 --> 00:06:45,850
+It is actually 0.58.
+
+190
+00:06:45,860 --> 00:06:47,500
+So I'm going to plot that
+
+191
+00:06:47,510 --> 00:06:51,890
+which is maybe about over there, okay.
+
+192
+00:06:53,510 --> 00:06:54,830
+Now, let's do one
+
+193
+00:06:54,840 --> 00:06:57,060
+more, how about if
+
+194
+00:06:57,070 --> 00:06:59,920
+theta 1 is equal to zero.
+
+195
+00:06:59,930 --> 00:07:03,050
+What is j of zero
+
+196
+00:07:03,120 --> 00:07:04,900
+equal to?
+
+197
+00:07:05,150 --> 00:07:06,700
+It turns out if that if
+
+198
+00:07:06,710 --> 00:07:09,150
+theta 1 is equal to 0
+
+199
+00:07:09,160 --> 00:07:11,490
+then h of x
+
+200
+00:07:11,500 --> 00:07:12,780
+is just equal to, you
+
+201
+00:07:12,790 --> 00:07:15,080
+know, this flat line.
+
+202
+00:07:15,090 --> 00:07:17,420
+Right, if this goes horizontally like this.
+
+203
+00:07:17,430 --> 00:07:23,430
+And so measuring the errors,
+
+204
+00:07:23,440 --> 00:07:24,940
+we have that j of 0
+
+205
+00:07:24,950 --> 00:07:27,250
+is equal to 1/2m times
+
+206
+00:07:27,260 --> 00:07:29,070
+1 squared + 2 squared
+
+207
+00:07:29,080 --> 00:07:32,640
++ 3 squared, which
+
+208
+00:07:32,650 --> 00:07:35,820
+is 1/6 times
+
+209
+00:07:35,830 --> 00:07:37,630
+14, which is about 2.3.
+
+210
+00:07:37,640 --> 00:07:41,390
+So let's go ahead and plot that as well.
+
+211
+00:07:41,400 --> 00:07:44,720
+You end up with a value around 2.3.
+
+212
+00:07:45,300 --> 00:07:46,670
+And, of course, we can keep
+
+213
+00:07:46,680 --> 00:07:49,100
+on doing this for other values of theta one.
+
+214
+00:07:49,110 --> 00:07:50,420
+It turns out that you can
+
+215
+00:07:50,430 --> 00:07:53,330
+have negative values of theta one as well.
+
+216
+00:07:53,340 --> 00:07:54,900
+So if theta one
+
+217
+00:07:54,910 --> 00:07:57,470
+is negative, then h
+
+218
+00:07:57,480 --> 00:07:58,850
+of x would be equal to,
+
+219
+00:07:58,860 --> 00:08:01,600
+say, -0.5 times x, right,
+
+220
+00:08:02,370 --> 00:08:03,410
+if negative theta 1 is -0.5.
+
+221
+00:08:03,420 --> 00:08:05,400
+And so that corresponds to
+
+222
+00:08:05,410 --> 00:08:08,830
+a hypothesis, you know, with
+
+223
+00:08:08,840 --> 00:08:10,550
+a slope of negative -0.5.
+
+224
+00:08:10,560 --> 00:08:12,920
+And you can actually keep on computing these errors.
+
+225
+00:08:12,930 --> 00:08:14,470
+This turns out to be,
+
+226
+00:08:14,480 --> 00:08:15,540
+you know, for 0.5, it
+
+227
+00:08:15,550 --> 00:08:16,910
+turns out to really high
+
+228
+00:08:16,920 --> 00:08:18,450
+however, it works out
+
+229
+00:08:18,460 --> 00:08:20,750
+to be something like 5.25
+
+230
+00:08:20,760 --> 00:08:22,470
+and so on, and
+
+231
+00:08:22,480 --> 00:08:23,850
+the different values of
+
+232
+00:08:23,860 --> 00:08:26,180
+theta 1 you can
+
+233
+00:08:26,190 --> 00:08:29,110
+compute these things, right and
+
+234
+00:08:29,120 --> 00:08:31,080
+it turns out the computer link
+
+235
+00:08:31,090 --> 00:08:33,860
+of values, you get something
+
+236
+00:08:33,870 --> 00:08:36,490
+like that and by computing
+
+237
+00:08:36,500 --> 00:08:38,260
+range of values you can actually,
+
+238
+00:08:38,270 --> 00:08:43,260
+slowly you trace out what
+
+239
+00:08:43,270 --> 00:08:45,570
+this function j of theta
+
+240
+00:08:45,580 --> 00:08:48,070
+will say and that's what
+
+241
+00:08:48,080 --> 00:08:50,120
+j of theta is.
+
+242
+00:08:50,130 --> 00:08:52,210
+To recap, for each value
+
+243
+00:08:52,220 --> 00:08:54,000
+of theta one, right, each
+
+244
+00:08:54,010 --> 00:08:56,870
+value of theta one corresponds
+
+245
+00:08:56,880 --> 00:08:59,150
+to a different hypothesis or
+
+246
+00:08:59,160 --> 00:09:00,820
+to a different straight line
+
+247
+00:09:00,830 --> 00:09:03,110
+fit on the left
+
+248
+00:09:03,120 --> 00:09:04,320
+and for each value if theta
+
+249
+00:09:04,330 --> 00:09:06,110
+1, we could then derive
+
+250
+00:09:06,120 --> 00:09:08,210
+a different value of j
+
+251
+00:09:08,220 --> 00:09:12,040
+of theta 1 and
+
+252
+00:09:12,080 --> 00:09:14,240
+for example, you know,
+
+253
+00:09:14,250 --> 00:09:16,830
+if theta 1 equals 1
+
+254
+00:09:16,840 --> 00:09:18,440
+corresponded to this straight
+
+255
+00:09:18,450 --> 00:09:21,860
+line to the data, whereas
+
+256
+00:09:22,460 --> 00:09:24,600
+theta 1 equals 0.5,
+
+257
+00:09:24,610 --> 00:09:26,810
+this point, shown in magenta,
+
+258
+00:09:26,820 --> 00:09:29,390
+corresponded to maybe that line.
+
+259
+00:09:29,400 --> 00:09:32,430
+And theta 1 equals zero,
+
+260
+00:09:32,440 --> 00:09:35,240
+which we'll show in
+
+261
+00:09:35,250 --> 00:09:40,140
+blue, that corresponds to this horizontal line.
+
+262
+00:09:40,150 --> 00:09:40,400
+Right?
+
+263
+00:09:40,410 --> 00:09:41,700
+So for each value of theta 1, we
+
+264
+00:09:41,710 --> 00:09:43,120
+wound up with a different value
+
+265
+00:09:43,130 --> 00:09:43,980
+of j of theta 1 and
+
+266
+00:09:43,990 --> 00:09:46,100
+we could then
+
+267
+00:09:46,110 --> 00:09:49,270
+use this to trace out this plot on the right.
+
+268
+00:09:49,280 --> 00:09:52,310
+Now, you remember, the optimization
+
+269
+00:09:52,320 --> 00:09:54,890
+objective for our learning algorithm
+
+270
+00:09:54,900 --> 00:09:56,160
+is we want to
+
+271
+00:09:56,170 --> 00:09:57,710
+choose the value of theta
+
+272
+00:09:57,720 --> 00:10:01,440
+one that minimizes
+
+273
+00:10:01,450 --> 00:10:02,420
+j of theta 1.
+
+274
+00:10:02,430 --> 00:10:02,910
+Right?
+
+275
+00:10:02,920 --> 00:10:07,220
+This was our objective function for linear regression.
+
+276
+00:10:07,230 --> 00:10:09,290
+Well, looking at this curve,
+
+277
+00:10:09,300 --> 00:10:11,520
+the value that minimizes theta 1
+
+278
+00:10:11,530 --> 00:10:15,460
+is, you know, theta 1 equals to 1.
+
+279
+00:10:15,470 --> 00:10:17,430
+And lo and behold, that
+
+280
+00:10:17,440 --> 00:10:19,170
+is indeed the best
+
+281
+00:10:19,180 --> 00:10:20,620
+possible straight line that
+
+282
+00:10:20,630 --> 00:10:22,080
+fits our data by setting theta
+
+283
+00:10:22,090 --> 00:10:23,710
+1 equals 1, for this
+
+284
+00:10:23,720 --> 00:10:27,880
+particular train set, we actually end up fitting it perfectly.
+
+285
+00:10:27,890 --> 00:10:29,830
+And that's why minimizing j if
+
+286
+00:10:29,840 --> 00:10:32,550
+theta 1 corresponds to finding
+
+287
+00:10:32,560 --> 00:10:36,100
+any straight line that fits the data well.
+
+288
+00:10:36,640 --> 00:10:38,670
+So, to wrap up,
+
+289
+00:10:38,680 --> 00:10:39,990
+in this video we looked at
+
+290
+00:10:40,000 --> 00:10:43,220
+some plus to understand the cost function.
+
+291
+00:10:43,230 --> 00:10:45,070
+To do so, we simplify the algorithms
+
+292
+00:10:45,080 --> 00:10:46,570
+so that it can only have
+
+293
+00:10:46,580 --> 00:10:48,220
+1 to theta 1 and we set
+
+294
+00:10:48,230 --> 00:10:50,330
+the parameters theta 0 to a 0.
+
+295
+00:10:50,340 --> 00:10:51,940
+In the next video,
+
+296
+00:10:51,950 --> 00:10:53,400
+we'll go back to the original
+
+297
+00:10:53,410 --> 00:10:55,380
+problem formulation and look
+
+298
+00:10:55,390 --> 00:10:57,460
+at some visualizations involving both
+
+299
+00:10:57,470 --> 00:10:59,080
+theta 0 and theta 1.
+
+300
+00:10:59,090 --> 00:11:01,350
+That is without setting theta 0
+
+301
+00:11:01,360 --> 00:11:02,660
+to 0 and hopefully that would
+
+302
+00:11:02,670 --> 00:11:04,100
+give you an even better sense
+
+303
+00:11:04,110 --> 00:11:05,530
+of what the cost function j is
+
+304
+00:11:05,540 --> 00:11:09,450
+doing in the original linear regression relation.
+

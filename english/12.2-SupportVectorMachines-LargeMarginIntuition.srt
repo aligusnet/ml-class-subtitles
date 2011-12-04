@@ -1,0 +1,1248 @@
+1
+00:00:00,750 --> 00:00:02,510
+Sometime people talk about support
+
+2
+00:00:02,520 --> 00:00:04,980
+vector machines,as large margin
+
+3
+00:00:04,990 --> 00:00:07,070
+classifiers,in this video I'd
+
+4
+00:00:07,080 --> 00:00:08,400
+like to tell you what that
+
+5
+00:00:08,410 --> 00:00:09,770
+means, and this will
+
+6
+00:00:09,780 --> 00:00:11,020
+also give us a useful
+
+7
+00:00:11,030 --> 00:00:13,010
+picture of what an
+
+8
+00:00:13,020 --> 00:00:18,060
+hypothesis may look like.
+
+9
+00:00:18,070 --> 00:00:20,790
+Here's my Cos function for the support
+
+10
+00:00:21,310 --> 00:00:22,780
+vector machine where here on the left
+
+11
+00:00:22,790 --> 00:00:24,550
+I've plotted my Cos 1
+
+12
+00:00:24,560 --> 00:00:29,600
+of z function that I used for positive examples and on the right I've  plotted my
+
+13
+00:00:30,080 --> 00:00:31,940
+zero of 'Z' function graph
+
+14
+00:00:31,950 --> 00:00:34,370
+here, with 'Z' on the horizontal axis.
+
+15
+00:00:34,380 --> 00:00:35,640
+Now, let's think about what
+
+16
+00:00:35,650 --> 00:00:39,650
+it takes to these cos functions small.
+
+17
+00:00:39,660 --> 00:00:41,940
+If you have a positive example,
+
+18
+00:00:41,950 --> 00:00:43,480
+so if y is equal to
+
+19
+00:00:43,490 --> 00:00:45,190
+1, then cos 1 of
+
+20
+00:00:45,200 --> 00:00:47,690
+Z is zero only when
+
+21
+00:00:47,700 --> 00:00:50,170
+Z is greater than or equal to 1.
+
+22
+00:00:50,180 --> 00:00:51,500
+So in other words, if you
+
+23
+00:00:51,510 --> 00:00:53,100
+have a positive example, we really
+
+24
+00:00:53,110 --> 00:00:54,860
+want theta [xx] to be greater
+
+25
+00:00:54,870 --> 00:00:56,440
+than or equal to 1
+
+26
+00:00:56,450 --> 00:00:58,140
+and conversely if y is
+
+27
+00:00:58,150 --> 00:00:59,500
+equal to zero, of this
+
+28
+00:00:59,510 --> 00:01:01,550
+cos zero of z function,
+
+29
+00:01:01,560 --> 00:01:03,190
+then it's only in
+
+30
+00:01:03,200 --> 00:01:04,450
+this region that z is
+
+31
+00:01:04,460 --> 00:01:06,140
+less than equal to 1
+
+32
+00:01:06,150 --> 00:01:07,600
+we have the course is zero
+
+33
+00:01:07,610 --> 00:01:10,630
+as z is equals to zero,
+
+34
+00:01:10,640 --> 00:01:12,550
+and this is an interesting property of the support
+
+35
+00:01:12,560 --> 00:01:13,790
+vector machine right, which is
+
+36
+00:01:13,800 --> 00:01:15,430
+that, if you have positive
+
+37
+00:01:15,440 --> 00:01:18,360
+example so if y is equal to one,
+
+38
+00:01:18,370 --> 00:01:19,540
+then all we really need
+
+39
+00:01:19,550 --> 00:01:22,960
+is that data transport is greater than equal zero.
+
+40
+00:01:22,970 --> 00:01:25,850
+And that would mean we classify correctly
+
+41
+00:01:25,860 --> 00:01:27,500
+because if theta [xx] x is greater than zero our
+
+42
+00:01:27,510 --> 00:01:29,830
+hypothesis will predict zero.
+
+43
+00:01:29,840 --> 00:01:31,330
+And similarly, if you have
+
+44
+00:01:31,340 --> 00:01:34,840
+a negative example, they
+
+45
+00:01:34,850 --> 00:01:37,660
+less than zero and that will make sure we get the example right.
+
+46
+00:01:37,670 --> 00:01:40,570
+But the support machine wants to do more than that.
+
+47
+00:01:40,580 --> 00:01:44,310
+It says, you don't just barely get the example right.
+
+48
+00:01:44,320 --> 00:01:46,230
+So then don't just
+
+49
+00:01:46,240 --> 00:01:47,880
+have it just a little bit bigger thans zero. What
+
+50
+00:01:47,890 --> 00:01:49,050
+i really want to is for
+
+51
+00:01:49,060 --> 00:01:50,480
+this to be quite a lot
+
+52
+00:01:50,490 --> 00:01:51,670
+because its zero, say maybe
+
+53
+00:01:51,680 --> 00:01:52,860
+quick printed and you can
+
+54
+00:01:52,870 --> 00:01:54,790
+and I want this to be much less than zero.
+
+55
+00:01:54,800 --> 00:01:56,220
+Maybe I want it less than or
+
+56
+00:01:56,230 --> 00:01:58,820
+equal to -1.
+
+57
+00:01:58,830 --> 00:02:00,110
+And so this builds in an
+
+58
+00:02:00,120 --> 00:02:02,060
+extra safety factor or safety
+
+59
+00:02:02,070 --> 00:02:04,020
+margin factor the support vector
+
+60
+00:02:04,030 --> 00:02:06,330
+machine logstic regressions
+
+61
+00:02:06,340 --> 00:02:07,810
+are something similar too of
+
+62
+00:02:07,820 --> 00:02:09,100
+course but lets see what
+
+63
+00:02:09,110 --> 00:02:10,450
+happens or lets see what
+
+64
+00:02:10,460 --> 00:02:11,350
+comes consequences of this are, in the
+
+65
+00:02:11,360 --> 00:02:14,680
+context of the support vector machine.
+
+66
+00:02:14,830 --> 00:02:16,000
+Concretely, what we'd like
+
+67
+00:02:16,010 --> 00:02:17,890
+to do next is consider a
+
+68
+00:02:17,900 --> 00:02:19,450
+case where we set
+
+69
+00:02:19,460 --> 00:02:21,390
+this constant C to be
+
+70
+00:02:21,400 --> 00:02:23,520
+a very large value, so let's
+
+71
+00:02:23,530 --> 00:02:24,810
+imagine we shall see through
+
+72
+00:02:24,820 --> 00:02:29,360
+a very large value, may be a hundred thousand, some huge number.
+
+73
+00:02:29,370 --> 00:02:31,570
+Lets see what the support vector machine will do.
+
+74
+00:02:31,580 --> 00:02:33,810
+If C is very,
+
+75
+00:02:33,820 --> 00:02:36,340
+very large, then when minimizing
+
+76
+00:02:36,350 --> 00:02:38,290
+this optimization objective, we're going
+
+77
+00:02:38,300 --> 00:02:39,940
+to be highly motivated to choose
+
+78
+00:02:39,950 --> 00:02:41,370
+a value, so that this
+
+79
+00:02:41,380 --> 00:02:44,680
+first term is equal to zero.
+
+80
+00:02:44,810 --> 00:02:46,660
+So let's try to
+
+81
+00:02:46,670 --> 00:02:48,420
+understand the optimization problem in
+
+82
+00:02:48,430 --> 00:02:50,040
+the context of, what would
+
+83
+00:02:50,050 --> 00:02:51,870
+it take to make this
+
+84
+00:02:51,880 --> 00:02:53,460
+first term in the objective
+
+85
+00:02:53,470 --> 00:02:54,990
+equal to zero, because you
+
+86
+00:02:55,000 --> 00:02:56,240
+know, maybe we'll set C to
+
+87
+00:02:56,250 --> 00:02:59,580
+some huge constant, and this
+
+88
+00:02:59,590 --> 00:03:01,290
+will hope, this should give us
+
+89
+00:03:01,300 --> 00:03:03,100
+additional intuition about what
+
+90
+00:03:03,110 --> 00:03:06,430
+sort of hypotheses a support vector machine learns.
+
+91
+00:03:06,440 --> 00:03:08,130
+So we saw already that
+
+92
+00:03:08,140 --> 00:03:09,470
+whenever you have a training
+
+93
+00:03:09,480 --> 00:03:11,680
+example with a label
+
+94
+00:03:11,690 --> 00:03:13,940
+of y1 if you
+
+95
+00:03:13,950 --> 00:03:15,230
+want to make that first term
+
+96
+00:03:15,240 --> 00:03:16,440
+zero, what you need is
+
+97
+00:03:16,450 --> 00:03:17,980
+is to find a value of theta
+
+98
+00:03:17,990 --> 00:03:20,680
+so that theta is greater
+
+99
+00:03:20,690 --> 00:03:23,210
+than or equal to 1.
+
+100
+00:03:23,220 --> 00:03:24,950
+Whenever we have an example,
+
+101
+00:03:24,960 --> 00:03:27,230
+we label zero in order
+
+102
+00:03:27,240 --> 00:03:28,990
+to make sure that the cost
+
+103
+00:03:29,000 --> 00:03:30,600
+cause zero of Z,  in order to
+
+104
+00:03:30,610 --> 00:03:31,780
+make sure that the cost cause
+
+105
+00:03:31,790 --> 00:03:33,800
+zero we need that theta transfer
+
+106
+00:03:33,810 --> 00:03:37,680
+was xy is less than or
+
+107
+00:03:37,900 --> 00:03:39,500
+equal to, minus one?
+
+108
+00:03:39,510 --> 00:03:41,040
+So, if we think
+
+109
+00:03:41,050 --> 00:03:43,350
+of our optimization problem as
+
+110
+00:03:43,360 --> 00:03:45,700
+now, really choosing parameters
+
+111
+00:03:45,710 --> 00:03:47,010
+and showing that this first
+
+112
+00:03:47,020 --> 00:03:49,120
+term is equal to zero,
+
+113
+00:03:49,130 --> 00:03:50,320
+what we're left with is
+
+114
+00:03:50,330 --> 00:03:52,040
+the following optimization problem, we're
+
+115
+00:03:52,050 --> 00:03:53,970
+going to minimize that first
+
+116
+00:03:53,980 --> 00:03:55,580
+term zero, so if C
+
+117
+00:03:55,590 --> 00:03:56,860
+times zero, because we're going
+
+118
+00:03:56,870 --> 00:03:58,140
+to choose parameters so that's equal
+
+119
+00:03:58,150 --> 00:04:00,320
+to zero, plus one half
+
+120
+00:04:00,330 --> 00:04:01,450
+and then you know that
+
+121
+00:04:01,460 --> 00:04:05,610
+second term and this
+
+122
+00:04:05,620 --> 00:04:07,150
+first term is 'C' times zero,
+
+123
+00:04:07,160 --> 00:04:08,120
+so let's just cross that
+
+124
+00:04:08,130 --> 00:04:11,370
+out because I know that's going to be zero.
+
+125
+00:04:11,380 --> 00:04:13,390
+And this will be subject to the constraint
+
+126
+00:04:13,400 --> 00:04:16,380
+that theta transpose xi
+
+127
+00:04:16,390 --> 00:04:18,690
+is greater than or equal to
+
+128
+00:04:18,700 --> 00:04:22,170
+one, if yi
+
+129
+00:04:22,180 --> 00:04:24,930
+Is equal to one and
+
+130
+00:04:24,940 --> 00:04:26,680
+the xi is less than
+
+131
+00:04:26,690 --> 00:04:29,020
+or equal to minus one
+
+132
+00:04:29,030 --> 00:04:32,100
+whenever you have
+
+133
+00:04:32,110 --> 00:04:34,530
+a negative example and it
+
+134
+00:04:34,540 --> 00:04:35,650
+turns out that when you
+
+135
+00:04:35,660 --> 00:04:38,060
+solve this authorization problem it
+
+136
+00:04:38,070 --> 00:04:40,700
+minimize this as a function of the parameters date
+
+137
+00:04:40,710 --> 00:04:42,580
+you get a very interesting decision
+
+138
+00:04:42,590 --> 00:04:45,000
+boundary. Concretely if you
+
+139
+00:04:45,010 --> 00:04:46,740
+look at a data set
+
+140
+00:04:46,750 --> 00:04:50,910
+like this with positive and negative examples,  this data
+
+141
+00:04:50,920 --> 00:04:52,700
+is linearly separable and by
+
+142
+00:04:52,710 --> 00:04:55,520
+that I mean that there exists s straight line,
+
+143
+00:04:55,530 --> 00:04:56,910
+there is as many straight rate
+
+144
+00:04:56,920 --> 00:04:58,710
+on it as they can separate the positive
+
+145
+00:04:58,720 --> 00:05:01,550
+the good example
+
+146
+00:05:01,560 --> 00:05:04,210
+is perfectly. For example, here is one discussion boundary
+
+147
+00:05:04,270 --> 00:05:05,560
+that separates the positive and
+
+148
+00:05:05,570 --> 00:05:07,020
+negative example, but somehow that
+
+149
+00:05:07,030 --> 00:05:07,890
+doesn't look like a very
+
+150
+00:05:07,900 --> 00:05:09,800
+natural one, right or by
+
+151
+00:05:09,810 --> 00:05:11,220
+drawing even worse you know
+
+152
+00:05:11,230 --> 00:05:13,700
+here's another decision boundary that
+
+153
+00:05:13,710 --> 00:05:14,890
+separates the positive and negative examples  and I'll
+
+154
+00:05:14,900 --> 00:05:16,110
+give examples we'll just be
+
+155
+00:05:16,120 --> 00:05:20,030
+having but neither of those seem like categorical choices.
+
+156
+00:05:20,420 --> 00:05:23,130
+The Support Vector Machines will instead choose this
+
+157
+00:05:23,140 --> 00:05:27,950
+decision boundary, whichI'm drawing in black.
+
+158
+00:05:29,010 --> 00:05:30,750
+And that seems like a much better.
+
+159
+00:05:30,760 --> 00:05:32,410
+boundary then either of
+
+160
+00:05:32,420 --> 00:05:34,740
+the one's that I drew in magenta or in green.
+
+161
+00:05:34,750 --> 00:05:36,040
+The black line seems like a more
+
+162
+00:05:36,050 --> 00:05:38,600
+robust separator, it does
+
+163
+00:05:38,610 --> 00:05:39,790
+a better job of separating the
+
+164
+00:05:39,800 --> 00:05:43,520
+positive and negative example and mathematically,
+
+165
+00:05:43,530 --> 00:05:46,070
+what that does is, this
+
+166
+00:05:46,080 --> 00:05:49,020
+boundary has a larger distance.
+
+167
+00:05:49,160 --> 00:05:50,750
+That distance is called the margin, when I
+
+168
+00:05:50,760 --> 00:05:52,370
+draw up this two extra
+
+169
+00:05:52,380 --> 00:05:54,530
+blue lines, we see
+
+170
+00:05:54,540 --> 00:05:56,230
+that the black decision boundary has
+
+171
+00:05:56,240 --> 00:06:00,110
+some larger minimum distance from any of my.
+
+172
+00:06:00,120 --> 00:06:01,570
+The good example is we
+
+173
+00:06:01,580 --> 00:06:02,880
+are extra momentary the green
+
+174
+00:06:02,890 --> 00:06:04,630
+lines thick humble thick close
+
+175
+00:06:04,640 --> 00:06:06,490
+to the training example that seems
+
+176
+00:06:06,500 --> 00:06:09,840
+to do a less great job separating the positive and negative classes than my black line.
+
+177
+00:06:09,850 --> 00:06:11,790
+And so
+
+178
+00:06:11,800 --> 00:06:13,950
+this distance is called
+
+179
+00:06:13,960 --> 00:06:16,590
+the margin of the
+
+180
+00:06:16,600 --> 00:06:21,490
+support fax machine and this
+
+181
+00:06:21,500 --> 00:06:22,930
+gives the SVM a certain
+
+182
+00:06:22,940 --> 00:06:24,350
+robustness, because it tries
+
+183
+00:06:24,360 --> 00:06:25,690
+to separate the data with as
+
+184
+00:06:25,700 --> 00:06:28,940
+a large a margin as possible.
+
+185
+00:06:29,210 --> 00:06:30,370
+So the support vector machine is
+
+186
+00:06:30,380 --> 00:06:31,820
+sometimes also called a large
+
+187
+00:06:31,830 --> 00:06:34,160
+margin classifier and this
+
+188
+00:06:34,170 --> 00:06:36,420
+is actually a consequence of
+
+189
+00:06:36,430 --> 00:06:40,130
+the optimization problem we wrote down on the previous one.
+
+190
+00:06:40,140 --> 00:06:41,090
+I know that you might be
+
+191
+00:06:41,100 --> 00:06:42,390
+wondering how is it that
+
+192
+00:06:42,400 --> 00:06:44,060
+the optimization problem I wrote
+
+193
+00:06:44,070 --> 00:06:45,270
+down in the previous while, how
+
+194
+00:06:45,280 --> 00:06:48,340
+does that lead to this large margin classifier.
+
+195
+00:06:48,350 --> 00:06:50,510
+I know I haven't explained that yet.
+
+196
+00:06:50,520 --> 00:06:51,800
+And in the next video
+
+197
+00:06:51,810 --> 00:06:53,490
+I'm going to sketch a
+
+198
+00:06:53,500 --> 00:06:55,420
+little bit of the intuition about why
+
+199
+00:06:55,430 --> 00:06:57,560
+that optimization problem gives us
+
+200
+00:06:57,570 --> 00:06:59,780
+this large margin classifier, but
+
+201
+00:06:59,790 --> 00:07:00,960
+this is a useful feature to
+
+202
+00:07:00,970 --> 00:07:01,910
+keep in mind if you are
+
+203
+00:07:01,920 --> 00:07:03,280
+trying to understand what are the
+
+204
+00:07:03,290 --> 00:07:06,130
+source of hypothesis that the Nesbian will choose.
+
+205
+00:07:06,140 --> 00:07:07,260
+That is, trying to separate the
+
+206
+00:07:07,270 --> 00:07:11,810
+positive and negative examples with as big a margin as possible.
+
+207
+00:07:12,890 --> 00:07:14,170
+Once you say one last thing
+
+208
+00:07:14,180 --> 00:07:16,060
+about large margin classifier in
+
+209
+00:07:16,070 --> 00:07:18,020
+this intuition, so we
+
+210
+00:07:18,030 --> 00:07:20,000
+left out this large margin classification
+
+211
+00:07:20,010 --> 00:07:21,410
+setting in the case
+
+212
+00:07:21,420 --> 00:07:24,150
+of when C organization concepts
+
+213
+00:07:24,160 --> 00:07:25,380
+was very large, I think
+
+214
+00:07:25,390 --> 00:07:28,300
+they say that's a hundred thousand something.
+
+215
+00:07:28,310 --> 00:07:30,100
+So give a dataset
+
+216
+00:07:30,110 --> 00:07:32,100
+like this, maybe we'll choose
+
+217
+00:07:32,110 --> 00:07:34,130
+that decision boundary that
+
+218
+00:07:34,140 --> 00:07:37,360
+separate the possible examples of large margins.
+
+219
+00:07:37,370 --> 00:07:39,360
+Now, DSDM is actually sliding
+
+220
+00:07:39,370 --> 00:07:41,430
+more sophisticated than this large
+
+221
+00:07:41,440 --> 00:07:43,620
+margin view might suggest
+
+222
+00:07:43,630 --> 00:07:45,300
+and in particular all you're
+
+223
+00:07:45,310 --> 00:07:46,670
+doing is use a large
+
+224
+00:07:46,680 --> 00:07:49,010
+margin classifier then your
+
+225
+00:07:49,020 --> 00:07:50,910
+learning algorithms can be sensitive
+
+226
+00:07:50,920 --> 00:07:52,440
+to out liners, so lets just
+
+227
+00:07:52,450 --> 00:07:54,510
+add an extra your positive example
+
+228
+00:07:54,520 --> 00:07:57,220
+like that shown on the screen.
+
+229
+00:07:57,230 --> 00:07:58,940
+If he had one example then
+
+230
+00:07:58,950 --> 00:08:00,290
+it seems as that the separate
+
+231
+00:08:00,300 --> 00:08:02,670
+data with a large margin,
+
+232
+00:08:02,680 --> 00:08:05,260
+maybe I'll end up learning
+
+233
+00:08:05,270 --> 00:08:07,530
+the decision boundary like that
+
+234
+00:08:07,540 --> 00:08:09,170
+right by this little gentle line and
+
+235
+00:08:09,180 --> 00:08:10,430
+it's really not clear that based
+
+236
+00:08:10,440 --> 00:08:12,170
+on the single outlier based on
+
+237
+00:08:12,180 --> 00:08:13,780
+a single example and it's
+
+238
+00:08:13,790 --> 00:08:14,880
+really not clear that it's
+
+239
+00:08:14,890 --> 00:08:17,050
+actually a good idea to change
+
+240
+00:08:17,060 --> 00:08:18,280
+my decision boundary from the black
+
+241
+00:08:18,290 --> 00:08:20,970
+one over to the magenta one.
+
+242
+00:08:20,980 --> 00:08:23,630
+So, if C, if
+
+243
+00:08:23,640 --> 00:08:25,960
+the regularization parameter C were very
+
+244
+00:08:25,970 --> 00:08:27,290
+large, then this is
+
+245
+00:08:27,300 --> 00:08:28,350
+actually what DSDM will do, it will
+
+246
+00:08:28,360 --> 00:08:30,260
+change the discussion boundary
+
+247
+00:08:30,270 --> 00:08:31,640
+from the black to the
+
+248
+00:08:31,650 --> 00:08:33,800
+monugental one but if
+
+249
+00:08:33,810 --> 00:08:35,540
+c is reasonably small if
+
+250
+00:08:35,550 --> 00:08:37,310
+you were to use the C,
+
+251
+00:08:37,320 --> 00:08:39,250
+not too large then you
+
+252
+00:08:39,260 --> 00:08:40,600
+still end up with this
+
+253
+00:08:40,610 --> 00:08:44,820
+black decision behind you the data were not.
+
+254
+00:08:44,830 --> 00:08:47,240
+And of course if the data were not linearly separable soo if you had some positive
+
+255
+00:08:47,250 --> 00:08:49,160
+examples in here, or if
+
+256
+00:08:49,170 --> 00:08:50,970
+you had some negative examples
+
+257
+00:08:50,980 --> 00:08:52,560
+in here then the DSDM
+
+258
+00:08:52,570 --> 00:08:54,250
+will also do the right thing.
+
+259
+00:08:54,260 --> 00:08:56,050
+And so this picture of
+
+260
+00:08:56,060 --> 00:08:58,080
+a large margin classifier that's
+
+261
+00:08:58,090 --> 00:08:59,520
+really, that's really the
+
+262
+00:08:59,530 --> 00:09:01,960
+picture that is only
+
+263
+00:09:01,970 --> 00:09:03,550
+for the case of when the
+
+264
+00:09:03,560 --> 00:09:05,180
+regulations and C is
+
+265
+00:09:05,190 --> 00:09:07,410
+very large, and just
+
+266
+00:09:07,420 --> 00:09:09,640
+to remind you this corresponds C
+
+267
+00:09:09,650 --> 00:09:11,840
+plays a role similar to
+
+268
+00:09:11,850 --> 00:09:13,920
+one over Lambda when Lambda
+
+269
+00:09:13,930 --> 00:09:16,100
+is the regularization parameter
+
+270
+00:09:16,110 --> 00:09:18,070
+we have previously have so it's
+
+271
+00:09:18,080 --> 00:09:19,070
+only that one of the Lambda
+
+272
+00:09:19,080 --> 00:09:21,270
+is very large or if
+
+273
+00:09:21,280 --> 00:09:23,550
+Lambda with is very small that
+
+274
+00:09:23,560 --> 00:09:24,840
+you end up with things like
+
+275
+00:09:24,850 --> 00:09:28,860
+this Magenta decision boundary, but
+
+276
+00:09:28,870 --> 00:09:30,180
+in practice when the applying support vector machines
+
+277
+00:09:30,190 --> 00:09:31,900
+,when C
+
+278
+00:09:31,910 --> 00:09:33,240
+is not very, very large like
+
+279
+00:09:33,250 --> 00:09:34,830
+it can, we want if it can
+
+280
+00:09:34,840 --> 00:09:36,970
+do a better job ignoring
+
+281
+00:09:36,980 --> 00:09:39,140
+the few other lines like here. And
+
+282
+00:09:39,150 --> 00:09:40,610
+it'll fine and  do reasonable things
+
+283
+00:09:40,620 --> 00:09:44,680
+even if your data is not linearly separable.
+
+284
+00:09:44,690 --> 00:09:46,970
+But when we talk about buyers and theories in the context of support vector machines
+
+285
+00:09:46,980 --> 00:09:48,160
+which will do
+
+286
+00:09:48,170 --> 00:09:50,400
+a little bit later, hopefully all
+
+287
+00:09:50,410 --> 00:09:52,400
+of you sterols involve the regularization
+
+288
+00:09:52,410 --> 00:09:53,820
+perimeter will become clearer at
+
+289
+00:09:53,830 --> 00:09:55,570
+that time. So I hope
+
+290
+00:09:55,580 --> 00:09:57,590
+that gives some intuition about
+
+291
+00:09:57,600 --> 00:09:59,840
+how this functions as
+
+292
+00:09:59,850 --> 00:10:01,940
+a large margin crossfire that
+
+293
+00:10:01,950 --> 00:10:03,600
+tries to separate the data with
+
+294
+00:10:03,610 --> 00:10:06,130
+a large margin, technically this
+
+295
+00:10:06,140 --> 00:10:07,450
+picture of this view is true
+
+296
+00:10:07,460 --> 00:10:08,820
+only when the parameter C is very large
+
+297
+00:10:08,830 --> 00:10:10,220
+, which
+
+298
+00:10:10,230 --> 00:10:13,110
+is a useful way to think about support vector machines.
+
+299
+00:10:13,120 --> 00:10:14,550
+There was one missing step in
+
+300
+00:10:14,560 --> 00:10:16,100
+this video which is, why is
+
+301
+00:10:16,110 --> 00:10:17,760
+it that optimization problem we
+
+302
+00:10:17,770 --> 00:10:19,030
+wrote down on these
+
+303
+00:10:19,040 --> 00:10:20,730
+lines, how does that actually
+
+304
+00:10:20,740 --> 00:10:22,590
+lead to the large margin classifier, I
+
+305
+00:10:22,600 --> 00:10:23,920
+didn't do that in this video,
+
+306
+00:10:23,930 --> 00:10:25,860
+in the next video I
+
+307
+00:10:25,870 --> 00:10:27,110
+will sketch a little bit
+
+308
+00:10:27,120 --> 00:10:28,740
+more of the man behind that
+
+309
+00:10:28,750 --> 00:10:29,840
+to explain
+
+310
+00:10:29,850 --> 00:10:31,920
+that separate reasoning of how
+
+311
+00:10:31,930 --> 00:10:33,830
+the optimization problem we wrote out
+
+312
+00:10:33,840 --> 00:10:36,490
+results in a large margin classifier.
+

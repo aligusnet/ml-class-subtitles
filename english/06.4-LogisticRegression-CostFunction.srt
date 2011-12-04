@@ -1,0 +1,1328 @@
+1
+00:00:00,160 --> 00:00:01,670
+In this video we'll talk about
+
+2
+00:00:01,680 --> 00:00:04,030
+how to fit the parameters theta
+
+3
+00:00:04,040 --> 00:00:05,870
+for logistic regression.
+
+4
+00:00:05,880 --> 00:00:07,010
+In particular, I'd like to
+
+5
+00:00:07,020 --> 00:00:10,390
+define the optimization objective or the
+
+6
+00:00:10,400 --> 00:00:13,970
+cost function that we'll use to fit the parameters.
+
+7
+00:00:15,390 --> 00:00:17,360
+Here's to supervised learning problem
+
+8
+00:00:17,370 --> 00:00:19,950
+of fitting a logistic regression model.
+
+9
+00:00:19,960 --> 00:00:22,170
+We have a training set
+
+10
+00:00:22,180 --> 00:00:24,940
+of M training examples.
+
+11
+00:00:24,950 --> 00:00:26,560
+And as usual each of
+
+12
+00:00:26,570 --> 00:00:28,140
+our examples is represented by
+
+13
+00:00:28,150 --> 00:00:32,730
+feature vector that's N plus 1 dimensional.
+
+14
+00:00:32,830 --> 00:00:35,170
+And as usual we have
+
+15
+00:00:35,180 --> 00:00:36,430
+X 0 equals 1.
+
+16
+00:00:36,440 --> 00:00:38,300
+Our first feature, or our 0
+
+17
+00:00:38,310 --> 00:00:39,960
+feature is always equal to 1,
+
+18
+00:00:39,970 --> 00:00:41,170
+and because this is a
+
+19
+00:00:41,180 --> 00:00:43,340
+classification problem, our training
+
+20
+00:00:43,350 --> 00:00:45,000
+set has the property that
+
+21
+00:00:45,010 --> 00:00:48,390
+every label Y, is either 0 or 1.
+
+22
+00:00:48,400 --> 00:00:50,550
+This is a hypothesis
+
+23
+00:00:50,560 --> 00:00:51,950
+and the parameters of the
+
+24
+00:00:51,960 --> 00:00:54,480
+hypothesis is this theta over here.
+
+25
+00:00:54,490 --> 00:00:55,600
+And the question I want
+
+26
+00:00:55,610 --> 00:00:57,330
+to talk about is given this
+
+27
+00:00:57,340 --> 00:00:58,870
+training set how do
+
+28
+00:00:58,880 --> 00:01:02,500
+we choose, or how do we fit the parameters theta?
+
+29
+00:01:02,510 --> 00:01:04,100
+Back when we were developing the
+
+30
+00:01:04,110 --> 00:01:08,410
+linear regression model, we use the following cost function.
+
+31
+00:01:08,480 --> 00:01:10,890
+I've written this slightly differently, where
+
+32
+00:01:10,900 --> 00:01:12,660
+instead of 1/2m, I've
+
+33
+00:01:12,670 --> 00:01:16,340
+taken the 1/2 and put it inside the summation instead.
+
+34
+00:01:16,350 --> 00:01:17,390
+Now, I want to use
+
+35
+00:01:17,400 --> 00:01:19,130
+an alternative way of writing
+
+36
+00:01:19,140 --> 00:01:20,690
+out this cost function which is
+
+37
+00:01:20,700 --> 00:01:22,020
+that instead of writing out
+
+38
+00:01:22,030 --> 00:01:23,910
+this squared and return here,
+
+39
+00:01:23,920 --> 00:01:28,300
+let's write here, cost of
+
+40
+00:01:28,310 --> 00:01:31,490
+H of X comma
+
+41
+00:01:31,500 --> 00:01:33,590
+Y, and I'm going
+
+42
+00:01:33,600 --> 00:01:37,000
+to define that term cost
+
+43
+00:01:37,210 --> 00:01:39,730
+of H of X comma Y to be equal to this.
+
+44
+00:01:39,740 --> 00:01:42,660
+It's just equal to just one half of the square root error.
+
+45
+00:01:42,670 --> 00:01:43,730
+So now, we can see more
+
+46
+00:01:43,740 --> 00:01:45,980
+clearly that the cost
+
+47
+00:01:45,990 --> 00:01:48,100
+function is a sum
+
+48
+00:01:48,110 --> 00:01:49,770
+over my training set, or
+
+49
+00:01:49,780 --> 00:01:51,360
+is 1/m times the sum
+
+50
+00:01:51,370 --> 00:01:55,870
+over my training set of this cost term here.
+
+51
+00:01:56,050 --> 00:01:58,040
+And to simplify this
+
+52
+00:01:58,050 --> 00:01:59,480
+equation a little bit more, it's gonna
+
+53
+00:01:59,490 --> 00:02:02,600
+be convenient to get rid of those superscripts.
+
+54
+00:02:02,610 --> 00:02:04,380
+So just define cost of
+
+55
+00:02:04,390 --> 00:02:05,500
+H of X comma Y to
+
+56
+00:02:05,510 --> 00:02:06,600
+be equal to 1/2 of
+
+57
+00:02:06,610 --> 00:02:08,910
+this square root error  and the
+
+58
+00:02:08,920 --> 00:02:10,350
+interpretation of this cost function
+
+59
+00:02:10,360 --> 00:02:11,880
+is that this is the
+
+60
+00:02:11,890 --> 00:02:13,450
+cost I want my learning
+
+61
+00:02:13,460 --> 00:02:15,050
+algorithm to, you know,
+
+62
+00:02:15,060 --> 00:02:16,740
+have to pay, if it
+
+63
+00:02:16,750 --> 00:02:18,720
+outputs that value it
+
+64
+00:02:18,730 --> 00:02:19,880
+this prediction is H of
+
+65
+00:02:19,890 --> 00:02:21,300
+X, and the actual
+
+66
+00:02:21,310 --> 00:02:24,040
+label was Y. So just
+
+67
+00:02:24,050 --> 00:02:27,830
+cross off those superscripts. All right.
+
+68
+00:02:27,840 --> 00:02:29,740
+And no surprise for linear
+
+69
+00:02:29,750 --> 00:02:31,510
+regression the cost for you to define is that.
+
+70
+00:02:31,520 --> 00:02:32,740
+Well the cost for this
+
+71
+00:02:32,750 --> 00:02:34,530
+is, that is 1/2
+
+72
+00:02:34,540 --> 00:02:36,170
+times the square difference
+
+73
+00:02:36,180 --> 00:02:37,660
+between what are predicted and the
+
+74
+00:02:37,670 --> 00:02:38,920
+actual value that we observe
+
+75
+00:02:38,930 --> 00:02:41,070
+for Y. Now, this cost
+
+76
+00:02:41,080 --> 00:02:42,820
+function worked fine for linear
+
+77
+00:02:42,830 --> 00:02:47,420
+regression, but here we're interested in logistic regression.
+
+78
+00:02:47,430 --> 00:02:49,140
+If we could minimize this cost
+
+79
+00:02:49,150 --> 00:02:52,010
+function that is plugged into J here.
+
+80
+00:02:52,020 --> 00:02:53,770
+That will work okay.
+
+81
+00:02:53,780 --> 00:02:55,470
+But it turns out that if
+
+82
+00:02:55,480 --> 00:02:57,620
+we use this particular cost function
+
+83
+00:02:57,630 --> 00:03:01,810
+this would be a non-convex function of the parameters theta.
+
+84
+00:03:01,820 --> 00:03:03,980
+Here's what I mean by non-convex.
+
+85
+00:03:03,990 --> 00:03:05,300
+We have some cost function J
+
+86
+00:03:05,310 --> 00:03:08,130
+of theta, and for logistic
+
+87
+00:03:08,140 --> 00:03:12,060
+regression this function H here
+
+88
+00:03:12,110 --> 00:03:13,490
+has a non linearity, right?
+
+89
+00:03:13,500 --> 00:03:14,490
+It says, you know, 1 over
+
+90
+00:03:14,500 --> 00:03:16,350
+1 plus E to the negative theta transfers
+
+91
+00:03:16,360 --> 00:03:19,570
+X. So it's a pretty complicated nonlinear function.
+
+92
+00:03:19,580 --> 00:03:21,120
+And if you take the sigmoid
+
+93
+00:03:21,130 --> 00:03:22,050
+function and plug it in
+
+94
+00:03:22,060 --> 00:03:23,290
+here and then take
+
+95
+00:03:23,300 --> 00:03:25,010
+this cost function and plug
+
+96
+00:03:25,020 --> 00:03:26,700
+it in there, and then plot
+
+97
+00:03:26,710 --> 00:03:28,200
+what J of theta looks
+
+98
+00:03:28,210 --> 00:03:29,620
+like, you find that
+
+99
+00:03:29,630 --> 00:03:33,490
+J of theta can look like a function just like this.
+
+100
+00:03:33,500 --> 00:03:35,920
+You know with many local optima and
+
+101
+00:03:35,930 --> 00:03:37,330
+the formal term for this
+
+102
+00:03:37,340 --> 00:03:39,490
+is that this a non convex function.
+
+103
+00:03:39,500 --> 00:03:40,610
+And you can kind of tell.
+
+104
+00:03:40,620 --> 00:03:41,820
+If you were to run gradient
+
+105
+00:03:41,830 --> 00:03:43,150
+descent on this sort of
+
+106
+00:03:43,160 --> 00:03:45,160
+function, it is not guaranteed
+
+107
+00:03:45,170 --> 00:03:47,720
+to converge to the global minimum.
+
+108
+00:03:47,730 --> 00:03:48,860
+Whereas in contrast, what
+
+109
+00:03:48,870 --> 00:03:50,340
+we would like is to have
+
+110
+00:03:50,350 --> 00:03:52,090
+a cost function J of theta
+
+111
+00:03:52,100 --> 00:03:53,580
+that is convex, that is
+
+112
+00:03:53,590 --> 00:03:55,190
+a single bow-shaped function that
+
+113
+00:03:55,200 --> 00:03:56,650
+looks like this, so that
+
+114
+00:03:56,660 --> 00:03:58,520
+if you run gradient descent, we
+
+115
+00:03:58,530 --> 00:04:01,160
+would be guaranteed that gradient descent, you know,
+
+116
+00:04:01,170 --> 00:04:04,900
+would converge to the global minimum.
+
+117
+00:04:04,910 --> 00:04:07,010
+And the problem of using the
+
+118
+00:04:07,020 --> 00:04:08,510
+the square cost function is that
+
+119
+00:04:08,520 --> 00:04:10,390
+because of this very
+
+120
+00:04:10,400 --> 00:04:12,340
+non linear sigmoid function that
+
+121
+00:04:12,350 --> 00:04:14,090
+appears in the middle here, J of
+
+122
+00:04:14,100 --> 00:04:15,950
+theta ends up being
+
+123
+00:04:15,960 --> 00:04:17,930
+a non convex function if you
+
+124
+00:04:17,940 --> 00:04:21,240
+were to define it as the square cost function.
+
+125
+00:04:21,250 --> 00:04:22,310
+So what we'd would like to do
+
+126
+00:04:22,320 --> 00:04:23,780
+is to instead come up with
+
+127
+00:04:23,790 --> 00:04:25,540
+a different cost function that
+
+128
+00:04:25,550 --> 00:04:28,050
+is convex and so
+
+129
+00:04:28,060 --> 00:04:29,270
+that we can apply a great
+
+130
+00:04:29,280 --> 00:04:30,930
+algorithm like gradient descent
+
+131
+00:04:30,940 --> 00:04:33,630
+and be guaranteed to find a global minimum.
+
+132
+00:04:33,640 --> 00:04:37,280
+Here's a cost function that we're going to use for logistic regression.
+
+133
+00:04:37,290 --> 00:04:39,310
+We're going to say the cost
+
+134
+00:04:39,320 --> 00:04:40,660
+or the penalty that the algorithm
+
+135
+00:04:40,670 --> 00:04:42,880
+pays if it outputs
+
+136
+00:04:42,890 --> 00:04:44,610
+a value H of X.
+
+137
+00:04:44,620 --> 00:04:46,680
+So, this is some number like 0.7
+
+138
+00:04:46,690 --> 00:04:48,620
+where it predicts a value H
+
+139
+00:04:48,630 --> 00:04:50,760
+of X. And the actual
+
+140
+00:04:50,770 --> 00:04:52,020
+cost label turns out to
+
+141
+00:04:52,030 --> 00:04:54,080
+be Y. The cost is
+
+142
+00:04:54,090 --> 00:04:56,090
+going to be minus log
+
+143
+00:04:56,100 --> 00:04:57,850
+H of X if Y is equal 1.
+
+144
+00:04:57,860 --> 00:04:59,450
+And minus log, 1 minus
+
+145
+00:04:59,460 --> 00:05:02,010
+H of X if Y is equal to 0.
+
+146
+00:05:02,020 --> 00:05:04,220
+This looks like a pretty complicated function.
+
+147
+00:05:04,230 --> 00:05:05,720
+But let's plot function to
+
+148
+00:05:05,730 --> 00:05:08,150
+gain some intuition about what it's doing.
+
+149
+00:05:08,160 --> 00:05:11,060
+Let's start up with the case of Y equals 1.
+
+150
+00:05:11,070 --> 00:05:12,420
+If Y is equal equal
+
+151
+00:05:12,430 --> 00:05:14,820
+to 1, then the cost function
+
+152
+00:05:14,830 --> 00:05:18,200
+is -log H of X, and
+
+153
+00:05:18,210 --> 00:05:19,580
+if we plot that, so let's
+
+154
+00:05:19,590 --> 00:05:21,570
+say that the horizontal
+
+155
+00:05:21,580 --> 00:05:22,910
+axis is H of X.
+
+156
+00:05:22,920 --> 00:05:24,720
+So we know that a hypothesis
+
+157
+00:05:24,730 --> 00:05:26,620
+is going to output a value between
+
+158
+00:05:26,630 --> 00:05:28,050
+0 and 1.
+
+159
+00:05:28,060 --> 00:05:28,480
+Right?
+
+160
+00:05:28,490 --> 00:05:30,520
+So H of X that varies
+
+161
+00:05:30,530 --> 00:05:31,920
+between 0 and 1.
+
+162
+00:05:31,930 --> 00:05:35,460
+If you plot what this cost function looks like.
+
+163
+00:05:35,470 --> 00:05:37,900
+You find that it looks like this.
+
+164
+00:05:37,910 --> 00:05:38,950
+One way to see why the
+
+165
+00:05:38,960 --> 00:05:41,430
+plot like this it is because
+
+166
+00:05:41,440 --> 00:05:44,950
+if you were to plot log Z
+
+167
+00:05:45,000 --> 00:05:47,580
+with Z on the horizontal axis.
+
+168
+00:05:47,590 --> 00:05:48,740
+Then that looks like that.
+
+169
+00:05:48,750 --> 00:05:50,340
+And it's approach is minus infinity.
+
+170
+00:05:50,350 --> 00:05:53,660
+So this is what the log function looks like.
+
+171
+00:05:53,670 --> 00:05:55,970
+And so this is 0, this is 1.
+
+172
+00:05:55,980 --> 00:05:57,460
+Here Z is of
+
+173
+00:05:57,470 --> 00:05:59,640
+course playing the row of
+
+174
+00:05:59,650 --> 00:06:02,010
+H of X.  And so
+
+175
+00:06:02,020 --> 00:06:06,060
+minus log Z will look like this.
+
+176
+00:06:06,330 --> 00:06:08,090
+Right just flipping the sign.
+
+177
+00:06:08,100 --> 00:06:09,780
+Minus log Z. And we're
+
+178
+00:06:09,790 --> 00:06:11,010
+interested only in the
+
+179
+00:06:11,020 --> 00:06:12,600
+range of when this function
+
+180
+00:06:12,610 --> 00:06:13,950
+goes between 0 and 1.
+
+181
+00:06:13,960 --> 00:06:15,910
+So, get rid of that.
+
+182
+00:06:15,920 --> 00:06:17,970
+And so, we're just left with,
+
+183
+00:06:17,980 --> 00:06:20,440
+you know, this part of the curve.
+
+184
+00:06:21,630 --> 00:06:23,150
+And that's what this curve on the left looks like.
+
+185
+00:06:23,160 --> 00:06:25,490
+Now this cost function
+
+186
+00:06:25,500 --> 00:06:29,680
+has a few interesting and desirable properties.
+
+187
+00:06:29,690 --> 00:06:32,080
+First you notice that if
+
+188
+00:06:32,090 --> 00:06:35,000
+Y is equal to 1 and H of X is equal 1, in
+
+189
+00:06:35,010 --> 00:06:37,400
+other words, if the hypothesis
+
+190
+00:06:37,410 --> 00:06:38,980
+exactly, you know, predicts
+
+191
+00:06:38,990 --> 00:06:40,250
+H equals 1, and Y
+
+192
+00:06:40,260 --> 00:06:42,710
+is exactly equal to what I predicted.
+
+193
+00:06:42,720 --> 00:06:44,160
+Then the cost is equal 0.
+
+194
+00:06:44,170 --> 00:06:44,380
+Right?
+
+195
+00:06:44,390 --> 00:06:47,440
+That corresponds to, the curve doesn't actually flatten out.
+
+196
+00:06:47,450 --> 00:06:49,870
+The curve is still going. First, notice
+
+197
+00:06:49,880 --> 00:06:50,960
+that if H of X
+
+198
+00:06:50,970 --> 00:06:52,980
+equals 1, if the hypothesis
+
+199
+00:06:52,990 --> 00:06:55,060
+predicts that Y is equal to 1.
+
+200
+00:06:55,070 --> 00:06:56,300
+And if indeed Y is
+
+201
+00:06:56,310 --> 00:06:58,520
+equal to 1 then the cost is equal to 0.
+
+202
+00:06:58,530 --> 00:07:00,820
+That corresponds to this point down here.
+
+203
+00:07:00,830 --> 00:07:01,020
+Right?
+
+204
+00:07:01,030 --> 00:07:02,320
+If H of X is equal
+
+205
+00:07:02,330 --> 00:07:04,020
+to 1, and we're only
+
+206
+00:07:04,030 --> 00:07:06,230
+concerned the case that Y equals 1 here.
+
+207
+00:07:06,240 --> 00:07:08,340
+But if H of X is equal to 1.
+
+208
+00:07:08,350 --> 00:07:11,030
+Then the cost is down here is equal to 0.
+
+209
+00:07:11,040 --> 00:07:13,010
+And that is what we like it to be.
+
+210
+00:07:13,020 --> 00:07:13,910
+Because, you know, if we
+
+211
+00:07:13,920 --> 00:07:17,640
+correctly predict the output Y then the cost is 0.
+
+212
+00:07:17,650 --> 00:07:21,320
+But now, notice
+
+213
+00:07:21,470 --> 00:07:23,430
+that H of X approaches 0.
+
+214
+00:07:23,440 --> 00:07:25,010
+So, that's H. As the
+
+215
+00:07:25,020 --> 00:07:26,830
+output of the hypothesis approaches 0
+
+216
+00:07:26,840 --> 00:07:30,130
+the cost blows up, and it goes to infinity.
+
+217
+00:07:30,140 --> 00:07:31,500
+And what this does is
+
+218
+00:07:31,510 --> 00:07:34,300
+it captures the intuition that if
+
+219
+00:07:34,310 --> 00:07:36,870
+a hypothesis, you know, outputs 0.
+
+220
+00:07:36,880 --> 00:07:38,550
+That's like saying, our hypothesis is
+
+221
+00:07:38,560 --> 00:07:39,910
+saying, the chance of Y
+
+222
+00:07:39,920 --> 00:07:41,520
+equals 1 is equal to 0.
+
+223
+00:07:41,530 --> 00:07:42,510
+It's kind of like our going
+
+224
+00:07:42,520 --> 00:07:44,010
+to our medical patient and saying,
+
+225
+00:07:44,020 --> 00:07:45,600
+"The probability that you
+
+226
+00:07:45,610 --> 00:07:47,280
+have a malignant tumor, the
+
+227
+00:07:47,290 --> 00:07:49,840
+probability that Y equals 1 is zero."
+
+228
+00:07:49,850 --> 00:07:52,150
+So, it's like absolutely impossible that your
+
+229
+00:07:52,160 --> 00:07:55,140
+tumor is malignant.
+
+230
+00:07:55,150 --> 00:07:56,740
+But if it turns out that
+
+231
+00:07:56,750 --> 00:08:00,090
+the tumor, the patient's tumor, actually is malignant.
+
+232
+00:08:00,100 --> 00:08:01,870
+So if Y is equal to
+
+233
+00:08:01,880 --> 00:08:03,290
+1 even after we told them
+
+234
+00:08:03,300 --> 00:08:05,380
+you know, the probability of it happening is 0.
+
+235
+00:08:05,390 --> 00:08:08,640
+It's absolutely impossible for it to be malignant.
+
+236
+00:08:08,650 --> 00:08:09,750
+But if we told them
+
+237
+00:08:09,760 --> 00:08:11,230
+this with that level of certainty,
+
+238
+00:08:11,240 --> 00:08:12,990
+and we turn out to be wrong,
+
+239
+00:08:13,000 --> 00:08:14,680
+then we penalize the learning algorithm
+
+240
+00:08:14,690 --> 00:08:16,100
+by a very, very large cost,
+
+241
+00:08:16,110 --> 00:08:17,950
+and that's captured by having this
+
+242
+00:08:17,960 --> 00:08:20,440
+cost goes infinity if Y
+
+243
+00:08:20,450 --> 00:08:21,890
+equals 1 and H
+
+244
+00:08:21,900 --> 00:08:24,320
+of X approaches 0.
+
+245
+00:08:24,330 --> 00:08:26,710
+This might consider of
+
+246
+00:08:26,720 --> 00:08:28,860
+Y1, let's look at what
+
+247
+00:08:28,870 --> 00:08:31,810
+the cost function looks like for Y0.
+
+248
+00:08:32,410 --> 00:08:35,710
+If Y is equal to 0, then the cost
+
+249
+00:08:35,720 --> 00:08:39,100
+looks like this expression over here.
+
+250
+00:08:39,110 --> 00:08:40,390
+And if you plot
+
+251
+00:08:40,400 --> 00:08:42,770
+the function minus log 1
+
+252
+00:08:42,780 --> 00:08:45,810
+minus Z what you
+
+253
+00:08:45,820 --> 00:08:49,230
+get is the cost function actually looks like this.
+
+254
+00:08:49,240 --> 00:08:50,260
+So, it goes from 0 to 1.
+
+255
+00:08:50,270 --> 00:08:53,010
+Something like that.
+
+256
+00:08:53,280 --> 00:08:54,590
+And so if you plot
+
+257
+00:08:54,600 --> 00:08:55,840
+the cost function for the case
+
+258
+00:08:55,850 --> 00:08:57,760
+of y equals zero, you find that it looks
+
+259
+00:08:57,770 --> 00:09:00,730
+like this and what
+
+260
+00:09:00,740 --> 00:09:02,380
+this curve does is it
+
+261
+00:09:02,390 --> 00:09:04,910
+now blows up,
+
+262
+00:09:04,920 --> 00:09:08,280
+and it goes to plus infinity as H of X goes to 1.
+
+263
+00:09:08,290 --> 00:09:09,890
+Because it's saying that
+
+264
+00:09:09,900 --> 00:09:11,190
+if Y turns out to be
+
+265
+00:09:11,200 --> 00:09:12,130
+equal to 0, but we
+
+266
+00:09:12,140 --> 00:09:13,950
+predicted that you know, Y is
+
+267
+00:09:13,960 --> 00:09:15,310
+equal to 1 with almost
+
+268
+00:09:15,320 --> 00:09:17,250
+certainty with probability 1, then
+
+269
+00:09:17,260 --> 00:09:20,100
+we end up paying a very large cost.
+
+270
+00:09:21,530 --> 00:09:23,080
+Let's plot the cost function for
+
+271
+00:09:23,090 --> 00:09:25,030
+the case of Y equals 0.
+
+272
+00:09:25,040 --> 00:09:29,510
+So if Y equals 0 that's going to be our cost function.
+
+273
+00:09:29,670 --> 00:09:31,900
+If you look at this expression,
+
+274
+00:09:31,910 --> 00:09:33,710
+and if you plot, you know, minus
+
+275
+00:09:33,720 --> 00:09:36,210
+log 1 minus Z, if
+
+276
+00:09:36,220 --> 00:09:37,410
+you figure out what that looks like,
+
+277
+00:09:37,420 --> 00:09:40,040
+you get a figure that looks like this.
+
+278
+00:09:40,050 --> 00:09:41,670
+Where, which goes from 0
+
+279
+00:09:41,680 --> 00:09:43,590
+to 1 with the Z
+
+280
+00:09:43,600 --> 00:09:45,790
+axis on the horizontal axis.
+
+281
+00:09:45,800 --> 00:09:47,190
+So If you take this cost
+
+282
+00:09:47,200 --> 00:09:48,310
+function and plot it for
+
+283
+00:09:48,320 --> 00:09:49,550
+the case of Y equals 0,
+
+284
+00:09:49,560 --> 00:09:51,130
+what you get is
+
+285
+00:09:51,140 --> 00:09:55,070
+that the cost function looks like this.
+
+286
+00:09:55,080 --> 00:09:56,710
+And what this cost function
+
+287
+00:09:56,720 --> 00:09:58,650
+does is that it blows
+
+288
+00:09:58,660 --> 00:09:59,550
+up or it goes to a
+
+289
+00:09:59,560 --> 00:10:01,410
+positive infinity as each
+
+290
+00:10:01,420 --> 00:10:03,700
+H of X goes to one
+
+291
+00:10:03,710 --> 00:10:05,400
+and this captures the
+
+292
+00:10:05,410 --> 00:10:07,170
+intuition that if a hypothesis
+
+293
+00:10:07,180 --> 00:10:08,840
+predicted that, you know, H of
+
+294
+00:10:08,850 --> 00:10:10,390
+X is equal to 1 with
+
+295
+00:10:10,400 --> 00:10:12,100
+certainty, with like probability 1,
+
+296
+00:10:12,110 --> 00:10:14,260
+it's absolutely got to be Y equals 1.
+
+297
+00:10:14,270 --> 00:10:15,490
+But if Y turned out to
+
+298
+00:10:15,500 --> 00:10:17,170
+be equal to 0 then
+
+299
+00:10:17,180 --> 00:10:18,180
+it makes sense to make the
+
+300
+00:10:18,190 --> 00:10:21,930
+hypothesis, or make the learning algorithm pay a very large cost.
+
+301
+00:10:21,940 --> 00:10:24,600
+And conversely, if H
+
+302
+00:10:24,610 --> 00:10:25,940
+of X is equal to
+
+303
+00:10:25,950 --> 00:10:27,440
+0 and Y equals zero,
+
+304
+00:10:27,450 --> 00:10:28,990
+then the hypothesis nailed it.
+
+305
+00:10:29,000 --> 00:10:30,620
+The predicted Y is equal
+
+306
+00:10:30,630 --> 00:10:32,320
+to zero and it turns
+
+307
+00:10:32,330 --> 00:10:34,340
+out Y is equal to zero
+
+308
+00:10:34,350 --> 00:10:36,740
+so at this point the cost
+
+309
+00:10:36,750 --> 00:10:40,150
+function is going to be 0.
+
+310
+00:10:40,160 --> 00:10:42,140
+In this video, we
+
+311
+00:10:42,150 --> 00:10:43,870
+have defined the cost function
+
+312
+00:10:43,880 --> 00:10:46,310
+for a single training example.
+
+313
+00:10:46,320 --> 00:10:50,260
+The topic of convexity analysis is beyond the scope of this course.
+
+314
+00:10:50,270 --> 00:10:51,610
+But it is possible to show
+
+315
+00:10:51,620 --> 00:10:53,140
+that with our particular choice
+
+316
+00:10:53,150 --> 00:10:54,720
+of cost function this would
+
+317
+00:10:54,730 --> 00:10:57,950
+give us a convex optimization problem
+
+318
+00:10:57,960 --> 00:11:00,070
+as cost function, overall cost function
+
+319
+00:11:00,080 --> 00:11:01,450
+J of theta will be
+
+320
+00:11:01,460 --> 00:11:04,360
+convex and local optima free.
+
+321
+00:11:04,370 --> 00:11:05,670
+In the next video we're going
+
+322
+00:11:05,680 --> 00:11:07,740
+to take these ideas of the
+
+323
+00:11:07,750 --> 00:11:08,900
+cost function for a single
+
+324
+00:11:08,910 --> 00:11:10,800
+training example and develop that
+
+325
+00:11:10,810 --> 00:11:12,460
+further and define the
+
+326
+00:11:12,470 --> 00:11:13,770
+cost function for the entire
+
+327
+00:11:13,780 --> 00:11:16,040
+training set, and we'll also
+
+328
+00:11:16,050 --> 00:11:17,380
+figure out a simpler way to
+
+329
+00:11:17,390 --> 00:11:19,670
+write it than we have been using so far.
+
+330
+00:11:19,680 --> 00:11:21,020
+And based on that will
+
+331
+00:11:21,030 --> 00:11:22,750
+work out gradient descent, and
+
+332
+00:11:22,760 --> 00:11:26,120
+that will give us our logistic regression algorithm.
+

@@ -1,0 +1,1672 @@
+1
+00:00:00,410 --> 00:00:01,810
+In the last video, we talked
+
+2
+00:00:01,820 --> 00:00:04,270
+about precision and recall as
+
+3
+00:00:04,280 --> 00:00:06,830
+an evaluation metric for classification
+
+4
+00:00:06,840 --> 00:00:09,520
+problems with skew classes.
+
+5
+00:00:09,530 --> 00:00:11,170
+For many applications, we'll want
+
+6
+00:00:11,180 --> 00:00:13,620
+to somehow control the trade
+
+7
+00:00:13,630 --> 00:00:16,490
+off between position and recall.
+
+8
+00:00:16,500 --> 00:00:17,460
+Let me tell you how
+
+9
+00:00:17,470 --> 00:00:19,380
+to do that and also show
+
+10
+00:00:19,390 --> 00:00:21,040
+you some, even more effective
+
+11
+00:00:21,050 --> 00:00:22,970
+ways to use precision and
+
+12
+00:00:22,980 --> 00:00:24,710
+recall as an evaluation
+
+13
+00:00:24,720 --> 00:00:28,610
+metric for learning algorithms.
+
+14
+00:00:28,620 --> 00:00:30,240
+As a reminder, here are the
+
+15
+00:00:30,250 --> 00:00:32,370
+definitions of precision and
+
+16
+00:00:32,380 --> 00:00:35,600
+recall from the previous video.
+
+17
+00:00:35,920 --> 00:00:38,670
+Let's continue our cancer classification
+
+18
+00:00:38,680 --> 00:00:40,360
+example, where y equals
+
+19
+00:00:40,370 --> 00:00:42,260
+one if the patient has cancer
+
+20
+00:00:42,270 --> 00:00:44,790
+and y equals zero otherwise.
+
+21
+00:00:44,800 --> 00:00:46,350
+And let's say we've trained in
+
+22
+00:00:46,360 --> 00:00:49,060
+logistic regression classifier, which outputs
+
+23
+00:00:49,070 --> 00:00:51,730
+probabilities between zero and one.
+
+24
+00:00:51,740 --> 00:00:53,000
+So, as usual, we're
+
+25
+00:00:53,010 --> 00:00:55,070
+going to predict one, y equals
+
+26
+00:00:55,080 --> 00:00:56,550
+one if h of x
+
+27
+00:00:56,560 --> 00:00:58,080
+is greater than or equal to
+
+28
+00:00:58,090 --> 00:01:00,130
+0.5 and predict zero if
+
+29
+00:01:00,140 --> 00:01:01,810
+the hypothesis outputs a value
+
+30
+00:01:01,820 --> 00:01:04,030
+less than 0.5 and this
+
+31
+00:01:04,040 --> 00:01:05,700
+classifier may give us
+
+32
+00:01:05,710 --> 00:01:09,930
+some value for precision and some value for recall.
+
+33
+00:01:10,420 --> 00:01:12,130
+But now, suppose we want
+
+34
+00:01:12,140 --> 00:01:13,720
+to predict that a patient
+
+35
+00:01:13,730 --> 00:01:15,740
+has cancer only if we're
+
+36
+00:01:15,750 --> 00:01:18,000
+very confident that they really do.
+
+37
+00:01:18,010 --> 00:01:19,130
+Because you know if you go
+
+38
+00:01:19,140 --> 00:01:20,470
+to a patient and you tell
+
+39
+00:01:20,480 --> 00:01:21,700
+them that they have cancer, it's
+
+40
+00:01:21,710 --> 00:01:22,670
+going to give them a huge
+
+41
+00:01:22,680 --> 00:01:24,210
+shock because this is seriously
+
+42
+00:01:24,220 --> 00:01:25,690
+bad news and they may
+
+43
+00:01:25,700 --> 00:01:27,650
+end up going through a pretty
+
+44
+00:01:27,660 --> 00:01:29,770
+painful treatment process and so on.
+
+45
+00:01:29,780 --> 00:01:30,970
+And so maybe we want to
+
+46
+00:01:30,980 --> 00:01:32,080
+tell someone that we think
+
+47
+00:01:32,090 --> 00:01:35,740
+they have cancer only if they're very confident.
+
+48
+00:01:36,230 --> 00:01:37,310
+One way to do this would
+
+49
+00:01:37,320 --> 00:01:39,110
+be to modify the algorithm, so
+
+50
+00:01:39,120 --> 00:01:40,700
+that instead of setting the
+
+51
+00:01:40,710 --> 00:01:42,810
+threshold at 0.5, we
+
+52
+00:01:42,820 --> 00:01:44,500
+might instead say that we'll
+
+53
+00:01:44,510 --> 00:01:46,320
+predict that y is equal
+
+54
+00:01:46,330 --> 00:01:48,690
+to 1, only if H of
+
+55
+00:01:48,700 --> 00:01:50,480
+x is greater than or equal to 0.7.
+
+56
+00:01:50,490 --> 00:01:52,350
+So this, I think
+
+57
+00:01:52,360 --> 00:01:53,500
+will tell someone if they
+
+58
+00:01:53,510 --> 00:01:54,800
+have cancer only if we think
+
+59
+00:01:54,810 --> 00:01:56,720
+there's a greater than, greater
+
+60
+00:01:56,730 --> 00:02:00,560
+than or equal to 70% that they have cancer.
+
+61
+00:02:00,830 --> 00:02:02,840
+And if you do this then
+
+62
+00:02:02,850 --> 00:02:03,830
+you're predicting some of this
+
+63
+00:02:03,840 --> 00:02:05,090
+cancer only when you're
+
+64
+00:02:05,100 --> 00:02:07,510
+more confident, and so
+
+65
+00:02:07,520 --> 00:02:09,910
+you end up with a classifier
+
+66
+00:02:09,920 --> 00:02:14,130
+that has higher precision, because
+
+67
+00:02:14,140 --> 00:02:15,440
+all the patients that you're
+
+68
+00:02:15,450 --> 00:02:16,850
+going to and say, you know,
+
+69
+00:02:16,860 --> 00:02:18,430
+we think you have cancer, all
+
+70
+00:02:18,440 --> 00:02:20,340
+of those patients are now
+
+71
+00:02:20,350 --> 00:02:21,710
+pretty, once they hear, pretty
+
+72
+00:02:21,720 --> 00:02:24,250
+confident they actually have cancer.
+
+73
+00:02:24,260 --> 00:02:26,140
+And so, a higher fraction of
+
+74
+00:02:26,150 --> 00:02:27,520
+the patients that you predict to
+
+75
+00:02:27,530 --> 00:02:29,270
+have cancer, will actually turn
+
+76
+00:02:29,280 --> 00:02:30,990
+out to have cancer, because in
+
+77
+00:02:31,000 --> 00:02:34,370
+making those predictions we are pretty confident.
+
+78
+00:02:34,510 --> 00:02:36,530
+But in contrast, this classifier will
+
+79
+00:02:36,540 --> 00:02:39,130
+have lower recall, because
+
+80
+00:02:39,140 --> 00:02:40,330
+now we are going
+
+81
+00:02:40,340 --> 00:02:41,730
+to make predictions, we are
+
+82
+00:02:41,740 --> 00:02:45,080
+going to predict y equals one, on a smaller number of patients.
+
+83
+00:02:45,090 --> 00:02:46,320
+Now we could even take this further.
+
+84
+00:02:46,330 --> 00:02:48,070
+Instead of setting the threshold
+
+85
+00:02:48,080 --> 00:02:49,480
+at 0.7, we can set
+
+86
+00:02:49,490 --> 00:02:52,420
+this at 0.9 and we'll predict
+
+87
+00:02:52,430 --> 00:02:53,310
+y1 only if we are
+
+88
+00:02:53,320 --> 00:02:55,370
+more than 90% certain that
+
+89
+00:02:55,380 --> 00:02:57,590
+the patient has cancer, and so,
+
+90
+00:02:57,600 --> 00:02:58,840
+you know, a large fraction that
+
+91
+00:02:58,850 --> 00:03:00,010
+those patients will turn out
+
+92
+00:03:00,020 --> 00:03:01,550
+to have cancer and so,
+
+93
+00:03:01,560 --> 00:03:04,150
+this is the high precision classifier
+
+94
+00:03:04,160 --> 00:03:06,180
+will have lower recall because we
+
+95
+00:03:06,190 --> 00:03:09,300
+want to correctly detect that those patients have cancer.
+
+96
+00:03:09,310 --> 00:03:12,090
+Now consider a different example.
+
+97
+00:03:12,100 --> 00:03:13,460
+Suppose we want to avoid
+
+98
+00:03:13,470 --> 00:03:15,950
+missing too many actual cases of cancer.
+
+99
+00:03:15,960 --> 00:03:18,590
+So we want to avoid the false negatives.
+
+100
+00:03:18,600 --> 00:03:20,340
+In particular, if a patient
+
+101
+00:03:20,350 --> 00:03:22,510
+actually has cancer, but we
+
+102
+00:03:22,520 --> 00:03:23,850
+fail to tell them that
+
+103
+00:03:23,860 --> 00:03:25,870
+they have cancer, then that can be really bad.
+
+104
+00:03:25,880 --> 00:03:27,750
+Because if we tell
+
+105
+00:03:27,760 --> 00:03:29,230
+a patient that they don't
+
+106
+00:03:29,240 --> 00:03:31,520
+have cancer then they are
+
+107
+00:03:31,530 --> 00:03:32,970
+not going to go for treatment and
+
+108
+00:03:32,980 --> 00:03:34,040
+if it turns out that they
+
+109
+00:03:34,050 --> 00:03:35,510
+have cancer or we fail
+
+110
+00:03:35,520 --> 00:03:36,650
+to tell them they have
+
+111
+00:03:36,660 --> 00:03:39,420
+cancer, well they may not get treated at all.
+
+112
+00:03:39,430 --> 00:03:40,630
+And so that would be
+
+113
+00:03:40,640 --> 00:03:42,070
+a really bad outcome because he
+
+114
+00:03:42,080 --> 00:03:43,130
+died because we told them
+
+115
+00:03:43,140 --> 00:03:44,660
+they don't have cancer they failed
+
+116
+00:03:44,670 --> 00:03:48,220
+to get treated, but it turns
+
+117
+00:03:48,230 --> 00:03:49,250
+out that they actually have cancer.
+
+118
+00:03:49,260 --> 00:03:50,350
+When in doubt, we want to
+
+119
+00:03:50,360 --> 00:03:52,710
+predict that y equals one.
+
+120
+00:03:52,720 --> 00:03:54,470
+So when in doubt, we want
+
+121
+00:03:54,480 --> 00:03:55,760
+to predict that they have
+
+122
+00:03:55,770 --> 00:03:57,100
+cancer so that at least
+
+123
+00:03:57,110 --> 00:03:59,390
+they look further into it
+
+124
+00:03:59,400 --> 00:04:01,170
+and this can get treated,
+
+125
+00:04:01,180 --> 00:04:04,250
+in case they do turn out to have cancer.
+
+126
+00:04:04,870 --> 00:04:06,740
+In this case, rather than setting
+
+127
+00:04:06,750 --> 00:04:09,090
+higher probability threshold, we might
+
+128
+00:04:09,100 --> 00:04:12,260
+instead take this value
+
+129
+00:04:12,270 --> 00:04:13,530
+and this then sets it to
+
+130
+00:04:13,540 --> 00:04:15,050
+a lower value, so maybe
+
+131
+00:04:15,060 --> 00:04:18,750
+0.3 like so.
+
+132
+00:04:18,760 --> 00:04:20,060
+By doing so, we're saying
+
+133
+00:04:20,070 --> 00:04:21,470
+that, you know what, if we
+
+134
+00:04:21,480 --> 00:04:22,210
+think there's more than a 30%
+
+135
+00:04:22,220 --> 00:04:24,880
+chance that they have caner, we better
+
+136
+00:04:24,890 --> 00:04:26,500
+be more conservative and tell
+
+137
+00:04:26,510 --> 00:04:27,840
+them that they may have cancer,
+
+138
+00:04:27,850 --> 00:04:31,100
+so they can seek treatment if necessary.
+
+139
+00:04:31,110 --> 00:04:32,780
+And in this case, what
+
+140
+00:04:32,790 --> 00:04:35,110
+we would have is going to
+
+141
+00:04:35,120 --> 00:04:39,540
+be a higher recall classifier,
+
+142
+00:04:39,550 --> 00:04:41,570
+because we're going to
+
+143
+00:04:41,580 --> 00:04:43,570
+be correctly flagging a higher
+
+144
+00:04:43,580 --> 00:04:44,790
+fraction of all of
+
+145
+00:04:44,800 --> 00:04:46,120
+the patients that actually do have
+
+146
+00:04:46,130 --> 00:04:47,730
+cancer, but we're going
+
+147
+00:04:47,740 --> 00:04:51,660
+to end up with lower precision,
+
+148
+00:04:51,670 --> 00:04:53,590
+because the higher fraction of
+
+149
+00:04:53,600 --> 00:04:54,810
+the patients that we said have
+
+150
+00:04:54,820 --> 00:04:59,030
+cancer, the higher fraction of them will turn out not to have cancer after all.
+
+151
+00:05:00,470 --> 00:05:01,390
+And by the way, just as an
+
+152
+00:05:01,400 --> 00:05:02,910
+aside, when I talk
+
+153
+00:05:02,920 --> 00:05:05,150
+about this to other
+
+154
+00:05:05,160 --> 00:05:08,380
+students up until before, it's pretty amazing.
+
+155
+00:05:08,390 --> 00:05:09,840
+Some of my say is
+
+156
+00:05:09,850 --> 00:05:12,540
+how I can tell the story both ways.
+
+157
+00:05:12,550 --> 00:05:14,440
+Why we might want to have
+
+158
+00:05:14,450 --> 00:05:16,120
+higher precision or higher recall
+
+159
+00:05:16,130 --> 00:05:19,330
+and the story actually seems to work both ways.
+
+160
+00:05:19,340 --> 00:05:20,660
+But I hope the details of
+
+161
+00:05:20,670 --> 00:05:22,980
+the algorithm is true and the
+
+162
+00:05:22,990 --> 00:05:24,770
+more general principle is, depending
+
+163
+00:05:24,780 --> 00:05:26,320
+on where you want, whether
+
+164
+00:05:26,330 --> 00:05:28,530
+you want high precision, lower recall
+
+165
+00:05:28,540 --> 00:05:30,440
+or higher recall, lower precision, you
+
+166
+00:05:30,450 --> 00:05:32,530
+can end up predicting y equals
+
+167
+00:05:32,540 --> 00:05:36,540
+one when each of x is greater than some threshold.
+
+168
+00:05:36,590 --> 00:05:39,870
+And so, in general, for
+
+169
+00:05:39,880 --> 00:05:41,530
+most crossfires, there is going
+
+170
+00:05:41,540 --> 00:05:45,350
+to be a trade off between precision and recall.
+
+171
+00:05:45,360 --> 00:05:47,040
+And as you vary the value
+
+172
+00:05:47,050 --> 00:05:49,020
+of this threshold, this value,
+
+173
+00:05:49,030 --> 00:05:49,900
+this special that I have
+
+174
+00:05:49,910 --> 00:05:51,780
+joined here, you can actually
+
+175
+00:05:51,790 --> 00:05:54,020
+plot us some curve that
+
+176
+00:05:54,030 --> 00:05:56,190
+trades off precision and
+
+177
+00:05:56,200 --> 00:05:58,400
+recall, where a value
+
+178
+00:05:58,410 --> 00:06:01,350
+up here, this would correspond
+
+179
+00:06:01,360 --> 00:06:02,760
+to a very high value of
+
+180
+00:06:02,770 --> 00:06:05,410
+the threshold, maybe threshold equals
+
+181
+00:06:05,420 --> 00:06:07,080
+over 0.99, so that say, predict
+
+182
+00:06:07,090 --> 00:06:08,470
+y equals 1 only where
+
+183
+00:06:08,480 --> 00:06:10,280
+no more than 99 percent
+
+184
+00:06:10,290 --> 00:06:11,940
+confident, at least 99
+
+185
+00:06:11,950 --> 00:06:13,750
+percent probability this once, so
+
+186
+00:06:13,760 --> 00:06:15,950
+that will be a precision relatively
+
+187
+00:06:15,960 --> 00:06:17,810
+low recall, whereas the point
+
+188
+00:06:17,820 --> 00:06:20,480
+down here will correspond to
+
+189
+00:06:20,490 --> 00:06:22,440
+a value of the threshold that's
+
+190
+00:06:22,450 --> 00:06:25,510
+much lower, maybe 0.01.
+
+191
+00:06:25,520 --> 00:06:27,110
+When in doubt at all, put down y1.
+
+192
+00:06:27,120 --> 00:06:28,510
+And if you do that, you
+
+193
+00:06:28,520 --> 00:06:29,750
+end up with a much
+
+194
+00:06:29,760 --> 00:06:33,230
+lower precision higher recall crossfire.
+
+195
+00:06:33,350 --> 00:06:35,420
+And as you vary the threshold, if
+
+196
+00:06:35,430 --> 00:06:36,990
+you want, you can actually trace
+
+197
+00:06:37,000 --> 00:06:38,920
+all the curve from your crossfire
+
+198
+00:06:38,930 --> 00:06:42,920
+to see the range of different values you can get for precision recall.
+
+199
+00:06:43,050 --> 00:06:44,220
+And by the way, the position
+
+200
+00:06:44,230 --> 00:06:47,250
+recall curve can look like many different shapes.
+
+201
+00:06:47,260 --> 00:06:50,540
+Sometimes it'll look this, sometimes
+
+202
+00:06:50,550 --> 00:06:52,320
+it'll look like that.
+
+203
+00:06:52,330 --> 00:06:53,600
+Now, there are many different possible
+
+204
+00:06:53,610 --> 00:06:55,010
+shapes in the position of recall
+
+205
+00:06:55,020 --> 00:06:57,980
+curve, depending on the details of the crossfire.
+
+206
+00:06:57,990 --> 00:06:59,890
+So this raises another
+
+207
+00:06:59,900 --> 00:07:01,860
+interesting question which is, is
+
+208
+00:07:01,870 --> 00:07:03,500
+there a way to choose
+
+209
+00:07:03,510 --> 00:07:06,800
+this threshold automatically?
+
+210
+00:07:06,810 --> 00:07:08,490
+Or, more generally, if we have
+
+211
+00:07:08,500 --> 00:07:10,140
+a few different algorithms or a
+
+212
+00:07:10,150 --> 00:07:12,480
+few different ideas for algorithms, how
+
+213
+00:07:12,490 --> 00:07:16,390
+do we compare different precision recall numbers?
+
+214
+00:07:16,400 --> 00:07:17,160
+completely.
+
+215
+00:07:17,170 --> 00:07:18,580
+Suppose we have three different
+
+216
+00:07:18,590 --> 00:07:20,110
+learning algorithms, or actually maybe
+
+217
+00:07:20,120 --> 00:07:22,240
+these are three different learning algorithms, may
+
+218
+00:07:22,250 --> 00:07:26,180
+be these are the same algorithm, but just with different values for the threshold.
+
+219
+00:07:26,190 --> 00:07:29,760
+How do we decide which of these algorithms is best?
+
+220
+00:07:29,770 --> 00:07:30,670
+One of the things we talked
+
+221
+00:07:30,680 --> 00:07:32,510
+about earlier is the importance
+
+222
+00:07:32,520 --> 00:07:35,870
+of a single real number evaluation metric.
+
+223
+00:07:35,880 --> 00:07:36,960
+And that is the idea of
+
+224
+00:07:36,970 --> 00:07:38,360
+having a number that just
+
+225
+00:07:38,370 --> 00:07:41,260
+tells you how well is your Crossfire doing.
+
+226
+00:07:41,270 --> 00:07:42,680
+But by switching to the precision
+
+227
+00:07:42,690 --> 00:07:44,570
+recall metric, we've actually lost that.
+
+228
+00:07:44,580 --> 00:07:47,180
+We now have two real numbers.
+
+229
+00:07:47,190 --> 00:07:48,760
+And so we often end up
+
+230
+00:07:48,770 --> 00:07:50,740
+facing situations, like if
+
+231
+00:07:50,750 --> 00:07:52,960
+we are trying to compare algorithm 1
+
+232
+00:07:52,970 --> 00:07:54,410
+to algorithm 2, we
+
+233
+00:07:54,420 --> 00:07:55,440
+end up asking ourselves, Is a
+
+234
+00:07:55,450 --> 00:07:56,690
+position of point five and
+
+235
+00:07:56,700 --> 00:07:57,820
+a recall of point four, well
+
+236
+00:07:57,830 --> 00:07:58,950
+is that better or worse than
+
+237
+00:07:58,960 --> 00:08:00,290
+a position of point seven or
+
+238
+00:08:00,300 --> 00:08:02,140
+a recall point one?
+
+239
+00:08:02,150 --> 00:08:03,340
+If every time you try
+
+240
+00:08:03,350 --> 00:08:04,880
+on a new algorithm you end up
+
+241
+00:08:04,890 --> 00:08:06,520
+having to sit around and think
+
+242
+00:08:06,530 --> 00:08:07,950
+well, maybe point five
+
+243
+00:08:07,960 --> 00:08:09,320
+point four, is better than point
+
+244
+00:08:09,330 --> 00:08:11,580
+seven point one, maybe not, I do not know.
+
+245
+00:08:11,590 --> 00:08:14,430
+If you end up having to sit around and think and make these decisions.
+
+246
+00:08:14,440 --> 00:08:16,020
+that really slows down your
+
+247
+00:08:16,030 --> 00:08:19,110
+decision making process, for what
+
+248
+00:08:19,120 --> 00:08:23,060
+changes are useful to incorporate into your algorithm.
+
+249
+00:08:23,070 --> 00:08:24,870
+Where as in contrast, if we
+
+250
+00:08:24,880 --> 00:08:27,210
+had a single real number evaluation metric,
+
+251
+00:08:27,220 --> 00:08:28,580
+like a number that just
+
+252
+00:08:28,590 --> 00:08:31,700
+tells us is either algorithm 1 or is algorithm 2 better.
+
+253
+00:08:31,710 --> 00:08:33,360
+That helps us much more
+
+254
+00:08:33,370 --> 00:08:34,940
+quickly decide which algorithm to
+
+255
+00:08:34,950 --> 00:08:36,440
+go with and helps us
+
+256
+00:08:36,450 --> 00:08:38,100
+as well to much more quickly
+
+257
+00:08:38,110 --> 00:08:39,820
+evaluate different changes that we
+
+258
+00:08:39,830 --> 00:08:42,040
+may be contemplating for an algorithm.
+
+259
+00:08:42,050 --> 00:08:43,470
+So, how can we get
+
+260
+00:08:43,480 --> 00:08:47,410
+a single real number evaluation metric.
+
+261
+00:08:47,480 --> 00:08:48,650
+One natural thing that you
+
+262
+00:08:48,660 --> 00:08:50,140
+might try is to look
+
+263
+00:08:50,150 --> 00:08:52,320
+at the average between precision and recall.
+
+264
+00:08:52,330 --> 00:08:53,560
+So using p and r
+
+265
+00:08:53,570 --> 00:08:55,000
+to denote position and recall, what
+
+266
+00:08:55,010 --> 00:08:56,510
+you could do is just compute the
+
+267
+00:08:56,520 --> 00:08:57,760
+average and look at what crossfire
+
+268
+00:08:57,770 --> 00:09:00,800
+has the highest average value.
+
+269
+00:09:00,840 --> 00:09:02,030
+But this turns out not to
+
+270
+00:09:02,040 --> 00:09:05,340
+be such a good solution because, similar
+
+271
+00:09:05,350 --> 00:09:07,850
+to the example we had earlier,
+
+272
+00:09:07,860 --> 00:09:09,060
+it turns out that if we
+
+273
+00:09:09,070 --> 00:09:11,300
+have a crossfire that predicts
+
+274
+00:09:11,310 --> 00:09:13,950
+y1 all the time, then if
+
+275
+00:09:13,960 --> 00:09:16,280
+you do that, you can get a very high recall.
+
+276
+00:09:16,290 --> 00:09:19,680
+That's you end up with a very low value of Vision.
+
+277
+00:09:19,690 --> 00:09:21,630
+Conversely,if you have a crossfire
+
+278
+00:09:21,640 --> 00:09:25,330
+that predicts y0 almost all
+
+279
+00:09:25,340 --> 00:09:26,480
+the time, that is, if
+
+280
+00:09:26,490 --> 00:09:28,900
+it predicts y one very sparingly.
+
+281
+00:09:28,910 --> 00:09:31,120
+This corresponds to setting
+
+282
+00:09:31,130 --> 00:09:34,480
+a very high threshold using the notation of previous line.
+
+283
+00:09:34,490 --> 00:09:35,660
+And then you can actually
+
+284
+00:09:35,670 --> 00:09:39,150
+end up with a very high precision with a very low recall.
+
+285
+00:09:39,280 --> 00:09:40,780
+So the two extremes of either
+
+286
+00:09:40,790 --> 00:09:42,530
+are a very high threshold or a
+
+287
+00:09:42,540 --> 00:09:44,160
+very low threshold, neither of
+
+288
+00:09:44,170 --> 00:09:46,270
+them would give it paticularary good crossfire.
+
+289
+00:09:46,280 --> 00:09:47,640
+And we recognize that is
+
+290
+00:09:47,650 --> 00:09:48,700
+by seeing if we end
+
+291
+00:09:48,710 --> 00:09:50,020
+up with a very low
+
+292
+00:09:50,030 --> 00:09:54,130
+precision or a very low recall.
+
+293
+00:09:54,140 --> 00:09:57,130
+And if you just take the average of people's ro2.
+
+294
+00:09:57,140 --> 00:09:59,750
+One does the example the average
+
+295
+00:09:59,760 --> 00:10:01,800
+is actually highest for algorithm 3.
+
+296
+00:10:01,810 --> 00:10:02,900
+Even though you can get
+
+297
+00:10:02,910 --> 00:10:04,500
+that sort of performance by predicting
+
+298
+00:10:04,510 --> 00:10:06,210
+y1 all the time.
+
+299
+00:10:06,220 --> 00:10:08,660
+And that is just not a very good classifier, right?
+
+300
+00:10:08,670 --> 00:10:09,770
+You predict y equals one all
+
+301
+00:10:09,780 --> 00:10:11,200
+the time is just not a
+
+302
+00:10:11,210 --> 00:10:14,990
+useful classifier if all it does is prints out y equals one.
+
+303
+00:10:15,000 --> 00:10:17,030
+And so algorithm one or algorithm
+
+304
+00:10:17,040 --> 00:10:18,270
+two would be more
+
+305
+00:10:18,280 --> 00:10:20,490
+useful than algorithm three,
+
+306
+00:10:20,500 --> 00:10:23,070
+but in this example algorithm three
+
+307
+00:10:23,080 --> 00:10:24,910
+has a higher average value of
+
+308
+00:10:24,920 --> 00:10:28,760
+precision recall than algorithm one and two.
+
+309
+00:10:28,770 --> 00:10:29,890
+So we usually think of
+
+310
+00:10:29,900 --> 00:10:32,270
+this average of precision recall
+
+311
+00:10:32,280 --> 00:10:36,500
+as not a particularly good way to evaluate our learning algorithm.
+
+312
+00:10:38,200 --> 00:10:40,020
+In contrast, there is a
+
+313
+00:10:40,030 --> 00:10:42,360
+different way of combining precision recall.
+
+314
+00:10:42,370 --> 00:10:46,410
+It is called the f score and it uses that formula.
+
+315
+00:10:46,420 --> 00:10:49,520
+So, in this example, here are the f scores.
+
+316
+00:10:49,530 --> 00:10:50,890
+And so we would tell
+
+317
+00:10:50,900 --> 00:10:52,260
+from these f scores and
+
+318
+00:10:52,270 --> 00:10:53,810
+we'll say algorithm 1 has
+
+319
+00:10:53,820 --> 00:10:55,610
+the highest f score.
+
+320
+00:10:55,620 --> 00:10:57,170
+Algorithm 2 has the second highest and
+
+321
+00:10:57,180 --> 00:10:59,030
+algorithm 3 has the lowest and so
+
+322
+00:10:59,040 --> 00:11:00,180
+you know, if we go by
+
+323
+00:11:00,190 --> 00:11:04,200
+the f score, we would pick probably algorithm of 1 over the others.
+
+324
+00:11:04,950 --> 00:11:06,300
+The f score, which is also
+
+325
+00:11:06,310 --> 00:11:07,660
+called the f1 score,
+
+326
+00:11:07,670 --> 00:11:09,330
+is usually written f1 score
+
+327
+00:11:09,340 --> 00:11:12,790
+that I have here, but often people will just say f score.
+
+328
+00:11:12,800 --> 00:11:15,070
+It determines use is a
+
+329
+00:11:15,080 --> 00:11:16,280
+little bit like taking the
+
+330
+00:11:16,290 --> 00:11:18,070
+average of precision of recall,
+
+331
+00:11:18,080 --> 00:11:19,570
+but it gives the lower
+
+332
+00:11:19,580 --> 00:11:21,050
+value of precision and recall
+
+333
+00:11:21,060 --> 00:11:23,940
+- whichever it is - it gives it a higher weight.
+
+334
+00:11:23,950 --> 00:11:25,350
+And so, you see in
+
+335
+00:11:25,360 --> 00:11:27,240
+the numerator here that the
+
+336
+00:11:27,250 --> 00:11:30,450
+f score takes a product or position of equal.
+
+337
+00:11:30,460 --> 00:11:32,040
+And so, if either position is
+
+338
+00:11:32,050 --> 00:11:33,170
+0 or recall is equal to
+
+339
+00:11:33,180 --> 00:11:34,590
+0, the f score will
+
+340
+00:11:34,600 --> 00:11:35,680
+be equal to o. So
+
+341
+00:11:35,690 --> 00:11:38,840
+in that sense, it kind of combines position and recall.
+
+342
+00:11:38,850 --> 00:11:40,290
+but for the f score to
+
+343
+00:11:40,300 --> 00:11:42,090
+be large, both position
+
+344
+00:11:42,100 --> 00:11:44,480
+and recall have to be pretty large.
+
+345
+00:11:44,490 --> 00:11:45,940
+I should say that there are
+
+346
+00:11:45,950 --> 00:11:48,050
+many different possible formulas for
+
+347
+00:11:48,060 --> 00:11:50,030
+combining position and recall.
+
+348
+00:11:50,040 --> 00:11:51,720
+This f score formula is
+
+349
+00:11:51,730 --> 00:11:53,630
+really, maybe just one out
+
+350
+00:11:53,640 --> 00:11:54,870
+of a much larger number of
+
+351
+00:11:54,880 --> 00:11:57,260
+possibilities, but historically or
+
+352
+00:11:57,270 --> 00:11:58,450
+traditionally this is what
+
+353
+00:11:58,460 --> 00:12:01,540
+people in machine learning use.
+
+354
+00:12:01,550 --> 00:12:02,950
+And the term f score, you
+
+355
+00:12:02,960 --> 00:12:04,380
+know, it doesn't really mean
+
+356
+00:12:04,390 --> 00:12:05,680
+anything, so don't worry about
+
+357
+00:12:05,690 --> 00:12:08,500
+why it's called f score or f1 score.
+
+358
+00:12:08,510 --> 00:12:11,360
+But this usually gives
+
+359
+00:12:11,370 --> 00:12:12,590
+you the effect that you want
+
+360
+00:12:12,600 --> 00:12:14,360
+because if either position is
+
+361
+00:12:14,370 --> 00:12:15,460
+0 or recall is 0, this
+
+362
+00:12:15,470 --> 00:12:17,600
+gives you a very low f score.
+
+363
+00:12:17,610 --> 00:12:18,760
+And so, to have a
+
+364
+00:12:18,770 --> 00:12:20,270
+high f score you can't
+
+365
+00:12:20,280 --> 00:12:22,220
+need a preserve quality 1
+
+366
+00:12:22,230 --> 00:12:25,000
+and completely if p
+
+367
+00:12:25,010 --> 00:12:26,440
+equals zero or i
+
+368
+00:12:26,450 --> 00:12:28,640
+equals zero then this
+
+369
+00:12:28,650 --> 00:12:33,040
+gives you the f score equals zero.
+
+370
+00:12:33,430 --> 00:12:34,810
+Where as a perfect f
+
+371
+00:12:34,820 --> 00:12:36,540
+score, so if position equals
+
+372
+00:12:36,550 --> 00:12:38,930
+one and  [xx] equals
+
+373
+00:12:38,940 --> 00:12:40,570
+one that would give
+
+374
+00:12:40,580 --> 00:12:43,670
+you an f score that's
+
+375
+00:12:43,680 --> 00:12:45,090
+equal to one times one
+
+376
+00:12:45,100 --> 00:12:46,790
+over two times two.
+
+377
+00:12:46,800 --> 00:12:47,890
+So the f score will be
+
+378
+00:12:47,900 --> 00:12:48,670
+equal to 1 if you
+
+379
+00:12:48,680 --> 00:12:51,270
+have perfect precision and perfect recall.
+
+380
+00:12:51,280 --> 00:12:53,510
+And intermediate values between 0
+
+381
+00:12:53,520 --> 00:12:55,200
+and 1, this usually gives a
+
+382
+00:12:55,210 --> 00:12:58,740
+reasonable rank ordering of different classifiers.
+
+383
+00:13:00,000 --> 00:13:01,360
+So this video we talked
+
+384
+00:13:01,370 --> 00:13:03,750
+about the notion of trading
+
+385
+00:13:03,760 --> 00:13:06,130
+off between position and recall
+
+386
+00:13:06,140 --> 00:13:07,530
+and how we can vary the
+
+387
+00:13:07,540 --> 00:13:09,240
+threshold that we use to
+
+388
+00:13:09,250 --> 00:13:10,530
+decide whether to predict y
+
+389
+00:13:10,540 --> 00:13:12,170
+equals one or y equals zero.
+
+390
+00:13:12,180 --> 00:13:14,060
+This threshold that says do
+
+391
+00:13:14,070 --> 00:13:15,490
+we need to be at least
+
+392
+00:13:15,500 --> 00:13:17,190
+seventy percent confident or ninety
+
+393
+00:13:17,200 --> 00:13:19,640
+percent confident or whatever before
+
+394
+00:13:19,650 --> 00:13:21,250
+we predict y equals one and
+
+395
+00:13:21,260 --> 00:13:22,940
+by varying the threshold you
+
+396
+00:13:22,950 --> 00:13:24,290
+can control a trade off
+
+397
+00:13:24,300 --> 00:13:26,420
+between precision and recall.
+
+398
+00:13:26,430 --> 00:13:27,410
+Ross talked about the f score
+
+399
+00:13:27,420 --> 00:13:29,630
+which takes precision and recall
+
+400
+00:13:29,640 --> 00:13:31,260
+and gives you a single
+
+401
+00:13:31,270 --> 00:13:33,310
+real number evaluation metric.
+
+402
+00:13:33,320 --> 00:13:34,730
+And of course, if your goal is
+
+403
+00:13:34,740 --> 00:13:36,870
+to automatically set that
+
+404
+00:13:36,880 --> 00:13:38,580
+threshold, to decide which
+
+405
+00:13:38,590 --> 00:13:39,510
+one of y equals 1 or
+
+406
+00:13:39,520 --> 00:13:41,410
+y equals 0, one pretty
+
+407
+00:13:41,420 --> 00:13:42,730
+reasonable way to do that
+
+408
+00:13:42,740 --> 00:13:44,630
+would also be to try
+
+409
+00:13:44,640 --> 00:13:46,920
+a range of different values of thresholds.
+
+410
+00:13:46,930 --> 00:13:48,180
+So, try a range of values
+
+411
+00:13:48,190 --> 00:13:50,610
+of thresholds and evaluate these
+
+412
+00:13:50,620 --> 00:13:51,780
+different threshold on say your
+
+413
+00:13:51,790 --> 00:13:53,830
+cross validation set, and then
+
+414
+00:13:53,840 --> 00:13:56,570
+to pick whatever value of threshold
+
+415
+00:13:56,580 --> 00:13:58,050
+gives you the highest f score
+
+416
+00:13:58,060 --> 00:14:00,120
+on your cross validation setting.
+
+417
+00:14:00,130 --> 00:14:01,710
+That would be a pretty reasonable way
+
+418
+00:14:01,720 --> 00:14:06,120
+to automatically chose the threshold for your crossfire as well.
+

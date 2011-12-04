@@ -1,0 +1,576 @@
+1
+00:00:00,090 --> 00:00:01,190
+In this video, I'd like to
+
+2
+00:00:01,200 --> 00:00:03,380
+show you a fun and historically
+
+3
+00:00:03,390 --> 00:00:06,710
+important example of Neural Network Learning.
+
+4
+00:00:06,720 --> 00:00:09,860
+Of using a Neural Network for autonomous driving
+
+5
+00:00:09,870 --> 00:00:13,800
+that is getting a car to learn to drive itself.
+
+6
+00:00:13,810 --> 00:00:15,120
+The video that I
+
+7
+00:00:15,130 --> 00:00:16,810
+showed a minute, was something
+
+8
+00:00:16,820 --> 00:00:18,460
+that I've gotten from Dean Pomilieu,
+
+9
+00:00:18,470 --> 00:00:20,250
+who Colleague who works
+
+10
+00:00:20,260 --> 00:00:22,130
+out in Carnegie Mellon University out
+
+11
+00:00:22,140 --> 00:00:24,450
+on the east coast of the United States,
+
+12
+00:00:24,460 --> 00:00:25,340
+and in part of the
+
+13
+00:00:25,350 --> 00:00:28,220
+video you see visualizations like
+
+14
+00:00:28,230 --> 00:00:30,070
+this, and what I should tell you what the visualization
+
+15
+00:00:30,080 --> 00:00:31,250
+looks like before starting to
+
+16
+00:00:31,260 --> 00:00:33,160
+video.
+
+Down here
+
+17
+00:00:33,170 --> 00:00:35,090
+on the lower left is the
+
+18
+00:00:35,100 --> 00:00:36,740
+view seen by the car
+
+19
+00:00:36,750 --> 00:00:37,830
+of what's in front of it
+
+20
+00:00:37,840 --> 00:00:39,120
+and so here you know, you will kind
+
+21
+00:00:39,130 --> 00:00:40,440
+of see you know, a road that's
+
+22
+00:00:40,450 --> 00:00:41,460
+maybe going a bit to
+
+23
+00:00:41,470 --> 00:00:42,660
+the left and going a little bit to
+
+24
+00:00:42,670 --> 00:00:45,240
+the right, and up
+
+25
+00:00:45,250 --> 00:00:47,810
+here on top, this
+
+26
+00:00:47,820 --> 00:00:49,930
+first horizontal bar shows the
+
+27
+00:00:49,940 --> 00:00:51,740
+direction selected by the
+
+28
+00:00:51,750 --> 00:00:53,570
+human driver and is the
+
+29
+00:00:53,580 --> 00:00:55,170
+location of this bright
+
+30
+00:00:55,180 --> 00:00:57,090
+white band that shows the
+
+31
+00:00:57,100 --> 00:00:58,680
+steering direction selected by the
+
+32
+00:00:58,690 --> 00:01:00,670
+human driver, where, you
+
+33
+00:01:00,680 --> 00:01:02,140
+know, here, far to the left
+
+34
+00:01:02,150 --> 00:01:03,900
+corresponds to steering hard left;
+
+35
+00:01:03,910 --> 00:01:05,440
+here corresponds to steering hard
+
+36
+00:01:05,450 --> 00:01:06,970
+to the right; and so
+
+37
+00:01:06,980 --> 00:01:08,490
+this location, which is a
+
+38
+00:01:08,500 --> 00:01:09,710
+little bit to the left,
+
+39
+00:01:09,720 --> 00:01:10,880
+a little bit left of
+
+40
+00:01:10,890 --> 00:01:12,270
+center, means that the human
+
+41
+00:01:12,280 --> 00:01:13,510
+driver, at this point, was
+
+42
+00:01:13,520 --> 00:01:16,010
+steering slightly to the left. 
+
+A
+
+43
+00:01:16,020 --> 00:01:17,870
+nd this second part here
+
+44
+00:01:17,880 --> 00:01:19,130
+corresponds to the steering
+
+45
+00:01:19,140 --> 00:01:20,860
+direction selected by the
+
+46
+00:01:20,870 --> 00:01:22,100
+learning algorithm; and again, the
+
+47
+00:01:22,110 --> 00:01:23,300
+location of this sort
+
+48
+00:01:23,310 --> 00:01:24,840
+of white band, means the
+
+49
+00:01:24,850 --> 00:01:27,030
+neural network was here, selecting
+
+50
+00:01:27,040 --> 00:01:28,370
+a steering direction just slightly to
+
+51
+00:01:28,380 --> 00:01:29,960
+the left and in fact,
+
+52
+00:01:29,970 --> 00:01:31,380
+before the neural network starts
+
+53
+00:01:31,390 --> 00:01:33,160
+learning initially, you
+
+54
+00:01:33,170 --> 00:01:35,160
+see that the network outputs a
+
+55
+00:01:35,170 --> 00:01:36,570
+grey band, like a
+
+56
+00:01:36,580 --> 00:01:38,880
+grey uniform, grey band throughout
+
+57
+00:01:38,890 --> 00:01:40,730
+this region, so the uniform
+
+58
+00:01:40,740 --> 00:01:42,320
+grey fuzz corresponds to the
+
+59
+00:01:42,330 --> 00:01:44,440
+neural network having been randomly
+
+60
+00:01:44,450 --> 00:01:46,500
+initialized, and initially having
+
+61
+00:01:46,510 --> 00:01:48,010
+no idea how to
+
+62
+00:01:48,020 --> 00:01:50,040
+drive the car, or initially having
+
+63
+00:01:50,050 --> 00:01:52,580
+no idea what direction to steer in.
+
+64
+00:01:52,590 --> 00:01:53,850
+And it's only after it's learned
+
+65
+00:01:53,860 --> 00:01:55,690
+for a while that it will then start
+
+66
+00:01:55,700 --> 00:01:57,760
+to output like a solid white
+
+67
+00:01:57,770 --> 00:01:58,790
+band in just a small
+
+68
+00:01:58,800 --> 00:02:00,690
+part of the region corresponding
+
+69
+00:02:00,700 --> 00:02:02,950
+to choosing a particular steering direction.
+
+70
+00:02:02,960 --> 00:02:05,330
+And that corresponds to when a neural network.
+
+71
+00:02:05,340 --> 00:02:08,070
+Becomes more confident in selecting, you know,
+
+72
+00:02:08,080 --> 00:02:10,210
+a and in one
+
+73
+00:02:10,220 --> 00:02:11,910
+location rather than outputting
+
+74
+00:02:11,920 --> 00:02:13,290
+a sort of light gray
+
+75
+00:02:13,300 --> 00:02:14,960
+fuzz, but instead outputting
+
+76
+00:02:14,970 --> 00:02:17,400
+a white band that's
+
+77
+00:02:17,410 --> 00:02:20,720
+more constantly selecting one steering direction.
+
+78
+00:02:21,340 --> 00:02:22,330
+Alban is a system
+
+79
+00:02:22,340 --> 00:02:25,270
+of artificial neural networks, that learns to steer
+
+80
+00:02:25,280 --> 00:02:27,580
+by watching a person drive. Alban
+
+81
+00:02:27,590 --> 00:02:29,660
+is designed to control the
+
+82
+00:02:29,670 --> 00:02:31,910
+tube a modified army
+
+83
+00:02:31,920 --> 00:02:33,010
+Humvee who could put
+
+84
+00:02:33,020 --> 00:02:36,150
+sensors, computers and actuators
+
+85
+00:02:36,160 --> 00:02:39,300
+for autonomous navigation experiments.
+
+86
+00:02:41,190 --> 00:02:42,740
+The initial spec in
+
+87
+00:02:42,750 --> 00:02:46,230
+configuring Alban is training in
+
+88
+00:02:46,770 --> 00:02:48,570
+the training the person drives
+
+89
+00:02:48,580 --> 00:02:52,140
+to be a car while Alban watches.
+
+90
+00:02:55,810 --> 00:02:58,680
+Once every two seconds, Alban
+
+91
+00:02:58,690 --> 00:03:00,310
+digitizes a video image
+
+92
+00:03:00,320 --> 00:03:04,760
+of the road ahead, and records the person's steering direction.
+
+93
+00:03:11,790 --> 00:03:13,550
+This training image is reduced
+
+94
+00:03:13,560 --> 00:03:15,460
+in resolution to 30 by
+
+95
+00:03:15,470 --> 00:03:17,580
+32 pixels and provided
+
+96
+00:03:17,590 --> 00:03:20,600
+as input to Alban's three-layer
+
+97
+00:03:21,920 --> 00:03:22,450
+network.
+
+98
+00:03:22,460 --> 00:03:25,360
+Using the back propagation learning algorithm; Alban
+
+99
+00:03:25,370 --> 00:03:26,930
+is training to output the same
+
+100
+00:03:26,940 --> 00:03:28,520
+steering direction as the
+
+101
+00:03:28,530 --> 00:03:31,470
+human driver for that image
+
+102
+00:03:33,450 --> 00:03:37,470
+Initially, the network's steering response is random.
+
+103
+00:03:43,930 --> 00:03:45,090
+After about two minutes of
+
+104
+00:03:45,100 --> 00:03:47,070
+training, the network learns
+
+105
+00:03:47,080 --> 00:03:49,100
+to accurately imitate the steering
+
+106
+00:03:49,110 --> 00:03:57,930
+reactions of the
+
+107
+00:03:58,670 --> 00:04:03,700
+human driver. This same
+
+108
+00:04:03,710 --> 00:04:07,940
+training procedure is repeated for other road types.
+
+109
+00:04:09,940 --> 00:04:11,760
+After the networks have been trained the
+
+110
+00:04:11,770 --> 00:04:13,190
+operator pushes the run
+
+111
+00:04:13,200 --> 00:04:15,040
+switch and often begins
+
+112
+00:04:15,050 --> 00:04:20,860
+driving. 12 times
+
+113
+00:04:20,870 --> 00:04:23,080
+per second, Alban digitizes an
+
+114
+00:04:23,090 --> 00:04:26,630
+image and feeds it to its neural networks.
+
+115
+00:04:33,210 --> 00:04:35,920
+Each network, running in parallel,
+
+116
+00:04:35,930 --> 00:04:39,640
+produces a steering direction and a measure of it's
+
+117
+00:04:40,050 --> 00:04:41,550
+confidence in its response.
+
+118
+00:04:46,610 --> 00:04:50,130
+The steering direction
+
+119
+00:04:50,140 --> 00:04:52,330
+from the most confident network.
+
+120
+00:04:52,340 --> 00:04:53,990
+In this case, the network trained
+
+121
+00:04:54,000 --> 00:04:58,140
+for the one-lane road is used to control the vehicle.
+
+122
+00:05:04,750 --> 00:05:08,300
+Suddenly, an intersection appears ahead
+
+123
+00:05:08,310 --> 00:05:10,850
+of the vehicle.
+
+124
+00:05:23,090 --> 00:05:25,670
+As the vehicle approaches the intersection,
+
+125
+00:05:25,680 --> 00:05:29,240
+the confidence of the one-lane network decreases.
+
+126
+00:05:38,070 --> 00:05:40,120
+As it crosses the intersection, and
+
+127
+00:05:40,130 --> 00:05:41,430
+the two-lane road ahead comes
+
+128
+00:05:41,440 --> 00:05:46,110
+into view, the confidence of the two-lane network rises.
+
+129
+00:05:51,260 --> 00:05:53,410
+When it's confidence rises, the two-lane
+
+130
+00:05:53,420 --> 00:05:55,040
+network is selected to steer,
+
+131
+00:05:55,050 --> 00:05:57,370
+safely guiding the vehicle
+
+132
+00:05:57,380 --> 00:06:00,530
+into it's lane, on the two-lane road.
+
+133
+00:06:05,400 --> 00:06:07,000
+So that was autonomous
+
+134
+00:06:07,010 --> 00:06:10,140
+driving using a neural network. Of course, there are more
+
+135
+00:06:10,150 --> 00:06:11,900
+recently more modern attempts
+
+136
+00:06:11,910 --> 00:06:14,170
+to do autonomous driving in a few properties, in
+
+137
+00:06:14,180 --> 00:06:16,260
+the U.S., in Europe, and so on.
+
+138
+00:06:16,270 --> 00:06:18,390
+They're giving more robust driving
+
+139
+00:06:18,400 --> 00:06:20,070
+controllers than this, but I
+
+140
+00:06:20,080 --> 00:06:22,030
+think it's still pretty remarkable and
+
+141
+00:06:22,040 --> 00:06:23,680
+pretty amazing how a simple
+
+142
+00:06:23,690 --> 00:06:26,130
+neural network trained with back-propagation
+
+143
+00:06:26,140 --> 00:06:30,490
+can, you know, actually learn to drive a car somewhat well.
+

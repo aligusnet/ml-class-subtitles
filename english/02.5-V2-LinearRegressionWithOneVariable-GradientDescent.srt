@@ -1,0 +1,1348 @@
+1
+00:00:00,350 --> 00:00:01,940
+We've previously defined the cost
+
+2
+00:00:01,950 --> 00:00:03,740
+function J.  In this video,
+
+3
+00:00:03,750 --> 00:00:04,500
+I want to tell you about
+
+4
+00:00:04,510 --> 00:00:06,750
+an algorithm, called gradient descent,
+
+5
+00:00:06,760 --> 00:00:07,820
+for minimizing the cost
+
+6
+00:00:07,830 --> 00:00:09,660
+function J.  It turns
+
+7
+00:00:09,670 --> 00:00:10,860
+out a gradient descent is a
+
+8
+00:00:10,870 --> 00:00:12,910
+more general algorithm and is
+
+9
+00:00:12,920 --> 00:00:15,000
+used not only in linear regression.
+
+10
+00:00:15,010 --> 00:00:16,130
+It's actually used all over the
+
+11
+00:00:16,140 --> 00:00:18,420
+place in machines or anything and
+
+12
+00:00:18,430 --> 00:00:20,220
+later in the class we'll use gradient descent
+
+13
+00:00:20,230 --> 00:00:21,960
+to minimize other functions as
+
+14
+00:00:21,970 --> 00:00:23,120
+well not just the cost
+
+15
+00:00:23,130 --> 00:00:26,120
+function j for linear regression.
+
+16
+00:00:26,130 --> 00:00:27,270
+So, in this video, we'll just
+
+17
+00:00:27,280 --> 00:00:28,630
+hop on gradient descent for
+
+18
+00:00:28,640 --> 00:00:31,040
+minimizing some arbitrary function
+
+19
+00:00:31,050 --> 00:00:32,520
+J and then in
+
+20
+00:00:32,530 --> 00:00:33,710
+later videos we'll take those
+
+21
+00:00:33,720 --> 00:00:36,500
+algorithms and apply specifically to
+
+22
+00:00:36,510 --> 00:00:37,680
+the cost function J that
+
+23
+00:00:37,690 --> 00:00:40,450
+we had to find for the linear regression.
+
+24
+00:00:42,210 --> 00:00:43,980
+So, here's the problem set up.
+
+25
+00:00:43,990 --> 00:00:45,110
+Going to see that we have
+
+26
+00:00:45,120 --> 00:00:47,320
+some function j of theta(
+
+27
+00:00:47,330 --> 00:00:48,930
+0), theta(1), maybe it's
+
+28
+00:00:48,940 --> 00:00:50,960
+a cost function from linear regression,
+
+29
+00:00:50,970 --> 00:00:52,050
+maybe it's some other function we
+
+30
+00:00:52,060 --> 00:00:53,510
+want to minimize and
+
+31
+00:00:53,520 --> 00:00:54,430
+we want to come up with
+
+32
+00:00:54,440 --> 00:00:56,570
+an algorithm for minimizing
+
+33
+00:00:56,580 --> 00:00:57,790
+that as a function of j
+
+34
+00:00:57,800 --> 00:00:59,210
+of theta 0 of theta 1.
+
+35
+00:00:59,220 --> 00:01:00,720
+So, just as a sign,
+
+36
+00:01:00,730 --> 00:01:02,420
+it turns out that gradient
+
+37
+00:01:02,430 --> 00:01:05,700
+descent actually Applies to more general functions.
+
+38
+00:01:05,710 --> 00:01:07,060
+So imagine if you have
+
+39
+00:01:07,070 --> 00:01:08,190
+a function that's a function
+
+40
+00:01:08,200 --> 00:01:09,630
+of J as theta 0, theta
+
+41
+00:01:09,640 --> 00:01:11,200
+1, theta 2, up
+
+42
+00:01:11,210 --> 00:01:12,680
+to say, sub theta n,
+
+43
+00:01:12,690 --> 00:01:15,350
+and you want to minimize
+
+44
+00:01:15,530 --> 00:01:17,780
+theta zero, minimise over theta
+
+45
+00:01:17,790 --> 00:01:19,440
+zero up to theta
+
+46
+00:01:19,450 --> 00:01:21,300
+n of this j
+
+47
+00:01:21,310 --> 00:01:22,720
+of theta zero up to
+
+48
+00:01:22,730 --> 00:01:24,310
+theta n.
+
+  It turns out
+
+49
+00:01:24,320 --> 00:01:25,520
+gradient descent is an algorithm
+
+50
+00:01:25,530 --> 00:01:28,190
+for solving this general problem,
+
+51
+00:01:28,200 --> 00:01:29,860
+but for the sake of brevity,
+
+52
+00:01:29,870 --> 00:01:31,900
+for the sake of succinctness
+
+53
+00:01:31,910 --> 00:01:33,360
+of notation, I'm just going
+
+54
+00:01:33,370 --> 00:01:34,960
+to pretend I have only two
+
+55
+00:01:34,970 --> 00:01:38,630
+parameters throughout the rest of this video.
+
+56
+00:01:38,640 --> 00:01:40,370
+Here's the idea for gradient descent.
+
+57
+00:01:40,380 --> 00:01:41,320
+What we're going to do is
+
+58
+00:01:41,330 --> 00:01:42,710
+we 're going to start off
+
+59
+00:01:42,720 --> 00:01:46,810
+with some initial guesses for theta 0 and theta 1.
+
+60
+00:01:46,820 --> 00:01:48,140
+Doesn't really matter what they
+
+61
+00:01:48,150 --> 00:01:49,660
+are, but a common choice would
+
+62
+00:01:49,670 --> 00:01:51,690
+be a reset theta 0
+
+63
+00:01:51,700 --> 00:01:54,170
+to state zero and set theta 1 to zero.
+
+64
+00:01:54,180 --> 00:01:55,940
+Just initialize them to zero.
+
+65
+00:01:55,950 --> 00:01:56,970
+What we're going to do
+
+66
+00:01:56,980 --> 00:01:58,800
+in gradient descent is we'll keep
+
+67
+00:01:58,810 --> 00:02:00,490
+changing theta zero and
+
+68
+00:02:00,500 --> 00:02:02,280
+zeta one a little bit, to
+
+69
+00:02:02,290 --> 00:02:03,960
+try to reduce j or
+
+70
+00:02:03,970 --> 00:02:05,560
+theta zero and theta one, so
+
+71
+00:02:05,570 --> 00:02:07,140
+hopefully we wind up at
+
+72
+00:02:07,150 --> 00:02:09,520
+a minimum or a local minimum
+
+73
+00:02:09,860 --> 00:02:11,510
+So, let's see what,
+
+74
+00:02:11,520 --> 00:02:14,660
+lets see pictures of what gradient descent does.
+
+75
+00:02:14,670 --> 00:02:16,760
+Let's say you tried to minimize these functions.
+
+76
+00:02:16,770 --> 00:02:17,700
+Notice the axes.
+
+77
+00:02:17,710 --> 00:02:19,400
+This is theta 0, theta
+
+78
+00:02:19,410 --> 00:02:22,650
+1 on the horizontal axes and J is the vertical axis.
+
+79
+00:02:22,660 --> 00:02:23,560
+And so the height of the
+
+80
+00:02:23,570 --> 00:02:27,650
+surface shows J. And we want to minimize this function.
+
+81
+00:02:27,660 --> 00:02:29,070
+So we're going to start off
+
+82
+00:02:29,080 --> 00:02:31,730
+at with theta 0, theta 1 at some point.
+
+83
+00:02:31,740 --> 00:02:33,780
+So imagine, picking some value
+
+84
+00:02:33,790 --> 00:02:35,240
+for theta 0, theta 1, and
+
+85
+00:02:35,250 --> 00:02:37,200
+that corresponds to starting at
+
+86
+00:02:37,210 --> 00:02:38,900
+some point on the surface
+
+87
+00:02:38,910 --> 00:02:40,100
+of this function.
+
+88
+00:02:40,110 --> 00:02:43,000
+So whatever value of theta 0, theta 1, gives you some point here.
+
+89
+00:02:43,010 --> 00:02:44,870
+I didn't initialize them to
+
+90
+00:02:44,880 --> 00:02:46,420
+0 - 0, but sometimes you can
+
+91
+00:02:46,430 --> 00:02:49,530
+initialize to other values as well.
+
+92
+00:02:49,540 --> 00:02:50,950
+Now, I want you to imagine
+
+93
+00:02:50,960 --> 00:02:54,190
+that this figure shows a hole.
+
+94
+00:02:54,200 --> 00:02:55,890
+Imagine this is the landscape
+
+95
+00:02:55,900 --> 00:02:58,320
+of some grassy park, with
+
+96
+00:02:58,330 --> 00:02:59,860
+two hills like so, and
+
+97
+00:02:59,870 --> 00:03:01,590
+I want you to imagine
+
+98
+00:03:01,600 --> 00:03:03,760
+that you are physically standing at
+
+99
+00:03:03,770 --> 00:03:07,850
+that point on this little red hill in your park.
+
+100
+00:03:07,950 --> 00:03:09,200
+In grading descent what we're going
+
+101
+00:03:09,210 --> 00:03:11,510
+to do is spin 360
+
+102
+00:03:11,520 --> 00:03:12,850
+degrees around, just look
+
+103
+00:03:12,860 --> 00:03:14,670
+all around us and ask
+
+104
+00:03:14,680 --> 00:03:16,180
+If I were to take a
+
+105
+00:03:16,190 --> 00:03:17,450
+little baby step in some
+
+106
+00:03:17,460 --> 00:03:19,780
+direction and I want
+
+107
+00:03:19,790 --> 00:03:21,000
+to go down hill as quickly
+
+108
+00:03:21,010 --> 00:03:23,360
+as possible, what direction do
+
+109
+00:03:23,370 --> 00:03:24,780
+I take that little baby step
+
+110
+00:03:24,790 --> 00:03:25,990
+in if I want to go
+
+111
+00:03:26,000 --> 00:03:27,210
+down, if I want to
+
+112
+00:03:27,220 --> 00:03:30,610
+physically walk down this hill as rapidly as possible?
+
+113
+00:03:30,680 --> 00:03:32,000
+It turns out that if
+
+114
+00:03:32,010 --> 00:03:33,040
+you are standing at that point on
+
+115
+00:03:33,050 --> 00:03:34,380
+a hill and you look all
+
+116
+00:03:34,390 --> 00:03:35,800
+around, you find that the
+
+117
+00:03:35,810 --> 00:03:37,030
+best direction to take a
+
+118
+00:03:37,040 --> 00:03:40,910
+little step downhill is roughly that direction.
+
+119
+00:03:40,920 --> 00:03:42,140
+OK?
+
+120
+00:03:42,150 --> 00:03:43,110
+And now you're at this new
+
+121
+00:03:43,120 --> 00:03:44,720
+point on your hill,
+
+122
+00:03:44,730 --> 00:03:45,890
+and you're going to again look all
+
+123
+00:03:45,900 --> 00:03:47,620
+around and then say, "What
+
+124
+00:03:47,630 --> 00:03:49,240
+direction should I step in
+
+125
+00:03:49,250 --> 00:03:52,060
+order to take a little baby step downhill?"
+
+126
+00:03:52,070 --> 00:03:53,380
+And if you do that and take
+
+127
+00:03:53,390 --> 00:03:57,090
+another step, you take a step in that direction.
+
+128
+00:03:57,130 --> 00:03:58,140
+And then you keep going.
+
+129
+00:03:58,150 --> 00:03:59,350
+You know, from this new point you
+
+130
+00:03:59,360 --> 00:04:01,220
+look around and decide what
+
+131
+00:04:01,230 --> 00:04:03,910
+direction will take you downhill most quickly.
+
+132
+00:04:03,920 --> 00:04:05,740
+Take another step, another step
+
+133
+00:04:05,750 --> 00:04:08,230
+and so on, until you converge
+
+134
+00:04:08,240 --> 00:04:11,840
+to this local minimum down here.
+
+135
+00:04:11,850 --> 00:04:14,560
+Gradient descent is an interesting property.
+
+136
+00:04:14,780 --> 00:04:16,260
+This first time we ran
+
+137
+00:04:16,270 --> 00:04:17,670
+gradient descent, we were starting
+
+138
+00:04:17,680 --> 00:04:22,190
+at this point over here Starting at that point over here.
+
+139
+00:04:22,200 --> 00:04:24,850
+Now imagine, we initialize gradient
+
+140
+00:04:24,860 --> 00:04:26,710
+descent just a couple of steps to the right.
+
+141
+00:04:26,720 --> 00:04:28,350
+Imagine we initialize gradient
+
+142
+00:04:28,360 --> 00:04:30,920
+descent with that point on the upper right.
+
+143
+00:04:30,930 --> 00:04:32,620
+If you were to repeat this process
+
+144
+00:04:32,630 --> 00:04:33,830
+and stop at that point, look
+
+145
+00:04:33,840 --> 00:04:35,260
+all around, take a little
+
+146
+00:04:35,270 --> 00:04:36,980
+step in the direction of steepest
+
+147
+00:04:36,990 --> 00:04:38,640
+descent, you would do
+
+148
+00:04:38,650 --> 00:04:39,850
+that, then look around and
+
+149
+00:04:39,860 --> 00:04:43,550
+take another step and so on.
+
+150
+00:04:43,920 --> 00:04:45,330
+And if you started just a
+
+151
+00:04:45,340 --> 00:04:46,940
+couple steps to the right,
+
+152
+00:04:46,950 --> 00:04:48,270
+gradient descent would have taken
+
+153
+00:04:48,280 --> 00:04:50,460
+you to this second
+
+154
+00:04:50,470 --> 00:04:54,090
+local optimum over on the right.
+
+155
+00:04:54,120 --> 00:04:55,530
+So, if you had started
+
+156
+00:04:55,540 --> 00:04:58,810
+at this first point, you would have wound up at this local optimum.
+
+157
+00:04:58,820 --> 00:05:00,100
+But if you started just a little
+
+158
+00:05:00,110 --> 00:05:02,170
+bit, slightly different location, you
+
+159
+00:05:02,180 --> 00:05:06,070
+would have wound up at a very different local optimum.
+
+160
+00:05:06,080 --> 00:05:07,250
+And, this is a property of
+
+161
+00:05:07,260 --> 00:05:10,720
+gradient descent that we'll say a little more about later.
+
+162
+00:05:10,730 --> 00:05:14,870
+So, that's the intuition in pictures.
+
+163
+00:05:14,880 --> 00:05:17,120
+Let's look at the map.
+
+164
+00:05:17,280 --> 00:05:21,070
+This is the defintion of the gradient descent algorithm.
+
+165
+00:05:21,080 --> 00:05:23,740
+We are going to just repeatedly do
+
+166
+00:05:23,750 --> 00:05:26,490
+this until convergence.
+
+167
+00:05:26,500 --> 00:05:28,590
+We are going to update my parameter,
+
+168
+00:05:28,600 --> 00:05:31,190
+theta j, by taking
+
+169
+00:05:31,200 --> 00:05:32,890
+theta j and subtracting from
+
+170
+00:05:32,900 --> 00:05:35,580
+it alpha times this term over here.
+
+171
+00:05:35,590 --> 00:05:36,430
+Okay?
+
+172
+00:05:36,440 --> 00:05:37,120
+So let's see.
+
+173
+00:05:37,130 --> 00:05:40,820
+The law of details in this equations so let me unpack some of it.
+
+174
+00:05:40,830 --> 00:05:43,500
+First this notation here,
+
+175
+00:05:43,510 --> 00:05:45,230
+colon equals, we're going
+
+176
+00:05:45,240 --> 00:05:47,070
+to use colon equals to denote
+
+177
+00:05:47,080 --> 00:05:51,270
+assignment, the assignment operator,
+
+178
+00:05:51,310 --> 00:05:52,930
+so concretely if I write
+
+179
+00:05:52,940 --> 00:05:57,710
+A:B, what this means
+
+180
+00:05:57,750 --> 00:06:00,480
+take the value in B
+
+181
+00:06:00,490 --> 00:06:01,960
+and use it to overwrite whether
+
+182
+00:06:01,970 --> 00:06:03,000
+the value is A.  
+
+So, this
+
+183
+00:06:03,010 --> 00:06:04,380
+means you'll set A to be
+
+184
+00:06:04,390 --> 00:06:06,210
+equal to the value of B.
+
+185
+00:06:06,220 --> 00:06:07,370
+It's assignment, and I can
+
+186
+00:06:07,380 --> 00:06:09,900
+also do a colon equals A + 1.
+
+187
+00:06:09,910 --> 00:06:13,880
+This means take A and increase its value by 1.
+
+188
+00:06:13,890 --> 00:06:16,300
+Whereas in contrast, if
+
+189
+00:06:16,310 --> 00:06:19,120
+I use the equals sign,
+
+190
+00:06:19,130 --> 00:06:20,360
+if we write AB, then this
+
+191
+00:06:20,370 --> 00:06:23,380
+is a truth assertion.
+
+192
+00:06:25,360 --> 00:06:27,560
+So if I write AB, then
+
+193
+00:06:27,570 --> 00:06:29,050
+I'm asserting that the value
+
+194
+00:06:29,060 --> 00:06:30,170
+of A equals to the
+
+195
+00:06:30,180 --> 00:06:31,430
+value of B. So
+
+196
+00:06:31,440 --> 00:06:34,330
+the left hand side, that's a computer operation.
+
+197
+00:06:34,340 --> 00:06:36,390
+We've set the value of A to B value.
+
+198
+00:06:36,400 --> 00:06:38,190
+The right hand side, this is asserting.
+
+199
+00:06:38,200 --> 00:06:41,920
+I'm just making a claim that the values of A and B are the same.
+
+200
+00:06:41,930 --> 00:06:43,610
+And so, whereas if we
+
+201
+00:06:43,620 --> 00:06:46,270
+write A:A+1, that increment A by 1.
+
+202
+00:06:46,280 --> 00:06:47,910
+Hopefully, I won't ever write
+
+203
+00:06:47,920 --> 00:06:50,730
+AA+1, because that's just wrong, right?
+
+204
+00:06:50,740 --> 00:06:52,220
+A and A+1 can never
+
+205
+00:06:52,230 --> 00:06:54,960
+be equal to the same values, okay?
+
+206
+00:06:54,970 --> 00:06:57,800
+So that's the first part of the definition.
+
+207
+00:06:59,060 --> 00:07:02,390
+This alpha here
+
+208
+00:07:02,400 --> 00:07:05,110
+is a number that
+
+209
+00:07:05,120 --> 00:07:08,990
+is called the learning rate, and
+
+210
+00:07:09,000 --> 00:07:10,860
+what alpha does, is it
+
+211
+00:07:10,870 --> 00:07:12,720
+basically controls how big
+
+212
+00:07:12,730 --> 00:07:15,170
+a step we take downhill with gradient descent.
+
+213
+00:07:15,180 --> 00:07:17,290
+So if alpha is very large,
+
+214
+00:07:17,300 --> 00:07:18,800
+then that corresponds to a very
+
+215
+00:07:18,810 --> 00:07:20,470
+aggressive gradient descent procedure
+
+216
+00:07:20,480 --> 00:07:21,430
+where we are trying to take huge
+
+217
+00:07:21,440 --> 00:07:22,930
+steps downhill, and if
+
+218
+00:07:22,940 --> 00:07:24,250
+alpha is very small then we're
+
+219
+00:07:24,260 --> 00:07:26,700
+taking little, little baby steps downhill.
+
+220
+00:07:26,710 --> 00:07:27,920
+And I'll come back and say
+
+221
+00:07:27,930 --> 00:07:29,790
+more about this later, about how
+
+222
+00:07:29,800 --> 00:07:32,100
+to set alpha and so on.
+
+223
+00:07:32,110 --> 00:07:34,920
+And finally, this term here.
+
+224
+00:07:35,440 --> 00:07:37,200
+That's a derivative term.
+
+225
+00:07:37,210 --> 00:07:38,150
+I don't want to talk about
+
+226
+00:07:38,160 --> 00:07:40,340
+it right now, but I will
+
+227
+00:07:40,350 --> 00:07:42,320
+derive this derivative term and
+
+228
+00:07:42,330 --> 00:07:45,230
+tell you exactly what this is later.
+
+229
+00:07:45,240 --> 00:07:46,450
+Some of you will
+
+230
+00:07:46,460 --> 00:07:48,140
+be more familiar with calculus than
+
+231
+00:07:48,150 --> 00:07:49,390
+others, but even if you
+
+232
+00:07:49,400 --> 00:07:51,470
+aren't familar with calculus, don't worry about it.
+
+233
+00:07:51,480 --> 00:07:55,260
+I'll tell you what you need to know about this term here.
+
+234
+00:07:55,370 --> 00:07:57,300
+Now, there's one more
+
+235
+00:07:57,310 --> 00:07:59,180
+subtlety about gradient descents, which
+
+236
+00:07:59,190 --> 00:08:01,040
+is in gradient descent
+
+237
+00:08:01,050 --> 00:08:04,070
+we are going to update theta(0) and theta(1).
+
+238
+00:08:04,080 --> 00:08:07,480
+So, this update takes place where J0 and J1.
+
+239
+00:08:07,490 --> 00:08:11,820
+So, update theta(0) and update theta(1).
+
+240
+00:08:11,830 --> 00:08:13,690
+And the subtlety of how
+
+241
+00:08:13,700 --> 00:08:17,190
+you create gradient descentfor this expression,
+
+242
+00:08:17,560 --> 00:08:20,420
+for this update equation, you
+
+243
+00:08:20,430 --> 00:08:28,620
+want to simultaneously update theta
+
+244
+00:08:28,630 --> 00:08:32,350
+zero and theta one.
+
+245
+00:08:32,360 --> 00:08:33,360
+What I mean by that,
+
+246
+00:08:33,370 --> 00:08:34,760
+is that in this equation we're
+
+247
+00:08:34,770 --> 00:08:36,760
+going to update theta zero :
+
+248
+00:08:36,770 --> 00:08:38,510
+theta zero minus something and update
+
+249
+00:08:38,520 --> 00:08:39,970
+theta one : theta one minus
+
+250
+00:08:39,980 --> 00:08:41,380
+something and the way
+
+251
+00:08:41,390 --> 00:08:43,190
+to implement this is you
+
+252
+00:08:43,200 --> 00:08:44,670
+should compute the right
+
+253
+00:08:44,680 --> 00:08:47,300
+hand side, compute that
+
+254
+00:08:47,310 --> 00:08:49,680
+thing for theta zero
+
+255
+00:08:49,690 --> 00:08:51,680
+and theta one, and then
+
+256
+00:08:51,690 --> 00:08:53,060
+simultaneously, at the same
+
+257
+00:08:53,070 --> 00:08:55,640
+time, update theta zero and theta one.
+
+258
+00:08:55,650 --> 00:08:57,570
+And so let me say
+
+259
+00:08:57,580 --> 00:08:59,460
+what I mean by that, this
+
+260
+00:08:59,470 --> 00:09:01,180
+is a correct implantion of create
+
+261
+00:09:01,190 --> 00:09:03,190
+a descend meaning simultaneous updates.
+
+262
+00:09:03,200 --> 00:09:05,070
+I'm going to set ten zero equals
+
+263
+00:09:05,080 --> 00:09:06,510
+that, set ten one equals that
+
+264
+00:09:06,520 --> 00:09:07,630
+so basic compute the right hand
+
+265
+00:09:07,640 --> 00:09:09,190
+sides and then having
+
+266
+00:09:09,200 --> 00:09:10,390
+computed the right hand side
+
+267
+00:09:10,400 --> 00:09:11,280
+and store them in two variables
+
+268
+00:09:11,290 --> 00:09:12,870
+ten zero and ten one and
+
+269
+00:09:12,880 --> 00:09:14,390
+you're going to update theta zero
+
+270
+00:09:14,400 --> 00:09:18,200
+and theta one simultaneously, that's
+
+271
+00:09:18,500 --> 00:09:19,810
+a correct implantation.
+
+272
+00:09:19,820 --> 00:09:21,010
+In contrast, here's an incorrect
+
+273
+00:09:21,020 --> 00:09:22,620
+implantion that does not do
+
+274
+00:09:22,630 --> 00:09:24,860
+a simultaneous update.
+
+275
+00:09:24,870 --> 00:09:27,470
+So in this incorrect implantation
+
+276
+00:09:27,480 --> 00:09:29,800
+we compute Ten zero and
+
+277
+00:09:29,810 --> 00:09:31,470
+then we update theta zero, then
+
+278
+00:09:31,480 --> 00:09:34,700
+we compute ten one and we update ten one.
+
+279
+00:09:34,710 --> 00:09:36,330
+And the difference between the right
+
+280
+00:09:36,340 --> 00:09:37,400
+hand side and left hand side
+
+281
+00:09:37,410 --> 00:09:39,430
+computations is that if
+
+282
+00:09:39,440 --> 00:09:40,770
+you look down here, you look
+
+283
+00:09:40,780 --> 00:09:42,350
+at this step, if by
+
+284
+00:09:42,360 --> 00:09:44,070
+this time you have already updated
+
+285
+00:09:44,080 --> 00:09:46,490
+theta zero, then you
+
+286
+00:09:46,500 --> 00:09:48,210
+would be using the new value
+
+287
+00:09:48,220 --> 00:09:50,550
+of theta zero to compute
+
+288
+00:09:50,560 --> 00:09:52,520
+this derivative term and so
+
+289
+00:09:52,530 --> 00:09:53,840
+this gives you a different
+
+290
+00:09:53,850 --> 00:09:56,540
+value of ten one than
+
+291
+00:09:56,550 --> 00:09:59,060
+the left hand side because you've
+
+292
+00:09:59,070 --> 00:10:00,170
+now plugged in the new
+
+293
+00:10:00,180 --> 00:10:01,410
+value of theta zero into
+
+294
+00:10:01,420 --> 00:10:03,320
+this equation, and so this
+
+295
+00:10:03,330 --> 00:10:05,760
+on the right hand side is not a correct implementation.
+
+296
+00:10:05,770 --> 00:10:08,320
+So I don't
+
+297
+00:10:08,330 --> 00:10:11,100
+want to say why you need to do the simultaneous updates.
+
+298
+00:10:11,110 --> 00:10:13,920
+It turns out that the way
+
+299
+00:10:13,930 --> 00:10:15,940
+gradient descent is usually implemented,
+
+300
+00:10:15,950 --> 00:10:18,480
+it actually turns out
+
+301
+00:10:18,490 --> 00:10:19,990
+to be more natural to implement
+
+302
+00:10:20,000 --> 00:10:22,090
+the simultaneous updates, and when
+
+303
+00:10:22,100 --> 00:10:23,280
+people talk about gradient
+
+304
+00:10:23,290 --> 00:10:26,130
+descent, they always mean simultaneous updates.
+
+305
+00:10:26,140 --> 00:10:28,400
+implement the non-simultaneous update,
+
+306
+00:10:28,410 --> 00:10:30,040
+it turns out it will probably
+
+307
+00:10:30,050 --> 00:10:31,970
+work anyway, but this algorithm
+
+308
+00:10:31,980 --> 00:10:33,180
+on the right is not what
+
+309
+00:10:33,190 --> 00:10:34,030
+people refer to as gradient
+
+310
+00:10:34,040 --> 00:10:37,490
+descend and this is some other algorithm with different properties.
+
+311
+00:10:37,740 --> 00:10:40,040
+For various reasons this
+
+312
+00:10:40,050 --> 00:10:41,770
+can behave in slightly stranger ways
+
+313
+00:10:41,780 --> 00:10:43,210
+and what you should do
+
+314
+00:10:43,220 --> 00:10:47,890
+is really update the simultaneous updates of gradient descent.
+
+315
+00:10:47,900 --> 00:10:51,330
+So that's the outline of the gradient descent algorithim.
+
+316
+00:10:51,340 --> 00:10:52,960
+In the next video we're going
+
+317
+00:10:52,970 --> 00:10:54,740
+to go into the details
+
+318
+00:10:54,750 --> 00:10:58,570
+of the derivative term, which I wrote out but didn't really define.
+
+319
+00:10:58,580 --> 00:11:00,150
+If you have taken a calculus
+
+320
+00:11:00,160 --> 00:11:01,380
+class before and if you
+
+321
+00:11:01,390 --> 00:11:03,180
+are familiar with partial derivatives
+
+322
+00:11:03,190 --> 00:11:04,810
+and derivatives it turns out
+
+323
+00:11:04,820 --> 00:11:06,190
+that's exactly what that derivative
+
+324
+00:11:06,200 --> 00:11:08,700
+is, but in case you
+
+325
+00:11:08,710 --> 00:11:11,830
+aren't familiar with calculus, don't worry about it.
+
+326
+00:11:11,840 --> 00:11:12,960
+The next book here will give you
+
+327
+00:11:12,970 --> 00:11:14,500
+all the intutions and tell you
+
+328
+00:11:14,510 --> 00:11:15,960
+everything you need to know
+
+329
+00:11:15,970 --> 00:11:17,890
+to compute that derivative term,
+
+330
+00:11:17,900 --> 00:11:19,340
+even if you haven't seen calculus
+
+331
+00:11:19,350 --> 00:11:20,600
+or even if you haven't seen partial
+
+332
+00:11:20,610 --> 00:11:23,560
+derivatives before and
+
+333
+00:11:23,570 --> 00:11:24,700
+with that with the next
+
+334
+00:11:24,710 --> 00:11:25,740
+video hopefully you will be
+
+335
+00:11:25,750 --> 00:11:27,070
+able to give you all the
+
+336
+00:11:27,080 --> 00:11:30,400
+intuition you need to apply gradient descent
+

@@ -1,0 +1,724 @@
+1
+00:00:00,620 --> 00:00:04,080
+You now know about linear regression and gradient descent.
+
+2
+00:00:04,090 --> 00:00:05,210
+The plan from here on out
+
+3
+00:00:05,220 --> 00:00:06,190
+is to tell you about a
+
+4
+00:00:06,200 --> 00:00:08,920
+couple important extensions of these ideas.
+
+5
+00:00:08,930 --> 00:00:11,190
+Concretely here they are.
+
+6
+00:00:11,200 --> 00:00:13,010
+First, it turns out that in
+
+7
+00:00:13,020 --> 00:00:14,760
+order to solve this minimization
+
+8
+00:00:14,770 --> 00:00:16,440
+problem, turns out there's
+
+9
+00:00:16,450 --> 00:00:17,970
+an algorithm for solving for
+
+10
+00:00:17,980 --> 00:00:19,630
+theta 0 and theta 1
+
+11
+00:00:19,640 --> 00:00:21,420
+exactly without needing an
+
+12
+00:00:21,430 --> 00:00:23,320
+iterative algorithm without needing
+
+13
+00:00:23,330 --> 00:00:24,900
+this algorithm like gradient descent that
+
+14
+00:00:24,910 --> 00:00:29,030
+we had to innovate you know, multiple times over.
+
+15
+00:00:29,040 --> 00:00:30,410
+So, it turns out there are
+
+16
+00:00:30,420 --> 00:00:31,920
+advantages and disadvantages of this
+
+17
+00:00:31,930 --> 00:00:33,340
+algorithm that you just saw
+
+18
+00:00:33,350 --> 00:00:34,730
+for theta 0 and theta
+
+19
+00:00:34,740 --> 00:00:37,050
+1 so basically just in one shot.
+
+20
+00:00:37,060 --> 00:00:38,190
+One advantage is that there
+
+21
+00:00:38,200 --> 00:00:39,770
+is no longer a learning rate
+
+22
+00:00:39,780 --> 00:00:40,880
+alpha that you need to
+
+23
+00:00:40,890 --> 00:00:42,510
+worry about, and set, and
+
+24
+00:00:42,520 --> 00:00:45,870
+so it can be much faster for some problems.
+
+25
+00:00:45,880 --> 00:00:49,040
+We'll see about advantages and disadvantages later.
+
+26
+00:00:49,050 --> 00:00:50,130
+Second we are going to talk
+
+27
+00:00:50,140 --> 00:00:51,690
+about algorithms for learning
+
+28
+00:00:51,700 --> 00:00:53,900
+with a larger number of features.
+
+29
+00:00:53,910 --> 00:00:55,530
+So, so far we've been
+
+30
+00:00:55,540 --> 00:00:57,270
+learning with just one feature,
+
+31
+00:00:57,280 --> 00:01:00,170
+the size of the house and using that to predict the price.
+
+32
+00:01:00,180 --> 00:01:01,320
+So we are trying to take x
+
+33
+00:01:01,330 --> 00:01:03,320
+and using that to predict y.
+
+34
+00:01:03,330 --> 00:01:05,060
+Before other learning problems,
+
+35
+00:01:05,070 --> 00:01:07,170
+we may have a larger number of features.
+
+36
+00:01:07,180 --> 00:01:08,820
+So for example let's say that
+
+37
+00:01:08,830 --> 00:01:10,320
+you know not only the size,
+
+38
+00:01:10,330 --> 00:01:11,880
+but also the number of bedrooms,
+
+39
+00:01:11,890 --> 00:01:13,700
+the number of floors and the
+
+40
+00:01:13,710 --> 00:01:15,240
+age of home of these
+
+41
+00:01:15,250 --> 00:01:16,330
+houses and when you want
+
+42
+00:01:16,340 --> 00:01:19,480
+to use that to predict the price of the houses.
+
+43
+00:01:19,490 --> 00:01:21,250
+In that case, maybe we'll
+
+44
+00:01:21,260 --> 00:01:25,790
+call these features x1, x2, x3, and x4.
+
+45
+00:01:25,800 --> 00:01:27,350
+So now we have
+
+46
+00:01:27,360 --> 00:01:28,930
+four features, want to
+
+47
+00:01:28,940 --> 00:01:30,700
+use these four features to predict
+
+48
+00:01:30,710 --> 00:01:33,010
+why the price of the house.
+
+49
+00:01:33,020 --> 00:01:34,010
+It turns out with all of
+
+50
+00:01:34,020 --> 00:01:35,320
+these features, and four of
+
+51
+00:01:35,330 --> 00:01:36,730
+them in this case, it turns out
+
+52
+00:01:36,740 --> 00:01:39,200
+that with multiple features, it
+
+53
+00:01:39,210 --> 00:01:42,670
+becomes harder to plot or to visualize the data.
+
+54
+00:01:42,680 --> 00:01:44,240
+So for example, you know,
+
+55
+00:01:44,250 --> 00:01:46,790
+we try to plot to this type of data set.
+
+56
+00:01:46,800 --> 00:01:48,050
+Maybe we'll have the vertical
+
+57
+00:01:48,060 --> 00:01:50,390
+axis be the price, and
+
+58
+00:01:50,400 --> 00:01:51,680
+maybe we can have one
+
+59
+00:01:51,690 --> 00:01:53,950
+axis here and another
+
+60
+00:01:53,960 --> 00:01:55,470
+one here with this axis
+
+61
+00:01:55,480 --> 00:01:57,100
+is the size of the house
+
+62
+00:01:57,110 --> 00:01:59,260
+and that axis is the number of bedrooms.
+
+63
+00:01:59,270 --> 00:02:00,770
+Yeah.
+
+64
+00:02:00,960 --> 00:02:02,850
+But this is just plotting my
+
+65
+00:02:02,860 --> 00:02:04,310
+first two features, size and
+
+66
+00:02:04,320 --> 00:02:06,050
+number of bedrooms and when we
+
+67
+00:02:06,060 --> 00:02:08,170
+have these additional features, I
+
+68
+00:02:08,180 --> 00:02:09,180
+just don't know how the plot
+
+69
+00:02:09,190 --> 00:02:10,520
+all of these data right, because
+
+70
+00:02:10,530 --> 00:02:13,450
+I need a quarter inch figure.
+
+71
+00:02:13,460 --> 00:02:15,040
+I don't really know how to plot.
+
+72
+00:02:15,050 --> 00:02:16,150
+You know, something more than like
+
+73
+00:02:16,160 --> 00:02:19,410
+a three dimensional figure over here.
+
+74
+00:02:19,420 --> 00:02:20,450
+Also, as you can tell, the
+
+75
+00:02:20,460 --> 00:02:23,180
+notation starts to get a little more complicated, right?
+
+76
+00:02:23,190 --> 00:02:24,840
+So, rather than just having X
+
+77
+00:02:24,850 --> 00:02:26,440
+our features, we now have
+
+78
+00:02:26,450 --> 00:02:28,590
+X1 through X4,
+
+79
+00:02:28,600 --> 00:02:30,260
+and we're using these
+
+80
+00:02:30,270 --> 00:02:34,680
+subscripts to denote my four different features.
+
+81
+00:02:34,880 --> 00:02:36,600
+It turns out the best notation
+
+82
+00:02:36,610 --> 00:02:38,190
+to keep all of this straight
+
+83
+00:02:38,200 --> 00:02:39,310
+and to understand what's going on
+
+84
+00:02:39,320 --> 00:02:40,630
+with the data even when we
+
+85
+00:02:40,640 --> 00:02:41,930
+don't quite know how to plot
+
+86
+00:02:41,940 --> 00:02:42,950
+it, it turns out that the
+
+87
+00:02:42,960 --> 00:02:46,610
+best notation is the notation of linear algebra.
+
+88
+00:02:46,620 --> 00:02:48,860
+Linear algebra gives a notation
+
+89
+00:02:48,870 --> 00:02:49,780
+and a set of things, or a
+
+90
+00:02:49,790 --> 00:02:51,140
+set of operations, that we can
+
+91
+00:02:51,150 --> 00:02:53,390
+do with matrices and vectors.
+
+92
+00:02:53,400 --> 00:02:55,450
+For example, here's a matrix
+
+93
+00:02:55,460 --> 00:02:57,220
+where the columns of
+
+94
+00:02:57,230 --> 00:02:59,250
+this matrix are, the
+
+95
+00:02:59,260 --> 00:03:00,700
+first column is the size
+
+96
+00:03:00,710 --> 00:03:02,770
+of the 4 houses, the second
+
+97
+00:03:02,780 --> 00:03:04,190
+column is the number of bedrooms,
+
+98
+00:03:04,200 --> 00:03:07,390
+that's the number of floors and that's the age of the home.
+
+99
+00:03:07,400 --> 00:03:08,560
+And so the matrix is this
+
+100
+00:03:08,570 --> 00:03:10,480
+block of numbers that lets
+
+101
+00:03:10,490 --> 00:03:11,770
+me take all of my data,
+
+102
+00:03:11,780 --> 00:03:13,600
+all of my axis and all
+
+103
+00:03:13,610 --> 00:03:16,480
+of my features and organize them into.
+
+104
+00:03:16,490 --> 00:03:19,330
+Instead of one big block of numbers like that.
+
+105
+00:03:19,340 --> 00:03:20,980
+And here is what
+
+106
+00:03:20,990 --> 00:03:22,370
+we call a vector in linear
+
+107
+00:03:22,380 --> 00:03:23,610
+algebra, where the four
+
+108
+00:03:23,620 --> 00:03:25,610
+numbers here are the
+
+109
+00:03:25,620 --> 00:03:26,780
+prices of the four
+
+110
+00:03:26,790 --> 00:03:30,210
+houses that we saw on the previous slide.
+
+111
+00:03:30,220 --> 00:03:31,690
+So, in the next
+
+112
+00:03:31,700 --> 00:03:32,980
+set of videos, what I'm
+
+113
+00:03:32,990 --> 00:03:36,680
+going to do is do a quick review of linear algebra.
+
+114
+00:03:36,690 --> 00:03:38,190
+If you haven't seen matrices and
+
+115
+00:03:38,200 --> 00:03:39,590
+vectors before, so if all
+
+116
+00:03:39,600 --> 00:03:41,800
+of this, everything on this slide is brand new to you.
+
+117
+00:03:41,810 --> 00:03:43,270
+Or if you see
+
+118
+00:03:43,280 --> 00:03:44,600
+linear algebra before but it's
+
+119
+00:03:44,610 --> 00:03:45,670
+been a while so you aren't
+
+120
+00:03:45,680 --> 00:03:47,600
+completely familiar with it anymore,
+
+121
+00:03:47,610 --> 00:03:48,800
+then please watch the next set
+
+122
+00:03:48,810 --> 00:03:50,350
+of videos and I'll quickly
+
+123
+00:03:50,360 --> 00:03:51,690
+review the linear algebra you
+
+124
+00:03:51,700 --> 00:03:53,600
+need in order to implement
+
+125
+00:03:53,610 --> 00:03:57,020
+and use the more powerful versions of linear regression.
+
+126
+00:03:57,030 --> 00:03:58,680
+It turns out linear algebra isn't
+
+127
+00:03:58,690 --> 00:04:00,630
+just useful for linear regression
+
+128
+00:04:00,640 --> 00:04:02,490
+models, but these ideas
+
+129
+00:04:02,500 --> 00:04:04,160
+of matrices and vectors will
+
+130
+00:04:04,170 --> 00:04:05,820
+be useful for helping us
+
+131
+00:04:05,830 --> 00:04:07,450
+to implement and actually get
+
+132
+00:04:07,460 --> 00:04:10,480
+computationally efficient implementations for
+
+133
+00:04:10,490 --> 00:04:13,880
+many later Mission Learning models as well.
+
+134
+00:04:13,890 --> 00:04:15,020
+And as you can tell,
+
+135
+00:04:15,030 --> 00:04:16,670
+these sorts of matrices and vectors
+
+136
+00:04:16,680 --> 00:04:18,590
+will give us an efficient way to
+
+137
+00:04:18,600 --> 00:04:20,590
+start to organize a light
+
+138
+00:04:20,600 --> 00:04:23,770
+amounts of data when working with larger training sets.
+
+139
+00:04:23,780 --> 00:04:25,460
+So, in case you're
+
+140
+00:04:25,470 --> 00:04:27,490
+not familiar with linear
+
+141
+00:04:27,500 --> 00:04:29,230
+algebra, or in case linear algebra seems
+
+142
+00:04:29,240 --> 00:04:31,060
+like a complicated little scary
+
+143
+00:04:31,070 --> 00:04:33,300
+concept, if you've never seen it before.
+
+144
+00:04:33,310 --> 00:04:34,300
+Don't worry about it.
+
+145
+00:04:34,310 --> 00:04:35,670
+It turns out in order to
+
+146
+00:04:35,680 --> 00:04:37,650
+implement machinery algorithms, we need
+
+147
+00:04:37,660 --> 00:04:39,330
+only the very, very basics of
+
+148
+00:04:39,340 --> 00:04:41,210
+linear algebra and you'll be
+
+149
+00:04:41,220 --> 00:04:42,620
+able to very quickly pick
+
+150
+00:04:42,630 --> 00:04:45,820
+up everything you need to know in the next few videos.
+
+151
+00:04:47,200 --> 00:04:49,810
+Concretely, to decide
+
+152
+00:04:49,820 --> 00:04:51,080
+if you should watch the
+
+153
+00:04:51,090 --> 00:04:55,420
+next set of videos, here are the topics I'm am going to cover.
+
+154
+00:04:55,430 --> 00:04:56,900
+Talk about what are matrices and vectors
+
+155
+00:04:56,910 --> 00:04:58,500
+and talk about how to add,
+
+156
+00:04:58,510 --> 00:05:00,260
+subtract, multiply matrices and vectors
+
+157
+00:05:00,270 --> 00:05:04,050
+and talk about the ideas of matrix inverses and transposes.
+
+158
+00:05:04,060 --> 00:05:05,510
+And so if you sure
+
+159
+00:05:05,520 --> 00:05:06,370
+if you should watch the next set
+
+160
+00:05:06,380 --> 00:05:09,100
+of videos, take a look at these two things.
+
+161
+00:05:09,110 --> 00:05:10,710
+So, if you think you know
+
+162
+00:05:10,720 --> 00:05:12,390
+how to compute this quantity, that's
+
+163
+00:05:12,400 --> 00:05:14,770
+is a matrix transfer times another matrix.
+
+164
+00:05:14,780 --> 00:05:17,210
+You think you know, if you've seen this stuff before.
+
+165
+00:05:17,220 --> 00:05:18,870
+If you know how to compute the
+
+166
+00:05:18,880 --> 00:05:20,080
+inverse of a matrix, times a
+
+167
+00:05:20,090 --> 00:05:22,390
+vector, minus a number times in the vector.
+
+168
+00:05:22,400 --> 00:05:23,990
+If these two things look completely
+
+169
+00:05:24,000 --> 00:05:26,170
+familiar to you, then you
+
+170
+00:05:26,180 --> 00:05:28,470
+can safely skip the optional
+
+171
+00:05:28,480 --> 00:05:30,630
+set of videos on linear algebra,
+
+172
+00:05:30,640 --> 00:05:33,190
+but these concepts, if you
+
+173
+00:05:33,200 --> 00:05:35,630
+are slightly uncertain what these
+
+174
+00:05:35,640 --> 00:05:37,210
+blocks of numbers, what these matrices
+
+175
+00:05:37,220 --> 00:05:39,160
+and numbers mean, then please
+
+176
+00:05:39,170 --> 00:05:40,270
+take a look at the next
+
+177
+00:05:40,280 --> 00:05:42,220
+set of videos, and it will
+
+178
+00:05:42,230 --> 00:05:43,380
+very quickly teach you what you
+
+179
+00:05:43,390 --> 00:05:45,230
+need to know about linear algebra
+
+180
+00:05:45,240 --> 00:05:47,410
+in order to program mission learning
+
+181
+00:05:47,420 --> 00:05:50,890
+algorithms, and deal with large amounts of data.
+

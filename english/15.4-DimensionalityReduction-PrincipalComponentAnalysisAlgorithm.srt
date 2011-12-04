@@ -1,0 +1,1708 @@
+1
+00:00:00,340 --> 00:00:01,540
+In this video I'd like
+
+2
+00:00:01,550 --> 00:00:03,330
+to tell you about the principle
+
+3
+00:00:03,340 --> 00:00:05,590
+components analysis algorithm.
+
+4
+00:00:05,600 --> 00:00:06,700
+And by the end of this
+
+5
+00:00:06,710 --> 00:00:10,160
+video you know to implement PCA for yourself.
+
+6
+00:00:10,170 --> 00:00:13,090
+And use it reduce the dimension of your data.
+
+7
+00:00:13,100 --> 00:00:14,790
+Before applying PCA, there is
+
+8
+00:00:14,800 --> 00:00:18,500
+a data pre-processing step which you should always do.
+
+9
+00:00:18,510 --> 00:00:20,510
+Given the trading sets of the
+
+10
+00:00:20,520 --> 00:00:22,590
+examples is important to
+
+11
+00:00:22,600 --> 00:00:25,320
+always perform mean normalization,
+
+12
+00:00:25,330 --> 00:00:26,830
+and then depending on your data,
+
+13
+00:00:26,840 --> 00:00:29,610
+maybe perform feature scaling as well.
+
+14
+00:00:29,620 --> 00:00:31,640
+this is very similar to the
+
+15
+00:00:31,650 --> 00:00:34,070
+mean normalization and feature scaling
+
+16
+00:00:34,080 --> 00:00:36,900
+process that we have for supervised learning.
+
+17
+00:00:36,910 --> 00:00:38,380
+In fact it's exactly the
+
+18
+00:00:38,390 --> 00:00:40,300
+same procedure except that we're
+
+19
+00:00:40,310 --> 00:00:42,920
+doing it now to our unlabeled
+
+20
+00:00:42,930 --> 00:00:44,170
+data, X1 through Xm.
+
+21
+00:00:44,180 --> 00:00:45,710
+So for mean normalization we
+
+22
+00:00:45,720 --> 00:00:47,380
+first compute the mean of
+
+23
+00:00:47,390 --> 00:00:49,330
+each feature and then
+
+24
+00:00:49,340 --> 00:00:51,140
+we replace each feature, X,
+
+25
+00:00:51,150 --> 00:00:52,800
+with X minus its mean,
+
+26
+00:00:52,810 --> 00:00:54,510
+and so this makes each feature
+
+27
+00:00:54,520 --> 00:00:58,680
+now have exactly zero mean
+
+28
+00:00:58,690 --> 00:01:01,530
+The different features have very different scales.
+
+29
+00:01:01,540 --> 00:01:03,070
+So for example, if x1
+
+30
+00:01:03,080 --> 00:01:04,090
+is the size of a house, and
+
+31
+00:01:04,100 --> 00:01:05,570
+x2 is the number of bedrooms, to
+
+32
+00:01:05,580 --> 00:01:07,470
+use our earlier example, we
+
+33
+00:01:07,480 --> 00:01:09,120
+then also scale each feature
+
+34
+00:01:09,130 --> 00:01:10,970
+to have a comparable range of values.
+
+35
+00:01:10,980 --> 00:01:12,670
+And so, similar to what
+
+36
+00:01:12,680 --> 00:01:14,050
+we had with supervised learning,
+
+37
+00:01:14,060 --> 00:01:16,670
+we would take x, i substitute
+
+38
+00:01:16,680 --> 00:01:19,120
+j, that's the j feature
+
+39
+00:01:23,250 --> 00:01:25,880
+and so we would
+
+40
+00:01:25,890 --> 00:01:28,360
+subtract of the mean,
+
+41
+00:01:28,370 --> 00:01:29,600
+now that's what we have on top, and then divide by sj.
+
+42
+00:01:29,610 --> 00:01:30,070
+Here, sj is some measure of the beta values of feature j.  So, it could be the max minus
+
+43
+00:01:30,080 --> 00:01:31,880
+min value, or more commonly,
+
+44
+00:01:31,890 --> 00:01:33,630
+it is the standard deviation of
+
+45
+00:01:33,640 --> 00:01:36,220
+feature j. Having done
+
+46
+00:01:36,230 --> 00:01:40,610
+this sort of data pre-processing, here's what the PCA algorithm does.
+
+47
+00:01:40,620 --> 00:01:41,950
+We saw from the previous video
+
+48
+00:01:41,960 --> 00:01:43,160
+that what PCA does is, it
+
+49
+00:01:43,170 --> 00:01:44,780
+tries to find a lower
+
+50
+00:01:44,790 --> 00:01:46,160
+dimensional sub-space onto which to
+
+51
+00:01:46,170 --> 00:01:47,640
+project the data, so as
+
+52
+00:01:47,650 --> 00:01:50,530
+to minimize the squared projection
+
+53
+00:01:50,540 --> 00:01:51,730
+errors, sum of the
+
+54
+00:01:51,740 --> 00:01:53,410
+squared projection errors, as the
+
+55
+00:01:53,420 --> 00:01:54,860
+square of the length of
+
+56
+00:01:54,870 --> 00:01:57,100
+those blue lines that and so
+
+57
+00:01:57,110 --> 00:01:59,200
+what we wanted to do specifically
+
+58
+00:01:59,210 --> 00:02:03,270
+is find a vector, u1, which
+
+59
+00:02:03,280 --> 00:02:05,030
+specifies that direction or
+
+60
+00:02:05,040 --> 00:02:06,870
+in the 2D case we want
+
+61
+00:02:06,880 --> 00:02:10,260
+to find two vectors, u1 and
+
+62
+00:02:10,640 --> 00:02:13,580
+u2, to define this surface
+
+63
+00:02:13,590 --> 00:02:16,110
+onto which to project the data.
+
+64
+00:02:16,620 --> 00:02:18,030
+So, just as a
+
+65
+00:02:18,040 --> 00:02:19,720
+quick reminder of what reducing
+
+66
+00:02:19,730 --> 00:02:21,480
+the dimension of the data means,
+
+67
+00:02:21,490 --> 00:02:22,460
+for this example on the
+
+68
+00:02:22,470 --> 00:02:23,670
+left we were given
+
+69
+00:02:23,680 --> 00:02:26,290
+the examples xI, which are in r2.
+
+70
+00:02:26,300 --> 00:02:28,650
+And what we
+
+71
+00:02:28,660 --> 00:02:29,960
+like to do is find
+
+72
+00:02:29,970 --> 00:02:32,990
+a set of numbers zI in
+
+73
+00:02:33,000 --> 00:02:35,990
+r push to represent our data.
+
+74
+00:02:36,000 --> 00:02:39,010
+So that's what from reduction from 2D to 1D means.
+
+75
+00:02:39,020 --> 00:02:42,700
+So specifically by projecting
+
+76
+00:02:42,710 --> 00:02:44,790
+data onto this red line there.
+
+77
+00:02:44,800 --> 00:02:46,440
+We need only one number to
+
+78
+00:02:46,450 --> 00:02:48,580
+specify the position of the points on the line.
+
+79
+00:02:48,590 --> 00:02:50,690
+So i'm going to call that number
+
+80
+00:02:50,700 --> 00:02:52,010
+z or z1.
+
+81
+00:02:52,020 --> 00:02:55,370
+Z here  [xx] real number, so that's like a one dimensional vector.
+
+82
+00:02:55,380 --> 00:02:56,680
+So z1 just refers to
+
+83
+00:02:56,690 --> 00:02:58,270
+the first component of this,
+
+84
+00:02:58,280 --> 00:03:01,660
+you know, one by one matrix, or this one dimensional vector.
+
+85
+00:03:01,670 --> 00:03:03,480
+And so we need only
+
+86
+00:03:03,490 --> 00:03:06,320
+one number to specify the position of a point.
+
+87
+00:03:06,330 --> 00:03:08,450
+So if this example
+
+88
+00:03:08,460 --> 00:03:10,600
+here was my example
+
+89
+00:03:10,610 --> 00:03:13,890
+X1, then maybe that gets mapped here.
+
+90
+00:03:13,900 --> 00:03:15,670
+And if this example was X2
+
+91
+00:03:15,680 --> 00:03:17,520
+maybe that example gets mapped
+
+92
+00:03:17,530 --> 00:03:19,050
+And so this point
+
+93
+00:03:19,060 --> 00:03:20,830
+here will be Z1
+
+94
+00:03:20,840 --> 00:03:22,070
+and this point here will be
+
+95
+00:03:22,080 --> 00:03:24,610
+Z2, and similarly we
+
+96
+00:03:24,620 --> 00:03:26,830
+would have those other points
+
+97
+00:03:26,840 --> 00:03:30,500
+for These, maybe X3,
+
+98
+00:03:30,510 --> 00:03:34,050
+X4, X5 get mapped to Z1, Z2, Z3.
+
+99
+00:03:34,360 --> 00:03:36,040
+So What PCA has
+
+100
+00:03:36,050 --> 00:03:36,920
+to do is we need to
+
+101
+00:03:36,930 --> 00:03:39,300
+come up with a way to compute two things.
+
+102
+00:03:39,310 --> 00:03:41,820
+One is to compute these vectors,
+
+103
+00:03:41,830 --> 00:03:45,220
+u1, and in this case u1 and u2.
+
+104
+00:03:45,230 --> 00:03:47,120
+And the other is
+
+105
+00:03:47,130 --> 00:03:49,350
+how do we compute these numbers,
+
+106
+00:03:49,360 --> 00:03:51,420
+Z. So on the
+
+107
+00:03:51,430 --> 00:03:55,280
+example on the left we're reducing the data from 2D to 1D.
+
+108
+00:03:55,290 --> 00:03:56,500
+In the example on the right,
+
+109
+00:03:56,510 --> 00:03:58,440
+we would be reducing data from
+
+110
+00:03:58,450 --> 00:04:00,700
+3 dimensional as in
+
+111
+00:04:00,710 --> 00:04:05,380
+r3, to zi, which is now two dimensional.
+
+112
+00:04:05,390 --> 00:04:08,440
+So these z vectors would now be two dimensional.
+
+113
+00:04:08,450 --> 00:04:10,140
+So it would be z1
+
+114
+00:04:10,150 --> 00:04:11,630
+z2 like so, and so
+
+115
+00:04:11,640 --> 00:04:13,660
+we need to give away to compute
+
+116
+00:04:13,670 --> 00:04:15,560
+these new representations, the z1
+
+117
+00:04:15,570 --> 00:04:18,270
+and z2 of the data as well.
+
+118
+00:04:18,280 --> 00:04:20,510
+So how do you compute all of these quantities?
+
+119
+00:04:20,520 --> 00:04:22,480
+It turns out that a mathematical
+
+120
+00:04:22,490 --> 00:04:24,290
+derivation, also the mathematical
+
+121
+00:04:24,300 --> 00:04:26,080
+proof, for what is
+
+122
+00:04:26,090 --> 00:04:28,280
+the right value U1, U2, Z1,
+
+123
+00:04:28,290 --> 00:04:29,680
+Z2, and so on.
+
+124
+00:04:29,690 --> 00:04:31,470
+That mathematical proof is very
+
+125
+00:04:31,480 --> 00:04:32,940
+complicated and beyond the
+
+126
+00:04:32,950 --> 00:04:35,270
+scope of the course.
+
+127
+00:04:35,280 --> 00:04:37,580
+But once you've done  [xx] it
+
+128
+00:04:37,590 --> 00:04:39,340
+turns out that the procedure
+
+129
+00:04:39,350 --> 00:04:41,190
+to actually find the value
+
+130
+00:04:41,200 --> 00:04:42,940
+of u1 that you want
+
+131
+00:04:42,950 --> 00:04:44,170
+is not that hard, even though
+
+132
+00:04:44,180 --> 00:04:45,830
+so that the mathematical proof that
+
+133
+00:04:45,840 --> 00:04:47,250
+this value is the correct
+
+134
+00:04:47,260 --> 00:04:48,690
+value is someone more
+
+135
+00:04:48,700 --> 00:04:50,870
+involved and more than i want to get into.
+
+136
+00:04:50,880 --> 00:04:52,470
+But let me just describe the
+
+137
+00:04:52,480 --> 00:04:53,950
+specific procedure that you
+
+138
+00:04:53,960 --> 00:04:55,430
+have to implement in order
+
+139
+00:04:55,440 --> 00:04:56,560
+to compute all of these
+
+140
+00:04:56,570 --> 00:04:58,900
+things, the vectors, u1, u2,
+
+141
+00:04:58,910 --> 00:05:02,060
+the vector z.  Here's the procedure.
+
+142
+00:05:02,070 --> 00:05:03,160
+Let's say we want to reduce
+
+143
+00:05:03,170 --> 00:05:04,830
+the data to n dimensions
+
+144
+00:05:04,840 --> 00:05:06,750
+to k dimension What we're
+
+145
+00:05:06,760 --> 00:05:07,890
+going to do is first
+
+146
+00:05:07,900 --> 00:05:09,820
+compute something called the
+
+147
+00:05:09,830 --> 00:05:11,690
+covariance matrix, and the covariance
+
+148
+00:05:11,700 --> 00:05:13,810
+matrix is commonly denoted by
+
+149
+00:05:13,820 --> 00:05:15,180
+this Greek alphabet which is
+
+150
+00:05:15,190 --> 00:05:17,990
+the capital Greek alphabet sigma.
+
+151
+00:05:18,000 --> 00:05:19,300
+It's a bit unfortunate that the
+
+152
+00:05:19,310 --> 00:05:21,750
+Greek alphabet sigma looks exactly
+
+153
+00:05:21,760 --> 00:05:23,200
+like the summation symbols.
+
+154
+00:05:23,210 --> 00:05:24,690
+So this is the
+
+155
+00:05:24,700 --> 00:05:26,410
+Greek alphabet Sigma is used
+
+156
+00:05:26,420 --> 00:05:30,500
+to denote a matrix and this here is a summation symbol.
+
+157
+00:05:30,510 --> 00:05:32,670
+So hopefully in these slides
+
+158
+00:05:32,680 --> 00:05:34,400
+there won't be ambiguity about which
+
+159
+00:05:34,410 --> 00:05:36,510
+is Sigma Matrix, the
+
+160
+00:05:36,520 --> 00:05:38,080
+matrix, which is a
+
+161
+00:05:38,090 --> 00:05:39,930
+summation symbol, and hopefully
+
+162
+00:05:39,940 --> 00:05:41,810
+it will be clear from context when
+
+163
+00:05:41,820 --> 00:05:43,730
+I'm using each one.
+
+164
+00:05:43,740 --> 00:05:45,520
+How do you compute this matrix
+
+165
+00:05:45,530 --> 00:05:46,620
+let's say we want to
+
+166
+00:05:46,630 --> 00:05:48,110
+store it in an octet
+
+167
+00:05:48,120 --> 00:05:50,830
+variable called sigma.
+
+168
+00:05:50,840 --> 00:05:52,020
+What we need to do is
+
+169
+00:05:52,030 --> 00:05:54,120
+compute something called the
+
+170
+00:05:54,130 --> 00:05:57,550
+eigenvectors of the matrix sigma.
+
+171
+00:05:57,560 --> 00:05:58,580
+And an octave, the way you
+
+172
+00:05:58,590 --> 00:05:59,960
+do that is you use this
+
+173
+00:05:59,970 --> 00:06:01,340
+command, u s v equals
+
+174
+00:06:01,350 --> 00:06:03,640
+s v d of sigma.
+
+175
+00:06:03,650 --> 00:06:07,590
+SVD, by the way, stands for singular value decomposition.
+
+176
+00:06:08,520 --> 00:06:10,780
+This is a Much
+
+177
+00:06:10,790 --> 00:06:14,160
+more advanced single value composition.
+
+178
+00:06:14,450 --> 00:06:15,790
+It is much more advanced linear
+
+179
+00:06:15,800 --> 00:06:16,940
+algebra than you actually need
+
+180
+00:06:16,950 --> 00:06:18,940
+to know but now It turns out
+
+181
+00:06:18,950 --> 00:06:20,470
+that when sigma is equal
+
+182
+00:06:20,480 --> 00:06:21,870
+to matrix there is
+
+183
+00:06:21,880 --> 00:06:23,600
+a few ways to compute these are
+
+184
+00:06:23,610 --> 00:06:25,950
+high in vectors andIf you
+
+185
+00:06:25,960 --> 00:06:27,690
+are an expert in linear algebra
+
+186
+00:06:27,700 --> 00:06:28,850
+and if you've heard of high in
+
+187
+00:06:28,860 --> 00:06:30,340
+vectors before you may know
+
+188
+00:06:30,350 --> 00:06:31,980
+that there is another octet function
+
+189
+00:06:31,990 --> 00:06:33,510
+called I, which can
+
+190
+00:06:33,520 --> 00:06:35,940
+also be used to compute the same thing.
+
+191
+00:06:35,950 --> 00:06:37,360
+and It turns out that the
+
+192
+00:06:37,370 --> 00:06:39,280
+SVD function and the
+
+193
+00:06:39,290 --> 00:06:40,360
+I function it will give
+
+194
+00:06:40,370 --> 00:06:42,830
+you the same vectors, although SVD
+
+195
+00:06:42,840 --> 00:06:44,530
+is a little more numerically stable.
+
+196
+00:06:44,540 --> 00:06:46,130
+So I tend to use SVD, although
+
+197
+00:06:46,140 --> 00:06:47,270
+I have a few friends that use
+
+198
+00:06:47,280 --> 00:06:48,910
+the I function to do
+
+199
+00:06:48,920 --> 00:06:50,120
+this as wellbut when you
+
+200
+00:06:50,130 --> 00:06:51,740
+apply this to a covariance matrix
+
+201
+00:06:51,750 --> 00:06:53,860
+sigma it gives you the same thing.
+
+202
+00:06:53,870 --> 00:06:55,490
+This is because the covariance matrix
+
+203
+00:06:55,500 --> 00:06:57,930
+always satisfies a mathematical
+
+204
+00:06:57,940 --> 00:07:01,350
+Property called simetion possess semi definence.
+
+205
+00:07:01,360 --> 00:07:02,270
+You really don't need to know
+
+206
+00:07:02,280 --> 00:07:05,330
+what that means, but the SVD
+
+207
+00:07:05,340 --> 00:07:07,390
+and I-functions are different functions but
+
+208
+00:07:07,400 --> 00:07:08,770
+when they are applied to a
+
+209
+00:07:08,780 --> 00:07:10,540
+covariance matrix which can
+
+210
+00:07:10,550 --> 00:07:13,180
+be proved to always satisfy this
+
+211
+00:07:13,190 --> 00:07:16,570
+mathematical property; they'll always give you the same thing.
+
+212
+00:07:16,580 --> 00:07:19,250
+Okay, that was probably much more linear algebra than you needed to know.
+
+213
+00:07:19,260 --> 00:07:22,550
+In case none of that made sense, don't worry about it.
+
+214
+00:07:22,560 --> 00:07:24,120
+All you need to know is that
+
+215
+00:07:24,130 --> 00:07:28,130
+this system command you
+
+216
+00:07:28,140 --> 00:07:30,070
+should implement in Octave.
+
+217
+00:07:30,080 --> 00:07:30,700
+And if you're implementing this in a
+
+218
+00:07:30,710 --> 00:07:32,700
+different language than Octave or MATLAB,
+
+219
+00:07:32,710 --> 00:07:34,180
+what you should do is find
+
+220
+00:07:34,190 --> 00:07:36,720
+the numerical linear algebra library
+
+221
+00:07:36,730 --> 00:07:38,220
+that can compute the SVD
+
+222
+00:07:38,230 --> 00:07:40,960
+or singular value decomposition, and
+
+223
+00:07:40,970 --> 00:07:43,560
+there are many such libraries for
+
+224
+00:07:43,570 --> 00:07:45,290
+probably all of the major programming languages.
+
+225
+00:07:45,300 --> 00:07:47,040
+People can use that to
+
+226
+00:07:47,050 --> 00:07:49,190
+compute the matrices u,
+
+227
+00:07:49,200 --> 00:07:53,330
+s, and d of the covariance matrix sigma.
+
+228
+00:07:53,340 --> 00:07:54,610
+So just to fill
+
+229
+00:07:54,620 --> 00:07:56,650
+in some more details, this covariance
+
+230
+00:07:56,660 --> 00:07:58,240
+matrix sigma will be
+
+231
+00:07:58,250 --> 00:08:02,240
+an n by n matrix.
+
+232
+00:08:02,250 --> 00:08:03,500
+And one way to see that
+
+233
+00:08:03,510 --> 00:08:05,240
+is if you look at the definition
+
+234
+00:08:05,250 --> 00:08:06,650
+this is an n by 1
+
+235
+00:08:06,660 --> 00:08:08,910
+vector and this
+
+236
+00:08:08,920 --> 00:08:11,000
+here I transpose is
+
+237
+00:08:11,010 --> 00:08:13,370
+1 by N so the
+
+238
+00:08:13,380 --> 00:08:15,140
+product of these two things
+
+239
+00:08:15,150 --> 00:08:16,560
+is going to be an N
+
+240
+00:08:16,570 --> 00:08:19,030
+by N matrix.
+
+241
+00:08:19,100 --> 00:08:22,270
+1xN transfers, 1xN, so
+
+242
+00:08:22,280 --> 00:08:22,900
+there's an NxN matrix and when
+
+243
+00:08:22,910 --> 00:08:23,830
+we add up all of these you still
+
+244
+00:08:23,840 --> 00:08:27,590
+have an NxN matrix.
+
+245
+00:08:27,600 --> 00:08:30,490
+And what the SVD outputs three
+
+246
+00:08:30,500 --> 00:08:32,820
+matrices, u, s, and
+
+247
+00:08:32,830 --> 00:08:36,220
+v.  The thing you really need out of the SVD is the u matrix.
+
+248
+00:08:36,230 --> 00:08:41,500
+The u matrix will also be a NxN matrix.
+
+249
+00:08:41,510 --> 00:08:42,340
+And if we look at the
+
+250
+00:08:42,350 --> 00:08:43,470
+columns of the U
+
+251
+00:08:43,480 --> 00:08:45,620
+matrix it turns
+
+252
+00:08:45,630 --> 00:08:48,560
+out that the columns
+
+253
+00:08:48,570 --> 00:08:50,340
+of the U matrix will be
+
+254
+00:08:50,350 --> 00:08:54,250
+exactly those vectors, u1,
+
+255
+00:08:54,260 --> 00:08:57,630
+u2 and so on.
+
+256
+00:08:57,640 --> 00:09:00,830
+So u, will be matrix.
+
+257
+00:09:00,910 --> 00:09:02,220
+And if we want to reduce
+
+258
+00:09:02,230 --> 00:09:03,790
+the data from n dimensions
+
+259
+00:09:03,800 --> 00:09:05,480
+down to k dimensions, then what
+
+260
+00:09:05,490 --> 00:09:09,450
+we need to do is take the first k vectors.
+
+261
+00:09:09,800 --> 00:09:12,850
+that gives us u1 up
+
+262
+00:09:12,860 --> 00:09:14,770
+to uK which gives
+
+263
+00:09:14,780 --> 00:09:17,190
+us the K direction onto which
+
+264
+00:09:17,200 --> 00:09:20,080
+we want to project the data.
+
+265
+00:09:20,090 --> 00:09:22,400
+the rest of the procedure from
+
+266
+00:09:22,410 --> 00:09:24,480
+this SVD numerical linear
+
+267
+00:09:24,490 --> 00:09:25,830
+algebra routine we get this
+
+268
+00:09:25,840 --> 00:09:27,520
+matrix u.  We'll call
+
+269
+00:09:27,530 --> 00:09:30,570
+these columns u1-uN.
+
+270
+00:09:30,580 --> 00:09:31,820
+So, just to wrap up the
+
+271
+00:09:31,830 --> 00:09:32,530
+description of the rest of
+
+272
+00:09:32,540 --> 00:09:35,310
+the procedure, from the SVD
+
+273
+00:09:35,320 --> 00:09:37,230
+numerical linear algebra routine we
+
+274
+00:09:37,240 --> 00:09:38,820
+get these matrices u, s,
+
+275
+00:09:38,830 --> 00:09:41,890
+and d.  we're going
+
+276
+00:09:41,900 --> 00:09:45,040
+to use the first K columns
+
+277
+00:09:45,050 --> 00:09:47,810
+of this matrix to get u1-uK.
+
+278
+00:09:48,710 --> 00:09:49,690
+Now the other thing we need
+
+279
+00:09:49,700 --> 00:09:54,100
+to is take my original
+
+280
+00:09:54,110 --> 00:09:55,620
+data set, X which is
+
+281
+00:09:55,630 --> 00:09:57,240
+an RN And find a
+
+282
+00:09:57,250 --> 00:09:59,410
+lower dimensional representation Z, which
+
+283
+00:09:59,420 --> 00:10:01,560
+is a R K for this data.
+
+284
+00:10:01,570 --> 00:10:02,890
+So the way we're
+
+285
+00:10:02,900 --> 00:10:04,170
+going to do that is
+
+286
+00:10:04,180 --> 00:10:08,190
+take the first K Columns of the U matrix.
+
+287
+00:10:08,330 --> 00:10:11,050
+Construct this matrix.
+
+288
+00:10:11,060 --> 00:10:14,160
+Stack up U1, U2 and
+
+289
+00:10:14,170 --> 00:10:17,340
+so on up to U K in columns.
+
+290
+00:10:17,350 --> 00:10:19,270
+It's really basically taking, you know,
+
+291
+00:10:19,280 --> 00:10:20,520
+this part of the matrix, the
+
+292
+00:10:20,530 --> 00:10:23,410
+first K columns of this matrix.
+
+293
+00:10:23,420 --> 00:10:25,590
+And so this is
+
+294
+00:10:25,600 --> 00:10:27,190
+going to be an N
+
+295
+00:10:27,200 --> 00:10:29,490
+by K matrix.
+
+296
+00:10:29,500 --> 00:10:30,870
+I'm going to give this matrix a name.
+
+297
+00:10:30,880 --> 00:10:32,920
+I'm going to call this matrix
+
+298
+00:10:32,930 --> 00:10:36,080
+U, subscript "reduce," sort
+
+299
+00:10:36,090 --> 00:10:39,130
+of a reduced version of the U matrix maybe.
+
+300
+00:10:39,140 --> 00:10:42,750
+I'm going to use it to reduce the dimension of my data.
+
+301
+00:10:43,040 --> 00:10:44,240
+And the way I'm going to compute Z is going
+
+302
+00:10:44,250 --> 00:10:46,210
+to let Z be equal to this
+
+303
+00:10:46,220 --> 00:10:50,000
+U reduce matrix transpose times
+
+304
+00:10:50,010 --> 00:10:52,500
+X. Or alternatively, you know,
+
+305
+00:10:52,510 --> 00:10:54,620
+to write down what this transpose means.
+
+306
+00:10:54,630 --> 00:10:56,000
+When I take this transpose of
+
+307
+00:10:56,010 --> 00:10:58,000
+this U matrix, what I'm
+
+308
+00:10:58,010 --> 00:11:00,940
+going to end up with is these vectors now in rows.
+
+309
+00:11:00,950 --> 00:11:06,040
+I have U1 transpose down to UK transpose.
+
+310
+00:11:07,060 --> 00:11:09,690
+Then take that times X,
+
+311
+00:11:09,700 --> 00:11:10,910
+and that's how I get
+
+312
+00:11:10,920 --> 00:11:12,730
+my vector Z. Just to
+
+313
+00:11:12,740 --> 00:11:15,360
+make sure that these dimensions make sense,
+
+314
+00:11:15,370 --> 00:11:16,550
+this matrix here is going
+
+315
+00:11:16,560 --> 00:11:18,260
+to be k by n
+
+316
+00:11:18,270 --> 00:11:19,410
+and x here is going
+
+317
+00:11:19,420 --> 00:11:20,740
+to be n by 1
+
+318
+00:11:20,750 --> 00:11:22,310
+and so the product
+
+319
+00:11:22,320 --> 00:11:24,810
+here will be k by 1.
+
+320
+00:11:24,820 --> 00:11:28,780
+And so z is k
+
+321
+00:11:28,790 --> 00:11:30,000
+dimensional, is a k
+
+322
+00:11:30,010 --> 00:11:31,990
+dimensional vector, which is exactly
+
+323
+00:11:32,000 --> 00:11:33,540
+what we wanted.
+
+324
+00:11:33,550 --> 00:11:34,880
+And of course these x's here right, can
+
+325
+00:11:34,890 --> 00:11:36,090
+be Examples in our
+
+326
+00:11:36,100 --> 00:11:37,530
+training set can be examples
+
+327
+00:11:37,540 --> 00:11:38,970
+in our cross validation set, can be
+
+328
+00:11:38,980 --> 00:11:40,490
+examples in our test set, and
+
+329
+00:11:40,500 --> 00:11:41,920
+for example if you know,
+
+330
+00:11:41,930 --> 00:11:44,250
+I wanted to take training example i,
+
+331
+00:11:44,260 --> 00:11:47,260
+I can write this as xi
+
+332
+00:11:47,270 --> 00:11:48,500
+XI and that's what will
+
+333
+00:11:48,510 --> 00:11:50,930
+give me ZI over there.
+
+334
+00:11:50,940 --> 00:11:53,450
+So, to summarize, here's the
+
+335
+00:11:53,460 --> 00:11:56,240
+PCA algorithm on one slide.
+
+336
+00:11:56,250 --> 00:11:58,410
+After mean normalization, to ensure
+
+337
+00:11:58,420 --> 00:11:59,600
+that every feature is zero mean
+
+338
+00:11:59,610 --> 00:12:02,270
+and optional feature scaling whichYou
+
+339
+00:12:02,280 --> 00:12:03,880
+really should do feature scaling if
+
+340
+00:12:03,890 --> 00:12:06,610
+your features take on very different ranges of values.
+
+341
+00:12:06,620 --> 00:12:09,120
+After this pre-processing we compute
+
+342
+00:12:09,130 --> 00:12:12,230
+the carrier matrix Sigma like
+
+343
+00:12:12,240 --> 00:12:14,200
+so by the
+
+344
+00:12:14,210 --> 00:12:16,600
+way if your data is
+
+345
+00:12:16,610 --> 00:12:18,020
+given as a matrix
+
+346
+00:12:18,030 --> 00:12:19,220
+like hits if you have your
+
+347
+00:12:19,230 --> 00:12:22,770
+data Given in rows like this.
+
+348
+00:12:22,780 --> 00:12:24,950
+If you have a matrix X
+
+349
+00:12:24,960 --> 00:12:27,020
+which is your time trading sets
+
+350
+00:12:27,030 --> 00:12:29,200
+written in rows where x1
+
+351
+00:12:29,210 --> 00:12:31,520
+transpose down to x1 transpose,
+
+352
+00:12:31,530 --> 00:12:33,010
+this covariance matrix sigma actually has
+
+353
+00:12:33,020 --> 00:12:37,380
+a nice vectorizing implementation.
+
+354
+00:12:37,390 --> 00:12:39,430
+You can implement in octave,
+
+355
+00:12:39,440 --> 00:12:41,660
+you can even run sigma equals 1
+
+356
+00:12:41,670 --> 00:12:45,540
+over m, times x,
+
+357
+00:12:45,550 --> 00:12:47,240
+which is this matrix up here,
+
+358
+00:12:47,250 --> 00:12:50,970
+transpose times x and
+
+359
+00:12:50,980 --> 00:12:53,560
+this simple expression, that's
+
+360
+00:12:53,570 --> 00:12:55,210
+the vectorize implementation of how
+
+361
+00:12:55,220 --> 00:12:58,010
+to compute the matrix sigma.
+
+362
+00:12:58,020 --> 00:12:59,150
+I'm not going to prove that today.
+
+363
+00:12:59,160 --> 00:13:00,730
+This is the correct vectorization whether you
+
+364
+00:13:00,740 --> 00:13:02,860
+want, you can either numerically test
+
+365
+00:13:02,870 --> 00:13:03,970
+this on yourself by trying out an
+
+366
+00:13:03,980 --> 00:13:05,830
+octave and making sure that
+
+367
+00:13:05,840 --> 00:13:06,910
+both this and this implementations
+
+368
+00:13:06,920 --> 00:13:11,240
+give the same answers or you Can try to prove it yourself mathematically.
+
+369
+00:13:11,250 --> 00:13:12,420
+Either way but this is the
+
+370
+00:13:12,430 --> 00:13:16,080
+correct vectorizing implementation, without compusingnext
+
+371
+00:13:16,480 --> 00:13:17,910
+we can apply the SVD
+
+372
+00:13:17,920 --> 00:13:19,240
+routine to get u, s,
+
+373
+00:13:19,250 --> 00:13:21,090
+and d. And then we
+
+374
+00:13:21,100 --> 00:13:23,040
+grab the first k
+
+375
+00:13:23,050 --> 00:13:24,650
+columns of the u
+
+376
+00:13:24,660 --> 00:13:26,640
+matrix you reduce and
+
+377
+00:13:26,650 --> 00:13:28,730
+finally this defines how
+
+378
+00:13:28,740 --> 00:13:30,280
+we go from a feature
+
+379
+00:13:30,290 --> 00:13:31,840
+vector x to this
+
+380
+00:13:31,850 --> 00:13:34,530
+reduce dimension representation z. And
+
+381
+00:13:34,540 --> 00:13:36,080
+similar to k Means
+
+382
+00:13:36,090 --> 00:13:38,020
+if you're apply PCA, they way
+
+383
+00:13:38,030 --> 00:13:41,090
+you'd apply this is with vectors X and RN.
+
+384
+00:13:41,100 --> 00:13:44,190
+So, this is not done with X-0 1.
+
+385
+00:13:44,200 --> 00:13:46,980
+So that was
+
+386
+00:13:46,990 --> 00:13:50,110
+the PCA algorithm.
+
+387
+00:13:50,120 --> 00:13:51,580
+One thing I didn't do is
+
+388
+00:13:51,590 --> 00:13:53,510
+give a mathematical proof that
+
+389
+00:13:53,520 --> 00:13:54,960
+this There it actually give
+
+390
+00:13:54,970 --> 00:13:57,220
+the projection of the data onto
+
+391
+00:13:57,230 --> 00:13:58,860
+the K dimensional subspace onto the
+
+392
+00:13:58,870 --> 00:14:02,120
+K dimensional surface that actually
+
+393
+00:14:02,170 --> 00:14:05,100
+minimizes the square projection error Proof
+
+394
+00:14:05,110 --> 00:14:07,690
+of that is beyond the scope of this course.
+
+395
+00:14:07,700 --> 00:14:09,460
+Fortunately the PCA algorithm
+
+396
+00:14:09,470 --> 00:14:11,310
+can be implemented in not
+
+397
+00:14:11,320 --> 00:14:13,180
+too many lines of code.
+
+398
+00:14:13,190 --> 00:14:14,630
+and if you implement this in
+
+399
+00:14:14,640 --> 00:14:16,510
+octave or algorithm, you
+
+400
+00:14:16,520 --> 00:14:18,100
+actually get a very effective
+
+401
+00:14:18,110 --> 00:14:21,210
+dimensionality reduction algorithm.
+
+402
+00:14:22,430 --> 00:14:25,000
+So, that was the PCA algorithm.
+
+403
+00:14:25,010 --> 00:14:26,830
+One thing I didn't do was
+
+404
+00:14:26,840 --> 00:14:29,160
+give a mathematical proof that
+
+405
+00:14:29,170 --> 00:14:30,710
+the U1 and U2 and so
+
+406
+00:14:30,720 --> 00:14:31,760
+on and the Z and so
+
+407
+00:14:31,770 --> 00:14:32,970
+on you get out of this
+
+408
+00:14:32,980 --> 00:14:34,670
+procedure is really the
+
+409
+00:14:34,680 --> 00:14:36,490
+choices that would minimize
+
+410
+00:14:36,500 --> 00:14:38,130
+these squared projection error.
+
+411
+00:14:38,140 --> 00:14:39,600
+Right, remember we said What
+
+412
+00:14:39,610 --> 00:14:40,950
+PCA tries to do is try
+
+413
+00:14:40,960 --> 00:14:42,560
+to find a surface or line
+
+414
+00:14:42,570 --> 00:14:44,270
+onto which to project the data
+
+415
+00:14:44,280 --> 00:14:46,690
+so as to minimize to square projection error.
+
+416
+00:14:46,700 --> 00:14:49,130
+So I didn't prove that this
+
+417
+00:14:49,140 --> 00:14:50,960
+that, and the mathematical proof
+
+418
+00:14:50,970 --> 00:14:53,160
+of that is beyond the scope of this course.
+
+419
+00:14:53,170 --> 00:14:55,720
+But fortunately the PCA algorithm can
+
+420
+00:14:55,730 --> 00:14:59,340
+be implemented in not too many lines of octave code.
+
+421
+00:14:59,350 --> 00:15:01,420
+And if you implement this,
+
+422
+00:15:01,430 --> 00:15:02,760
+this is actually what will
+
+423
+00:15:02,770 --> 00:15:04,700
+work, or this will work well,
+
+424
+00:15:04,710 --> 00:15:06,490
+and if you implement this algorithm,
+
+425
+00:15:06,500 --> 00:15:09,770
+you get a very effective dimensionality reduction algorithm.
+
+426
+00:15:09,780 --> 00:15:11,040
+That does do the right thing
+
+427
+00:15:11,050 --> 00:15:14,960
+of minimizing this square projection error.
+

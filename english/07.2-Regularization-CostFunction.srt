@@ -1,0 +1,1157 @@
+1
+00:00:00,560 --> 00:00:01,950
+In this video, I'd like to
+
+2
+00:00:01,960 --> 00:00:03,970
+convey to you, the main intuitions
+
+3
+00:00:03,980 --> 00:00:05,760
+behind how regularization works.
+
+4
+00:00:05,770 --> 00:00:07,340
+And, we'll also write down
+
+5
+00:00:07,350 --> 00:00:11,240
+the cost function that we'll use, when we were using regularization.
+
+6
+00:00:11,780 --> 00:00:13,300
+With the hand drawn examples that
+
+7
+00:00:13,310 --> 00:00:14,940
+we have on these slides, I
+
+8
+00:00:14,950 --> 00:00:17,690
+think I'll be able to convey part of the intuition.
+
+9
+00:00:17,700 --> 00:00:19,580
+But, an even better
+
+10
+00:00:19,590 --> 00:00:21,170
+way to see for yourself, how
+
+11
+00:00:21,180 --> 00:00:22,610
+regularization works, is if
+
+12
+00:00:22,620 --> 00:00:25,820
+you implement it, and, see it work for yourself.
+
+13
+00:00:25,830 --> 00:00:26,860
+And, if you do the
+
+14
+00:00:26,870 --> 00:00:28,550
+appropriate exercises after this,
+
+15
+00:00:28,560 --> 00:00:30,030
+you get the chance
+
+16
+00:00:30,040 --> 00:00:33,920
+to self see regularization in action for yourself.
+
+17
+00:00:33,930 --> 00:00:36,440
+So, here is the intuition.
+
+18
+00:00:36,450 --> 00:00:38,200
+In the previous video, we saw
+
+19
+00:00:38,210 --> 00:00:39,760
+that, if we were to fit
+
+20
+00:00:39,770 --> 00:00:41,410
+a quadratic function to this
+
+21
+00:00:41,420 --> 00:00:44,230
+data, it gives us a pretty good fit to the data.
+
+22
+00:00:44,240 --> 00:00:45,300
+Whereas, if we were to
+
+23
+00:00:45,310 --> 00:00:47,200
+fit an overly high order
+
+24
+00:00:47,210 --> 00:00:48,840
+degree polynomial, we end
+
+25
+00:00:48,850 --> 00:00:50,040
+up with a curve that may fit
+
+26
+00:00:50,050 --> 00:00:51,740
+the training set very well, but,
+
+27
+00:00:51,750 --> 00:00:53,410
+really not be a,
+
+28
+00:00:53,420 --> 00:00:54,460
+but overfit the data
+
+29
+00:00:54,470 --> 00:00:57,310
+poorly, and, not generalize well.
+
+30
+00:00:57,900 --> 00:01:00,380
+Consider the following, suppose we
+
+31
+00:01:00,390 --> 00:01:02,060
+were to penalize, and, make
+
+32
+00:01:02,070 --> 00:01:04,720
+the parameters theta 3 and theta 4 really small.
+
+33
+00:01:04,730 --> 00:01:06,500
+Here's what I
+
+34
+00:01:06,510 --> 00:01:09,680
+mean, here is our optimization
+
+35
+00:01:09,690 --> 00:01:10,860
+objective, or here is our
+
+36
+00:01:10,870 --> 00:01:12,570
+optimization problem, where we minimize
+
+37
+00:01:12,580 --> 00:01:15,510
+our usual squared error cause function.
+
+38
+00:01:15,520 --> 00:01:17,360
+Let's say I take this objective
+
+39
+00:01:17,370 --> 00:01:19,150
+and modify it and add
+
+40
+00:01:19,160 --> 00:01:23,660
+to it, plus 1000 theta
+
+41
+00:01:23,670 --> 00:01:28,310
+3 squared, plus 1000 theta 4 squared.
+
+42
+00:01:28,320 --> 00:01:32,270
+1000 I am just writing down as some huge number.
+
+43
+00:01:32,350 --> 00:01:33,530
+Now, if we were to
+
+44
+00:01:33,540 --> 00:01:35,130
+minimize this function, the
+
+45
+00:01:35,140 --> 00:01:36,700
+only way to make this
+
+46
+00:01:36,710 --> 00:01:38,600
+new cost function small is
+
+47
+00:01:38,610 --> 00:01:40,730
+if theta 3 and data
+
+48
+00:01:40,740 --> 00:01:42,110
+4 are small, right?
+
+49
+00:01:42,120 --> 00:01:43,250
+Because otherwise, if you have
+
+50
+00:01:43,260 --> 00:01:44,960
+a thousand times theta 3, this
+
+51
+00:01:44,970 --> 00:01:48,130
+new cost functions gonna be big.
+
+52
+00:01:48,140 --> 00:01:49,170
+So when we minimize this
+
+53
+00:01:49,180 --> 00:01:50,380
+new function we are going
+
+54
+00:01:50,390 --> 00:01:52,100
+to end up with theta 3
+
+55
+00:01:52,110 --> 00:01:53,760
+close to 0 and theta
+
+56
+00:01:53,770 --> 00:01:56,680
+4 close to 0, and as
+
+57
+00:01:56,690 --> 00:01:59,670
+if we're getting rid
+
+58
+00:01:59,680 --> 00:02:03,060
+of these two terms over there.
+
+59
+00:02:03,710 --> 00:02:05,280
+And if we do that, well then,
+
+60
+00:02:05,290 --> 00:02:06,760
+if theta 3 and theta 4
+
+61
+00:02:06,770 --> 00:02:07,950
+close to 0 then we are
+
+62
+00:02:07,960 --> 00:02:09,590
+being left with a quadratic function,
+
+63
+00:02:09,600 --> 00:02:11,100
+and, so, we end up with
+
+64
+00:02:11,110 --> 00:02:13,330
+a fit to the data, that's, you know, quadratic
+
+65
+00:02:13,340 --> 00:02:15,440
+function plus maybe, tiny
+
+66
+00:02:15,450 --> 00:02:17,850
+contributions from small terms,
+
+67
+00:02:17,860 --> 00:02:20,170
+theta 3, theta 4, that they may be very close to 0.
+
+68
+00:02:20,180 --> 00:02:25,770
+And, so, we end up with
+
+69
+00:02:25,780 --> 00:02:29,370
+essentially, a quadratic function, which is good.
+
+70
+00:02:29,380 --> 00:02:30,480
+Because this is a
+
+71
+00:02:30,490 --> 00:02:35,560
+much better hypothesis.
+
+72
+00:02:35,720 --> 00:02:36,690
+In this particular example, we looked at the effect
+
+73
+00:02:36,700 --> 00:02:38,980
+of penalizing two of
+
+74
+00:02:38,990 --> 00:02:41,300
+the parameter values being large.
+
+75
+00:02:41,310 --> 00:02:44,980
+More generally, here is the idea behind regularization.
+
+76
+00:02:46,980 --> 00:02:48,900
+The idea is that, if we
+
+77
+00:02:48,910 --> 00:02:50,260
+have small values for the
+
+78
+00:02:50,270 --> 00:02:53,040
+parameters, then, having
+
+79
+00:02:53,050 --> 00:02:55,240
+small values for the parameters,
+
+80
+00:02:55,250 --> 00:02:57,810
+will somehow, will usually correspond
+
+81
+00:02:57,820 --> 00:03:00,340
+to having a simpler hypothesis.
+
+82
+00:03:00,350 --> 00:03:02,220
+So, for our last example, we
+
+83
+00:03:02,230 --> 00:03:03,940
+penalize just theta 3 and
+
+84
+00:03:03,950 --> 00:03:05,640
+theta 4 and when both
+
+85
+00:03:05,650 --> 00:03:07,010
+of these were close to zero,
+
+86
+00:03:07,020 --> 00:03:08,470
+we wound up with a much simpler
+
+87
+00:03:08,480 --> 00:03:12,480
+hypothesis that was essentially a quadratic function.
+
+88
+00:03:12,530 --> 00:03:13,930
+But more broadly, if we penalize all
+
+89
+00:03:13,940 --> 00:03:15,950
+the parameters usually that, we
+
+90
+00:03:15,960 --> 00:03:17,410
+can think of that, as trying
+
+91
+00:03:17,420 --> 00:03:19,100
+to give us a simpler hypothesis
+
+92
+00:03:19,110 --> 00:03:20,900
+as well because when, you
+
+93
+00:03:20,910 --> 00:03:22,400
+know, these parameters are
+
+94
+00:03:22,410 --> 00:03:23,670
+as close as you in this
+
+95
+00:03:23,680 --> 00:03:26,090
+example, that gave us a quadratic function.
+
+96
+00:03:26,100 --> 00:03:28,960
+But more generally, it is
+
+97
+00:03:28,970 --> 00:03:30,520
+possible to show that having
+
+98
+00:03:30,530 --> 00:03:32,530
+smaller values of the parameters
+
+99
+00:03:32,540 --> 00:03:34,380
+corresponds to usually smoother
+
+100
+00:03:34,390 --> 00:03:36,770
+functions as well for the simpler.
+
+101
+00:03:36,780 --> 00:03:41,260
+And which are therefore, also, less prone to overfitting.
+
+102
+00:03:41,680 --> 00:03:43,170
+I realize that the reasoning for
+
+103
+00:03:43,180 --> 00:03:45,430
+why having all the parameters be small.
+
+104
+00:03:45,440 --> 00:03:46,950
+Why that corresponds to a simpler
+
+105
+00:03:46,960 --> 00:03:48,870
+hypothesis; I realize that
+
+106
+00:03:48,880 --> 00:03:51,580
+reasoning may not be entirely clear to you right now.
+
+107
+00:03:51,590 --> 00:03:52,760
+And it is kind of hard
+
+108
+00:03:52,770 --> 00:03:54,470
+to explain unless you implement
+
+109
+00:03:54,480 --> 00:03:56,460
+yourself and see it for yourself.
+
+110
+00:03:56,470 --> 00:03:58,210
+But I hope that the example of
+
+111
+00:03:58,220 --> 00:03:59,640
+having theta 3 and theta
+
+112
+00:03:59,650 --> 00:04:01,200
+4 be small and how
+
+113
+00:04:01,210 --> 00:04:02,530
+that gave us a simpler
+
+114
+00:04:02,540 --> 00:04:04,790
+hypothesis, I hope that
+
+115
+00:04:04,800 --> 00:04:06,320
+helps explain why, at least give
+
+116
+00:04:06,330 --> 00:04:09,180
+some intuition as to why this might be true.
+
+117
+00:04:09,190 --> 00:04:11,700
+Lets look at the specific example.
+
+118
+00:04:12,010 --> 00:04:13,850
+For housing price prediction we
+
+119
+00:04:13,860 --> 00:04:15,470
+may have our hundred features
+
+120
+00:04:15,480 --> 00:04:17,240
+that we talked about where may
+
+121
+00:04:17,250 --> 00:04:18,720
+be x1 is the size, x2
+
+122
+00:04:18,730 --> 00:04:20,080
+is the number of bedrooms, x3
+
+123
+00:04:20,090 --> 00:04:21,910
+is the number of floors and so on.
+
+124
+00:04:21,920 --> 00:04:24,450
+And we may we may have a hundred features.
+
+125
+00:04:24,460 --> 00:04:26,910
+And unlike the polynomial
+
+126
+00:04:26,920 --> 00:04:28,450
+example, we don't know, right,
+
+127
+00:04:28,460 --> 00:04:29,810
+we don't know that theta 3,
+
+128
+00:04:29,820 --> 00:04:32,590
+theta 4, are the high order polynomial terms.
+
+129
+00:04:32,600 --> 00:04:34,530
+So, if we have just a
+
+130
+00:04:34,540 --> 00:04:35,830
+bag, if we have just a
+
+131
+00:04:35,840 --> 00:04:38,090
+set of a hundred features, it's hard
+
+132
+00:04:38,100 --> 00:04:40,250
+to pick in advance which are
+
+133
+00:04:40,260 --> 00:04:42,690
+the ones that are less likely to be relevant.
+
+134
+00:04:42,700 --> 00:04:45,770
+So we have a hundred or a hundred one parameters.
+
+135
+00:04:45,780 --> 00:04:47,300
+And we don't know which
+
+136
+00:04:47,310 --> 00:04:49,000
+ones to pick, we
+
+137
+00:04:49,010 --> 00:04:50,440
+don't know which
+
+138
+00:04:50,450 --> 00:04:54,280
+parameters to try to pick, to try to shrink.
+
+139
+00:04:54,430 --> 00:04:56,220
+So, in regularization, what we're
+
+140
+00:04:56,230 --> 00:04:58,350
+going to do, is take our
+
+141
+00:04:58,360 --> 00:05:01,190
+cost function, here's my cost function for linear regression.
+
+142
+00:05:01,200 --> 00:05:02,650
+And what I'm going to do
+
+143
+00:05:02,660 --> 00:05:04,330
+is, modify this cost
+
+144
+00:05:04,340 --> 00:05:06,260
+function to shrink all
+
+145
+00:05:06,270 --> 00:05:07,570
+of my parameters, because, you know,
+
+146
+00:05:07,580 --> 00:05:08,990
+I don't know which
+
+147
+00:05:09,000 --> 00:05:10,410
+one or two to try to shrink.
+
+148
+00:05:10,420 --> 00:05:11,620
+So I am going to modify my
+
+149
+00:05:11,630 --> 00:05:16,540
+cost function to add a term at the end.
+
+150
+00:05:17,390 --> 00:05:20,430
+Like so we have square brackets here as well.
+
+151
+00:05:20,440 --> 00:05:22,200
+When I add an extra
+
+152
+00:05:22,210 --> 00:05:23,520
+regularization term at the
+
+153
+00:05:23,530 --> 00:05:25,550
+end to shrink every
+
+154
+00:05:25,560 --> 00:05:27,310
+single parameter and so
+this
+
+155
+00:05:27,320 --> 00:05:28,750
+term we tend to shrink
+
+156
+00:05:28,760 --> 00:05:30,700
+all of my parameters theta 1,
+
+157
+00:05:30,710 --> 00:05:32,690
+theta 2, theta 3 up
+
+158
+00:05:32,700 --> 00:05:35,760
+to theta 100.
+
+159
+00:05:36,790 --> 00:05:39,590
+By the way, by convention the summation
+
+160
+00:05:39,600 --> 00:05:40,970
+here starts from one so I
+
+161
+00:05:40,980 --> 00:05:43,350
+am not actually going penalize theta
+
+162
+00:05:43,360 --> 00:05:45,460
+zero being large.
+
+163
+00:05:45,470 --> 00:05:46,410
+That sort of the convention that,
+
+164
+00:05:46,420 --> 00:05:48,490
+the sum I equals one through
+
+165
+00:05:48,500 --> 00:05:50,180
+N, rather than I equals zero
+
+166
+00:05:50,190 --> 00:05:51,950
+through N. But in practice,
+
+167
+00:05:51,960 --> 00:05:53,480
+it makes very little difference, and,
+
+168
+00:05:53,490 --> 00:05:54,750
+whether you include, you know,
+
+169
+00:05:54,760 --> 00:05:56,200
+theta zero or not, in
+
+170
+00:05:56,210 --> 00:05:59,530
+practice, make very little difference to the results.
+
+171
+00:05:59,540 --> 00:06:01,760
+But by convention, usually, we regularize
+
+172
+00:06:01,770 --> 00:06:03,350
+only theta  through theta
+
+173
+00:06:03,360 --> 00:06:06,060
+100. Writing down
+
+174
+00:06:06,070 --> 00:06:08,950
+our regularized optimization objective,
+
+175
+00:06:08,960 --> 00:06:10,630
+our regularized cost function again.
+
+176
+00:06:10,640 --> 00:06:11,650
+Here it is. Here's J of
+
+177
+00:06:11,660 --> 00:06:13,960
+theta where, this term
+
+178
+00:06:13,970 --> 00:06:15,840
+on the right is a regularization
+
+179
+00:06:15,850 --> 00:06:17,560
+term and londer
+
+180
+00:06:17,570 --> 00:06:24,240
+here is called the regularization parameter and
+
+181
+00:06:24,250 --> 00:06:26,310
+what londer does, is it
+
+182
+00:06:26,320 --> 00:06:28,500
+controls a trade off
+
+183
+00:06:28,510 --> 00:06:30,560
+between two different goals.
+
+184
+00:06:30,570 --> 00:06:32,490
+The first goal, capture it
+
+185
+00:06:32,500 --> 00:06:34,380
+by the first goal objective, is
+
+186
+00:06:34,390 --> 00:06:36,080
+that we would like to train,
+
+187
+00:06:36,090 --> 00:06:38,380
+is that we would like to fit the training data well.
+
+188
+00:06:38,390 --> 00:06:41,050
+We would like to fit the training set well.
+
+189
+00:06:41,060 --> 00:06:42,940
+And the second goal is,
+
+190
+00:06:42,950 --> 00:06:44,400
+we want to keep the parameters
+
+191
+00:06:44,410 --> 00:06:46,050
+small, and that's captured by
+
+192
+00:06:46,060 --> 00:06:49,090
+the second term, by the regularization objective. And by the regularization term.
+
+193
+00:06:49,100 --> 00:06:53,530
+And what londer, the regularization
+
+194
+00:06:53,800 --> 00:06:55,900
+parameter does is the controls the trade of
+
+195
+00:06:55,910 --> 00:06:57,670
+between these two
+
+196
+00:06:57,680 --> 00:06:58,950
+goals, between the goal of fitting the training set well
+
+197
+00:06:58,960 --> 00:07:00,550
+and the
+
+198
+00:07:00,560 --> 00:07:02,070
+goal of keeping the parameter plan
+
+199
+00:07:02,080 --> 00:07:04,260
+small and therefore keeping the hypothesis relatively
+
+200
+00:07:04,270 --> 00:07:05,830
+
+
+201
+00:07:05,840 --> 00:07:08,850
+simple to avoid overfitting.
+
+202
+00:07:09,290 --> 00:07:11,020
+For our housing price prediction
+
+203
+00:07:11,030 --> 00:07:13,020
+example, whereas, previously, if
+
+204
+00:07:13,030 --> 00:07:14,220
+we had fit a very high
+
+205
+00:07:14,230 --> 00:07:15,950
+order polynomial, we may
+
+206
+00:07:15,960 --> 00:07:17,470
+have wound up with a very,
+
+207
+00:07:17,480 --> 00:07:19,010
+sort of wiggly or curvy function like
+
+208
+00:07:19,020 --> 00:07:22,450
+this. If you still fit a high order polynomial
+
+209
+00:07:22,460 --> 00:07:24,110
+with all the polynomial
+
+210
+00:07:24,120 --> 00:07:25,900
+features in there, but instead,
+
+211
+00:07:25,910 --> 00:07:27,960
+you just make sure, to use
+
+212
+00:07:27,970 --> 00:07:30,780
+this sole of regularized objective, then what
+
+213
+00:07:30,790 --> 00:07:32,260
+you can get out is in
+
+214
+00:07:32,270 --> 00:07:34,330
+fact a curve that isn't
+
+215
+00:07:34,340 --> 00:07:36,480
+quite a quadratic function, but is
+
+216
+00:07:36,490 --> 00:07:38,450
+much smoother and much simpler
+
+217
+00:07:38,460 --> 00:07:39,850
+and maybe a curve like the magenta
+
+218
+00:07:39,860 --> 00:07:42,230
+line that, you know, gives a
+
+219
+00:07:42,240 --> 00:07:45,310
+much better hypothesis for this data.
+
+220
+00:07:45,320 --> 00:07:46,540
+Once again, I realize
+
+221
+00:07:46,550 --> 00:07:47,890
+it can be a bit difficult to see why strengthening the
+
+222
+00:07:47,900 --> 00:07:50,030
+parameters can have
+
+223
+00:07:50,040 --> 00:07:51,680
+this effect, but if you
+
+224
+00:07:51,690 --> 00:07:54,640
+implement yourselves with regularization
+
+225
+00:07:54,650 --> 00:07:56,080
+you will be able to see
+
+226
+00:07:56,090 --> 00:07:58,790
+this effect firsthand.
+
+227
+00:08:00,620 --> 00:08:02,760
+In regularized linear regression, if
+
+228
+00:08:02,770 --> 00:08:05,710
+the regularization parameter monitor
+
+229
+00:08:05,720 --> 00:08:07,640
+is set to be very large,
+
+230
+00:08:07,650 --> 00:08:09,530
+then what will happen is
+
+231
+00:08:09,540 --> 00:08:11,640
+we will end up penalizing the
+
+232
+00:08:11,650 --> 00:08:13,510
+parameters theta 1, theta
+
+233
+00:08:13,520 --> 00:08:15,220
+2, theta 3, theta
+
+234
+00:08:15,230 --> 00:08:17,420
+4 very highly.
+
+235
+00:08:17,430 --> 00:08:21,920
+That is, if our hypothesis is this is one down at the bottom.
+
+236
+00:08:21,930 --> 00:08:23,650
+And if we end up penalizing
+
+237
+00:08:23,660 --> 00:08:24,980
+theta 1, theta 2, theta
+
+238
+00:08:24,990 --> 00:08:26,070
+3, theta 4 very heavily, then we
+
+239
+00:08:26,080 --> 00:08:29,450
+end up with all of these parameters close to zero, right?
+
+240
+00:08:29,460 --> 00:08:32,230
+Theta 1 will be close to zero; theta 2 will be close to zero.
+
+241
+00:08:32,240 --> 00:08:34,390
+Theta three and theta four
+
+242
+00:08:34,400 --> 00:08:36,500
+will end up being close to zero.
+
+243
+00:08:36,510 --> 00:08:37,780
+And if we do that, it's as
+
+244
+00:08:37,790 --> 00:08:39,150
+if we're getting rid of these
+
+245
+00:08:39,160 --> 00:08:41,170
+terms in the hypothesis so that
+
+246
+00:08:41,180 --> 00:08:43,500
+we're just left with a hypothesis
+
+247
+00:08:43,510 --> 00:08:44,220
+that will say that.
+
+248
+00:08:44,230 --> 00:08:45,980
+It says that, well, housing
+
+249
+00:08:45,990 --> 00:08:48,640
+prices are equal to theta zero,
+
+250
+00:08:48,650 --> 00:08:50,820
+and that is akin to fitting
+
+251
+00:08:50,830 --> 00:08:54,620
+a flat horizontal straight line to the data.
+
+252
+00:08:54,630 --> 00:08:56,560
+And this is an
+
+253
+00:08:56,570 --> 00:08:58,740
+example of underfitting, and
+
+254
+00:08:58,750 --> 00:09:00,940
+in particular this hypothesis, this
+
+255
+00:09:00,950 --> 00:09:02,560
+straight line it just fails
+
+256
+00:09:02,570 --> 00:09:04,060
+to fit the training set
+
+257
+00:09:04,070 --> 00:09:05,350
+well. It's just a fat straight
+
+258
+00:09:05,360 --> 00:09:07,130
+line, it doesn't go, you know, go near.
+
+259
+00:09:07,140 --> 00:09:10,370
+It doesn't go anywhere near most of the training examples.
+
+260
+00:09:10,380 --> 00:09:11,570
+And another way of saying this
+
+261
+00:09:11,580 --> 00:09:13,710
+is that this hypothesis has
+
+262
+00:09:13,720 --> 00:09:15,440
+too strong a preconception or
+
+263
+00:09:15,450 --> 00:09:17,110
+too high bias that housing
+
+264
+00:09:17,120 --> 00:09:18,450
+prices are just equal
+
+265
+00:09:18,460 --> 00:09:20,220
+to theta zero, and despite
+
+266
+00:09:20,230 --> 00:09:22,050
+the clear data to the contrary,
+
+267
+00:09:22,060 --> 00:09:23,170
+you know chooses to fit a sort
+
+268
+00:09:23,180 --> 00:09:25,640
+of, flat line, just a
+
+269
+00:09:25,650 --> 00:09:28,220
+flat horizontal line. I didn't draw that very well.
+
+270
+00:09:28,230 --> 00:09:30,400
+This just a horizontal flat line
+
+271
+00:09:30,410 --> 00:09:33,050
+to the data. So for
+
+272
+00:09:33,060 --> 00:09:35,550
+regularization to work well, some
+
+273
+00:09:35,560 --> 00:09:37,840
+care should be taken,
+
+274
+00:09:37,850 --> 00:09:39,880
+to choose a good choice for
+
+275
+00:09:39,890 --> 00:09:42,950
+the regularization parameter londer as well.
+
+276
+00:09:42,960 --> 00:09:44,910
+And when we talk about multi-selection
+
+277
+00:09:44,920 --> 00:09:46,700
+later in this course, we'll talk
+
+278
+00:09:46,710 --> 00:09:48,410
+about a way, a variety
+
+279
+00:09:48,420 --> 00:09:50,800
+of ways for automatically choosing
+
+280
+00:09:50,810 --> 00:09:54,820
+the regularization parameter londer as well. So, that's
+
+281
+00:09:54,830 --> 00:09:56,540
+the idea of the high regularization
+
+282
+00:09:56,550 --> 00:09:58,200
+and the cost function reviews in
+
+283
+00:09:58,210 --> 00:10:00,390
+order to use regularization In the
+
+284
+00:10:00,400 --> 00:10:01,850
+next two videos, lets take
+
+285
+00:10:01,860 --> 00:10:03,740
+these ideas and apply them
+
+286
+00:10:03,750 --> 00:10:05,430
+to linear regression and to
+
+287
+00:10:05,440 --> 00:10:07,040
+logistic regression, so that
+
+288
+00:10:07,050 --> 00:10:09,050
+we can then get them to
+
+289
+00:10:09,060 --> 00:10:11,590
+avoid overfitting.
+

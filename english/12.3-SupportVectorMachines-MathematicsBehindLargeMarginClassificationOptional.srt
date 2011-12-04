@@ -1,0 +1,2116 @@
+1
+00:00:00,680 --> 00:00:01,890
+In this video, I'd like to
+
+2
+00:00:01,900 --> 00:00:03,200
+tell you a bit about the
+
+3
+00:00:03,210 --> 00:00:05,950
+math behind large margin classification.
+
+4
+00:00:05,960 --> 00:00:09,250
+This video is optional, so please feel free to skip it.
+
+5
+00:00:09,260 --> 00:00:10,640
+It may also give you better
+
+6
+00:00:10,650 --> 00:00:12,450
+intuition about how the
+
+7
+00:00:12,460 --> 00:00:13,930
+optimization problem of the
+
+8
+00:00:13,940 --> 00:00:15,850
+support vex machine, how that
+
+9
+00:00:15,860 --> 00:00:18,650
+leads to large margin classifiers.
+
+10
+00:00:21,180 --> 00:00:22,590
+In order to get started, let
+
+11
+00:00:22,600 --> 00:00:23,960
+me first remind you of a
+
+12
+00:00:23,970 --> 00:00:27,990
+couple of properties of what vector inner products look like.
+
+13
+00:00:28,310 --> 00:00:29,890
+Let's say I have two vectors
+
+14
+00:00:29,900 --> 00:00:32,940
+U and V, that look like this.
+
+15
+00:00:32,950 --> 00:00:35,450
+So both two dimensional vectors.
+
+16
+00:00:35,460 --> 00:00:37,430
+Then let's see what U
+
+17
+00:00:37,440 --> 00:00:40,150
+transpose V looks like.
+
+18
+00:00:40,160 --> 00:00:42,290
+And U transpose V is
+
+19
+00:00:42,300 --> 00:00:44,480
+also called the inner products
+
+20
+00:00:44,490 --> 00:00:47,380
+between the vectors U and V.
+
+21
+00:00:48,360 --> 00:00:50,370
+Use a two dimensional vector, so
+
+22
+00:00:50,380 --> 00:00:52,750
+I can on plot it on this figure.
+
+23
+00:00:52,760 --> 00:00:54,030
+So let's say
+
+24
+00:00:54,040 --> 00:00:55,950
+that's the vector U. And
+
+25
+00:00:55,960 --> 00:00:57,100
+what I mean by that is
+
+26
+00:00:57,110 --> 00:00:59,350
+if on the horizontal axis that
+
+27
+00:00:59,360 --> 00:01:01,550
+value takes whatever value
+
+28
+00:01:01,560 --> 00:01:03,340
+U1 is and on the
+
+29
+00:01:03,350 --> 00:01:05,090
+vertical axis the height
+
+30
+00:01:05,100 --> 00:01:07,330
+of that is whatever U2
+
+31
+00:01:07,340 --> 00:01:08,980
+is the second component
+
+32
+00:01:08,990 --> 00:01:12,850
+of the vector U. Now, one
+
+33
+00:01:12,860 --> 00:01:14,030
+quantity that will be nice
+
+34
+00:01:14,040 --> 00:01:16,490
+to have is the norm
+
+35
+00:01:16,500 --> 00:01:17,850
+of the vector U. So, these
+
+36
+00:01:17,860 --> 00:01:19,530
+are, you know, double bars on
+
+37
+00:01:19,540 --> 00:01:20,790
+the left and right that denotes
+
+38
+00:01:20,800 --> 00:01:22,720
+the norm or length of
+
+39
+00:01:22,730 --> 00:01:24,190
+U. So this just means; really the
+
+40
+00:01:24,200 --> 00:01:27,400
+euclidean length of the
+
+41
+00:01:27,410 --> 00:01:31,340
+vector U. And this
+
+42
+00:01:31,350 --> 00:01:33,930
+is Pythagoras theorem is just
+
+43
+00:01:33,940 --> 00:01:35,610
+equal to U1
+
+44
+00:01:35,620 --> 00:01:37,520
+squared plus U2
+
+45
+00:01:37,530 --> 00:01:40,290
+squared square root, right?
+
+46
+00:01:40,300 --> 00:01:43,720
+And this is the length of the vector U. That's a real number.
+
+47
+00:01:43,730 --> 00:01:45,070
+Just say you know, what is the length
+
+48
+00:01:45,080 --> 00:01:46,210
+of this, what is the
+
+49
+00:01:46,220 --> 00:01:49,670
+length of this vector down here.
+
+50
+00:01:49,680 --> 00:01:50,750
+What is the length of this
+
+51
+00:01:50,760 --> 00:01:54,490
+arrow that I just drew, is the normal view?
+
+52
+00:01:56,020 --> 00:01:57,440
+Now let's go back and
+
+53
+00:01:57,450 --> 00:02:00,420
+look at the vector V because we want to compute the inner product.
+
+54
+00:02:00,430 --> 00:02:01,510
+So V will be some other
+
+55
+00:02:01,520 --> 00:02:03,300
+vector with, you know,
+
+56
+00:02:03,310 --> 00:02:08,330
+some value V1, V2.
+
+57
+00:02:08,340 --> 00:02:10,870
+And so, the vector
+
+58
+00:02:10,880 --> 00:02:16,550
+V will look like that, towards V like so.
+
+59
+00:02:16,920 --> 00:02:18,630
+Now let's go back
+
+60
+00:02:18,640 --> 00:02:20,390
+and look at how to compute
+
+61
+00:02:20,400 --> 00:02:21,850
+the inner product between U
+
+62
+00:02:21,860 --> 00:02:24,000
+and V. Here's how you can do it.
+
+63
+00:02:24,010 --> 00:02:26,190
+Let me take the vector V and
+
+64
+00:02:26,200 --> 00:02:28,540
+project it down onto the
+
+65
+00:02:28,550 --> 00:02:29,920
+vector U. So I'm going
+
+66
+00:02:29,930 --> 00:02:31,960
+to take a orthogonal projection or
+
+67
+00:02:31,970 --> 00:02:33,910
+a 90 degree projection, and project
+
+68
+00:02:33,920 --> 00:02:36,640
+it down onto U like so.
+
+69
+00:02:36,650 --> 00:02:38,120
+And what I'm going to do
+
+70
+00:02:38,130 --> 00:02:40,200
+measure length of this
+
+71
+00:02:40,210 --> 00:02:41,710
+red line that I just drew here.
+
+72
+00:02:41,720 --> 00:02:42,720
+So, I'm going to call the length of
+
+73
+00:02:42,730 --> 00:02:45,520
+that red line P. So, P
+
+74
+00:02:45,530 --> 00:02:46,880
+is the length or is
+
+75
+00:02:46,890 --> 00:02:49,660
+the magnitude of the projection
+
+76
+00:02:49,670 --> 00:02:51,780
+of the vector V onto the
+
+77
+00:02:51,790 --> 00:02:54,550
+vector U. Let me just write that down.
+
+78
+00:02:54,560 --> 00:02:57,100
+So, P is the length
+
+79
+00:02:57,500 --> 00:03:02,250
+of the projection of the
+
+80
+00:03:02,260 --> 00:03:05,910
+vector V onto the
+
+81
+00:03:05,920 --> 00:03:08,420
+vector U. And it is
+
+82
+00:03:08,430 --> 00:03:10,780
+possible to show that unit
+
+83
+00:03:10,790 --> 00:03:12,860
+product U transpose V, that
+
+84
+00:03:12,870 --> 00:03:13,830
+this is going to be equal
+
+85
+00:03:13,840 --> 00:03:16,420
+to P  times the
+
+86
+00:03:16,430 --> 00:03:18,100
+norm or the length of
+
+87
+00:03:18,110 --> 00:03:21,450
+the vector U. So, this
+
+88
+00:03:21,460 --> 00:03:24,060
+is one way to compute the inner product.
+
+89
+00:03:24,070 --> 00:03:25,770
+And if you actually do
+
+90
+00:03:25,780 --> 00:03:27,320
+the geometry figure out what
+
+91
+00:03:27,330 --> 00:03:29,890
+P is and figure out what the norm of U is.
+
+92
+00:03:29,900 --> 00:03:31,040
+This should give you the same
+
+93
+00:03:31,050 --> 00:03:32,670
+way, the same answer as
+
+94
+00:03:32,680 --> 00:03:34,850
+the other way of computing unit product.
+
+95
+00:03:34,860 --> 00:03:35,060
+Right.
+
+96
+00:03:35,070 --> 00:03:36,270
+Which is if you take U
+
+97
+00:03:36,280 --> 00:03:38,990
+transpose V then U transposes
+
+98
+00:03:39,000 --> 00:03:41,080
+this U1 U2, its a
+
+99
+00:03:41,090 --> 00:03:43,210
+one by two matrix, 1
+
+100
+00:03:43,220 --> 00:03:45,610
+times V. And so
+
+101
+00:03:45,620 --> 00:03:47,480
+this should actually give you
+
+102
+00:03:47,490 --> 00:03:51,690
+U1, V1 plus U2, V2.
+
+103
+00:03:51,700 --> 00:03:53,300
+And so the theorem of
+
+104
+00:03:53,310 --> 00:03:55,170
+linear algebra that these two
+
+105
+00:03:55,180 --> 00:03:57,880
+formulas give you the same answer.
+
+106
+00:03:57,890 --> 00:03:59,280
+And by the way, U transpose
+
+107
+00:03:59,290 --> 00:04:01,310
+V is also equal to
+
+108
+00:04:01,320 --> 00:04:03,640
+V transpose U. So if
+
+109
+00:04:03,650 --> 00:04:05,040
+you were to do the same process
+
+110
+00:04:05,050 --> 00:04:07,110
+in reverse, instead of projecting
+
+111
+00:04:07,120 --> 00:04:08,510
+V onto U, you could project
+
+112
+00:04:08,520 --> 00:04:10,150
+U onto V. Then, you know, do
+
+113
+00:04:10,160 --> 00:04:13,160
+the same process, but with the rows of U and V reversed.
+
+114
+00:04:13,170 --> 00:04:14,700
+And you would actually, you should
+
+115
+00:04:14,710 --> 00:04:17,530
+actually get the same number whatever that number is.
+
+116
+00:04:17,540 --> 00:04:18,980
+And just to clarify what's
+
+117
+00:04:18,990 --> 00:04:21,020
+going on in this equation the
+
+118
+00:04:21,030 --> 00:04:22,090
+norm of U is a real
+
+119
+00:04:22,100 --> 00:04:25,750
+number and P is also a real number.
+
+120
+00:04:25,760 --> 00:04:29,400
+And so U transpose V is
+
+121
+00:04:29,410 --> 00:04:33,030
+the regular multiplication as two real numbers of
+
+122
+00:04:33,040 --> 00:04:35,570
+the length of P times the normal view.
+
+123
+00:04:35,580 --> 00:04:37,180
+Just one last detail, which is
+
+124
+00:04:37,190 --> 00:04:38,320
+if you look at the norm of
+
+125
+00:04:38,330 --> 00:04:41,340
+P, P is actually signed so to the right.
+
+126
+00:04:41,350 --> 00:04:44,340
+And it can either be positive or negative.
+
+127
+00:04:44,350 --> 00:04:45,640
+So let me say what I mean
+
+128
+00:04:45,650 --> 00:04:47,160
+by that, if U
+
+129
+00:04:47,170 --> 00:04:49,630
+is a vector that looks like
+
+130
+00:04:49,640 --> 00:04:52,370
+this and V is a vector that looks like this.
+
+131
+00:04:52,380 --> 00:04:54,120
+So if the angle between U
+
+132
+00:04:54,130 --> 00:04:56,610
+and V is greater than ninety degrees.
+
+133
+00:04:56,620 --> 00:04:58,260
+Then if I project V onto
+
+134
+00:04:58,270 --> 00:05:00,410
+U, what I get
+
+135
+00:05:00,420 --> 00:05:01,710
+is a projection it looks like
+
+136
+00:05:01,720 --> 00:05:04,100
+this and so that length
+
+137
+00:05:04,110 --> 00:05:05,660
+P. And in this
+
+138
+00:05:05,670 --> 00:05:07,660
+case, I will still have
+
+139
+00:05:07,670 --> 00:05:09,650
+that U transpose V is
+
+140
+00:05:09,660 --> 00:05:11,790
+equal to P times the
+
+141
+00:05:11,800 --> 00:05:14,190
+norm of U. Except in
+
+142
+00:05:14,200 --> 00:05:18,100
+this example P will be negative.
+
+143
+00:05:19,150 --> 00:05:21,310
+So, you know, in inner products if the angle
+
+144
+00:05:21,320 --> 00:05:22,780
+between U and V is less
+
+145
+00:05:22,790 --> 00:05:24,090
+than ninety degrees, then P
+
+146
+00:05:24,100 --> 00:05:27,120
+is the positive length for that red line
+
+147
+00:05:27,130 --> 00:05:28,710
+whereas if the angle of this
+
+148
+00:05:28,720 --> 00:05:29,990
+angle of here is greater
+
+149
+00:05:30,000 --> 00:05:32,120
+than 90 degrees then P
+
+150
+00:05:32,130 --> 00:05:34,120
+here will be negative of
+
+151
+00:05:34,130 --> 00:05:37,640
+the length of the super line of that little line segment right over there.
+
+152
+00:05:37,650 --> 00:05:38,890
+So the inner product between two
+
+153
+00:05:38,900 --> 00:05:40,810
+vectors can also be negative
+
+154
+00:05:40,820 --> 00:05:43,760
+if the angle between them is greater than 90 degrees.
+
+155
+00:05:43,770 --> 00:05:45,300
+So that's how vector inner
+
+156
+00:05:45,310 --> 00:05:46,920
+products work. We're going to
+
+157
+00:05:46,930 --> 00:05:48,270
+use these properties of vector
+
+158
+00:05:48,280 --> 00:05:49,830
+inner product to try
+
+159
+00:05:49,840 --> 00:05:52,390
+to understand the support
+
+160
+00:05:52,400 --> 00:05:54,620
+vector machine optimization objective over there. Here
+
+161
+00:05:54,630 --> 00:05:58,640
+is the optimization objective for the
+
+162
+00:05:58,650 --> 00:06:01,090
+support vector machine that we worked out earlier. Just for
+
+163
+00:06:01,100 --> 00:06:02,110
+the purpose of this slide I
+
+164
+00:06:02,120 --> 00:06:04,900
+am going to make one simplification or
+
+165
+00:06:04,910 --> 00:06:08,660
+once just to make the objective easy
+
+166
+00:06:08,670 --> 00:06:10,260
+to analyze and what I'm going to do is
+
+167
+00:06:10,270 --> 00:06:15,660
+ignore the indeceptrums. So, we'll just ignore theta 0 and set that to be equal to 0. To
+
+168
+00:06:16,510 --> 00:06:23,970
+make things easier to plot, I'm also going to set N the number of features to be equal to 2. So, we have only 2 features,
+
+169
+00:06:23,980 --> 00:06:26,210
+X1 and X2.
+
+170
+00:06:26,510 --> 00:06:28,460
+Now, let's look at the objective function.
+
+171
+00:06:28,470 --> 00:06:30,150
+The optimization objective of the
+
+172
+00:06:30,160 --> 00:06:32,620
+SVM. What we have only two features.
+
+173
+00:06:32,630 --> 00:06:34,160
+When N is equal to 2.
+
+174
+00:06:34,170 --> 00:06:36,120
+This can be written,
+
+175
+00:06:36,130 --> 00:06:38,030
+one half of
+
+176
+00:06:38,040 --> 00:06:40,610
+theta one squared plus theta two squared.
+
+177
+00:06:40,620 --> 00:06:44,370
+Because we only have two parameters, theta one and thetaa two.
+
+178
+00:06:45,240 --> 00:06:46,930
+What I'm going to do is rewrite this a bit.
+
+179
+00:06:46,940 --> 00:06:48,080
+I'm going to write this as one
+
+180
+00:06:48,090 --> 00:06:50,180
+half of theta one
+
+181
+00:06:50,190 --> 00:06:52,040
+squared plus theta two squared and
+
+182
+00:06:52,050 --> 00:06:54,810
+the square root squared.
+
+183
+00:06:54,820 --> 00:06:56,090
+And the reason I can do that,
+
+184
+00:06:56,100 --> 00:07:00,490
+is because for any number, you know, W, right, the
+
+185
+00:07:00,830 --> 00:07:02,560
+square roots of W and
+
+186
+00:07:02,570 --> 00:07:04,070
+then squared, that's just equal
+
+187
+00:07:04,080 --> 00:07:05,830
+to W. So square roots
+
+188
+00:07:05,840 --> 00:07:08,590
+and squared should give you the same thing.
+
+189
+00:07:08,600 --> 00:07:09,720
+What you may notice is that
+
+190
+00:07:09,730 --> 00:07:12,280
+this term inside is that's
+
+191
+00:07:12,290 --> 00:07:14,520
+equal to the norm
+
+192
+00:07:14,530 --> 00:07:16,680
+or the length of the
+
+193
+00:07:16,690 --> 00:07:18,420
+vector theta and what
+
+194
+00:07:18,430 --> 00:07:20,190
+I mean by that is that
+
+195
+00:07:20,200 --> 00:07:21,690
+if we write out the
+
+196
+00:07:21,700 --> 00:07:23,070
+vector theta like this, as
+
+197
+00:07:23,080 --> 00:07:25,250
+you know theta one, theta two.
+
+198
+00:07:25,260 --> 00:07:26,680
+Then this term that I've just
+
+199
+00:07:26,690 --> 00:07:28,630
+underlined in red, that's exactly
+
+200
+00:07:28,640 --> 00:07:30,890
+the length, or the norm, of the vector theta.
+
+201
+00:07:30,900 --> 00:07:32,940
+We are calling the definition
+
+202
+00:07:32,950 --> 00:07:36,130
+of the norm of the vector that we have on the previous line.
+
+203
+00:07:36,140 --> 00:07:37,390
+And in fact this is actually
+
+204
+00:07:37,400 --> 00:07:38,360
+equal to the length of the
+
+205
+00:07:38,370 --> 00:07:40,010
+vector theta, whether you write
+
+206
+00:07:40,020 --> 00:07:42,270
+it as theta zero, theta 1, theta 2.
+
+207
+00:07:42,280 --> 00:07:45,850
+That is, if theta zero is equal to zero, as I assume here.
+
+208
+00:07:45,860 --> 00:07:46,890
+Or just the length of theta
+
+209
+00:07:46,900 --> 00:07:48,820
+1, theta 2; but for
+
+210
+00:07:48,830 --> 00:07:50,930
+this line I am going to ignore theta 0.
+
+211
+00:07:50,940 --> 00:07:53,140
+So let me just, you know, treat theta
+
+212
+00:07:53,150 --> 00:07:54,950
+as this, let me just
+
+213
+00:07:54,960 --> 00:07:56,710
+write theta, the normal
+
+214
+00:07:56,720 --> 00:07:58,610
+theta as this theta 1,
+
+215
+00:07:58,620 --> 00:08:00,250
+theta 2 only, but the
+
+216
+00:08:00,260 --> 00:08:01,450
+math works out either way,
+
+217
+00:08:01,460 --> 00:08:03,960
+whether we include theta zero here or not.
+
+218
+00:08:03,970 --> 00:08:07,370
+So it's not going to matter for the rest of our derivation.
+
+219
+00:08:07,630 --> 00:08:09,380
+And so finally this means
+
+220
+00:08:09,390 --> 00:08:11,740
+that my optimization objective is equal
+
+221
+00:08:11,750 --> 00:08:13,180
+to one half of the
+
+222
+00:08:13,190 --> 00:08:16,110
+norm of theta squared.
+
+223
+00:08:16,190 --> 00:08:17,520
+So all the support vector machine
+
+224
+00:08:17,530 --> 00:08:19,900
+is doing in the optimization
+
+225
+00:08:19,910 --> 00:08:21,580
+objective is it's minimizing the
+
+226
+00:08:21,590 --> 00:08:23,460
+squared norm of the square
+
+227
+00:08:23,470 --> 00:08:26,340
+length of the parameter vector theta.
+
+228
+00:08:28,330 --> 00:08:29,360
+Now what I'd like to do
+
+229
+00:08:29,370 --> 00:08:31,080
+is look at these terms, theta
+
+230
+00:08:31,090 --> 00:08:34,220
+transpose X and understand better what they're doing.
+
+231
+00:08:34,230 --> 00:08:36,920
+So given the parameter vector theta and given
+
+232
+00:08:36,930 --> 00:08:40,810
+and example x, what is this is equal to?
+
+233
+00:08:40,820 --> 00:08:42,220
+And on the previous slide, we
+
+234
+00:08:42,230 --> 00:08:44,860
+figured out what U transpose
+
+235
+00:08:44,870 --> 00:08:46,100
+V looks like, with different
+
+236
+00:08:46,110 --> 00:08:48,120
+vectors U and V. And so we're
+
+237
+00:08:48,130 --> 00:08:50,970
+going to take those definitions, you know, with theta
+
+238
+00:08:50,980 --> 00:08:52,400
+and X(i) playing the
+
+239
+00:08:52,410 --> 00:08:54,390
+roles of U and V.
+
+240
+00:08:54,400 --> 00:08:57,850
+And let's see what that picture looks like.
+
+241
+00:08:57,860 --> 00:08:59,420
+So, let's say I plot. Let's say I look at
+
+242
+00:08:59,430 --> 00:09:01,220
+just a single training example. Let's say I
+
+243
+00:09:01,230 --> 00:09:03,710
+have a positive example the drawing
+
+244
+00:09:03,720 --> 00:09:05,790
+was across there and let's say that is
+
+245
+00:09:05,800 --> 00:09:09,490
+my example X(i), what
+
+246
+00:09:09,500 --> 00:09:12,090
+that really means is
+
+247
+00:09:12,100 --> 00:09:14,440
+plotted on the horizontal axis
+
+248
+00:09:14,450 --> 00:09:17,130
+some value X(i) 1
+
+249
+00:09:17,140 --> 00:09:21,120
+and on the vertical axis
+
+250
+00:09:21,240 --> 00:09:22,640
+X(i) 2.
+
+251
+00:09:22,650 --> 00:09:25,390
+That's how I plot my training examples.
+
+252
+00:09:25,400 --> 00:09:27,310
+And although we haven't been really
+
+253
+00:09:27,320 --> 00:09:28,560
+thinking of this as a vector, what
+
+254
+00:09:28,570 --> 00:09:29,640
+this really is, this is a
+
+255
+00:09:29,650 --> 00:09:31,600
+vector from the origin
+
+256
+00:09:31,610 --> 00:09:34,550
+from 0, 0 out to
+
+257
+00:09:34,560 --> 00:09:37,710
+the location of this training example.
+
+258
+00:09:37,830 --> 00:09:39,970
+And now let's say we have
+
+259
+00:09:39,980 --> 00:09:42,070
+a parameter vector and
+
+260
+00:09:42,080 --> 00:09:43,790
+I'm going to plot
+
+261
+00:09:43,800 --> 00:09:46,380
+that as vector, as well.
+
+262
+00:09:46,390 --> 00:09:49,090
+What I mean by that is if I plot theta 1
+
+263
+00:09:49,100 --> 00:09:55,030
+here and theta 2 there
+
+264
+00:09:56,230 --> 00:09:57,280
+so what is the inner
+
+265
+00:09:57,290 --> 00:09:59,210
+product theta transpose X(i).
+
+266
+00:09:59,220 --> 00:10:01,980
+While using our earlier method,
+
+267
+00:10:01,990 --> 00:10:04,300
+the way we compute that is we
+
+268
+00:10:04,310 --> 00:10:06,310
+take my example and
+
+269
+00:10:06,320 --> 00:10:09,820
+project it onto my parameter vector theta.
+
+270
+00:10:09,830 --> 00:10:10,940
+And then I'm going to look
+
+271
+00:10:10,950 --> 00:10:13,670
+at the length of this segment
+
+272
+00:10:13,680 --> 00:10:15,080
+that I'm coloring in, in red.
+
+273
+00:10:15,090 --> 00:10:16,660
+And I'm going to
+
+274
+00:10:16,670 --> 00:10:20,320
+call that P superscript I
+
+275
+00:10:20,330 --> 00:10:21,600
+to denote that this is a
+
+276
+00:10:21,610 --> 00:10:24,420
+projection of the i-th training example
+
+277
+00:10:24,860 --> 00:10:26,890
+onto the parameter vector theta.
+
+278
+00:10:26,900 --> 00:10:28,340
+And so what we have is
+
+279
+00:10:28,350 --> 00:10:30,910
+that theta transpose X(i) is
+
+280
+00:10:30,920 --> 00:10:32,950
+equal to following what
+
+281
+00:10:32,960 --> 00:10:34,420
+we have on the previous slide, this
+
+282
+00:10:34,430 --> 00:10:36,550
+is going to be equal to
+
+283
+00:10:36,560 --> 00:10:40,080
+P times the
+
+284
+00:10:40,090 --> 00:10:43,400
+length of the norm of the vector theta.
+
+285
+00:10:43,410 --> 00:10:44,740
+And this is of course also equal to
+
+286
+00:10:44,750 --> 00:10:47,910
+theta 1 x1
+
+287
+00:10:47,920 --> 00:10:50,800
+plus theta 2 x2. So each
+
+288
+00:10:50,810 --> 00:10:52,670
+of these is, you know, an equally
+
+289
+00:10:52,680 --> 00:10:54,170
+valid way of computing the
+
+290
+00:10:54,180 --> 00:10:57,660
+inner product between theta and X(i).
+
+291
+00:10:57,780 --> 00:10:58,130
+Okay.
+
+292
+00:10:58,140 --> 00:10:59,270
+So where does this leave us?
+
+293
+00:10:59,280 --> 00:11:01,010
+What this means is that, this
+
+294
+00:11:01,020 --> 00:11:03,120
+constrains that theta transpose X(i)
+
+295
+00:11:03,130 --> 00:11:06,100
+be greater than or equal to one or less than minus one.
+
+296
+00:11:06,110 --> 00:11:06,960
+What this means is that it
+
+297
+00:11:06,970 --> 00:11:08,600
+can replace the use of constraints
+
+298
+00:11:08,610 --> 00:11:12,310
+that P(i) times X
+
+299
+00:11:12,320 --> 00:11:13,670
+be greater than or equal to one.
+
+300
+00:11:13,680 --> 00:11:16,390
+Because theta transpose X(i) is
+
+301
+00:11:16,400 --> 00:11:20,970
+equal to P(i) times the norm of theta.
+
+302
+00:11:21,250 --> 00:11:23,900
+So writing that into our optimization objective.
+
+303
+00:11:23,910 --> 00:11:25,120
+This is what we get
+
+304
+00:11:25,130 --> 00:11:27,080
+where I have, instead of
+
+305
+00:11:27,090 --> 00:11:28,610
+theta transpose X(i), I now
+
+306
+00:11:28,620 --> 00:11:31,960
+have this P(i) times the norm of theta.
+
+307
+00:11:31,970 --> 00:11:33,080
+And just to remind you we
+
+308
+00:11:33,090 --> 00:11:34,450
+worked out earlier too that
+
+309
+00:11:34,460 --> 00:11:36,500
+this optimization objective can be
+
+310
+00:11:36,510 --> 00:11:38,490
+written as one half times
+
+311
+00:11:38,500 --> 00:11:41,410
+the norm of theta squared.
+
+312
+00:11:41,730 --> 00:11:44,200
+So, now let's consider
+
+313
+00:11:44,210 --> 00:11:45,690
+the training example that we
+
+314
+00:11:45,700 --> 00:11:47,440
+have at the bottom and
+
+315
+00:11:47,450 --> 00:11:50,170
+for now, continuing to use the simplification that
+
+316
+00:11:50,180 --> 00:11:52,020
+theta 0 is equal to 0.
+
+317
+00:11:52,030 --> 00:11:55,850
+Let's see what decision boundary the support vector machine will choose.
+
+318
+00:11:55,860 --> 00:11:57,860
+Here's one option, let's say
+
+319
+00:11:57,870 --> 00:11:59,330
+the support vector machine were to
+
+320
+00:11:59,340 --> 00:12:02,680
+choose this decision boundary.
+
+321
+00:12:02,690 --> 00:12:05,520
+This is not a very good choice because it has very small margins.
+
+322
+00:12:05,530 --> 00:12:09,710
+This decision boundary comes very close to the training examples.
+
+323
+00:12:09,810 --> 00:12:13,860
+Let's see why the support vector machine will not do this.
+
+324
+00:12:14,130 --> 00:12:16,400
+For this choice of parameters
+
+325
+00:12:16,410 --> 00:12:19,020
+it's possible to show that the
+
+326
+00:12:19,030 --> 00:12:21,750
+parameter vector theta is actually
+
+327
+00:12:21,760 --> 00:12:24,050
+at 90 degrees to the decision boundary.
+
+328
+00:12:24,060 --> 00:12:26,240
+And so, that green decision boundary
+
+329
+00:12:26,250 --> 00:12:27,910
+corresponds to a parameter vector
+
+330
+00:12:27,920 --> 00:12:30,720
+theta that points in that direction.
+
+331
+00:12:30,730 --> 00:12:32,500
+And by the way, the simplification that
+
+332
+00:12:32,510 --> 00:12:34,290
+theta 0 equals 0 that
+
+333
+00:12:34,300 --> 00:12:35,900
+just means that the decision boundary
+
+334
+00:12:35,910 --> 00:12:38,320
+must pass through the origin, (0,0) over there.
+
+335
+00:12:38,330 --> 00:12:40,680
+So now, let's
+
+336
+00:12:40,690 --> 00:12:41,830
+look at what this implies
+
+337
+00:12:41,840 --> 00:12:45,090
+for the optimization objective.
+
+338
+00:12:45,260 --> 00:12:47,450
+Let's say that this example here.
+
+339
+00:12:47,460 --> 00:12:50,060
+Let's say that's my first example, you know,
+
+340
+00:12:50,480 --> 00:12:51,680
+X1.
+
+341
+00:12:51,690 --> 00:12:53,310
+If we look at the projection
+
+342
+00:12:53,320 --> 00:12:56,170
+of this example onto my parameters theta.
+
+343
+00:12:56,180 --> 00:12:57,650
+That's the projection.
+
+344
+00:12:57,660 --> 00:13:00,440
+And so that little red line segment.
+
+345
+00:13:00,450 --> 00:13:02,370
+That is equal to P1.
+
+346
+00:13:02,380 --> 00:13:05,850
+And that is going to be pretty small, right.
+
+347
+00:13:05,860 --> 00:13:09,600
+And similarly, if this
+
+348
+00:13:09,610 --> 00:13:11,160
+example here, if this happens
+
+349
+00:13:11,170 --> 00:13:13,870
+to be X2, that's my second example.
+
+350
+00:13:13,880 --> 00:13:18,070
+Then, if I look at the projection of this this example onto theta.
+
+351
+00:13:18,080 --> 00:13:18,430
+You know.
+
+352
+00:13:18,440 --> 00:13:21,590
+Then, let me draw this one in magenta.
+
+353
+00:13:21,600 --> 00:13:23,990
+This little magenta line segment, that's
+
+354
+00:13:24,000 --> 00:13:26,060
+going to be P2. That's
+
+355
+00:13:26,070 --> 00:13:27,760
+the projection of the second example
+
+356
+00:13:27,770 --> 00:13:30,090
+onto my, onto the direction
+
+357
+00:13:30,100 --> 00:13:33,860
+of my parameter vector theta which goes like this.
+
+358
+00:13:33,870 --> 00:13:35,260
+And so, this little
+
+359
+00:13:35,270 --> 00:13:35,750
+projection line segment is getting pretty small.
+
+360
+00:13:35,760 --> 00:13:36,840
+
+
+361
+00:13:36,850 --> 00:13:38,550
+P2 will actually be a negative number, right so P2 is
+
+362
+00:13:38,560 --> 00:13:43,700
+in the opposite direction.
+
+363
+00:13:43,710 --> 00:13:45,550
+This vector has greater
+
+364
+00:13:45,560 --> 00:13:47,260
+than 90 degree angle with my
+
+365
+00:13:47,270 --> 00:13:50,270
+parameter vector theta, it's going to be less than 0.
+
+366
+00:13:50,280 --> 00:13:51,840
+And so what we're finding is that
+
+367
+00:13:51,850 --> 00:13:55,190
+these terms P(i) are
+
+368
+00:13:55,200 --> 00:13:58,200
+going to be pretty small numbers.
+
+369
+00:13:58,210 --> 00:13:59,100
+So if we look at
+
+370
+00:13:59,110 --> 00:14:02,480
+the optimization objective and see, well, for positive examples
+
+371
+00:14:02,490 --> 00:14:05,210
+we need P(i) times
+
+372
+00:14:05,220 --> 00:14:08,660
+the norm of theta to be bigger than either one.
+
+373
+00:14:08,670 --> 00:14:10,850
+But if P(i) over
+
+374
+00:14:10,860 --> 00:14:12,760
+here, if P1 over here
+
+375
+00:14:12,770 --> 00:14:14,400
+is pretty small, that means
+
+376
+00:14:14,410 --> 00:14:15,640
+that we need the norm of
+
+377
+00:14:15,650 --> 00:14:19,820
+theta to be pretty large, right? If
+
+378
+00:14:19,830 --> 00:14:21,780
+P1 of theta is small
+
+379
+00:14:21,790 --> 00:14:23,400
+and we want P1 you
+
+380
+00:14:23,410 --> 00:14:24,910
+know times in all of theta
+
+381
+00:14:24,920 --> 00:14:26,390
+to be bigger than either one, well
+
+382
+00:14:26,400 --> 00:14:27,500
+the only way for that
+
+383
+00:14:27,510 --> 00:14:28,640
+to be true for the profit that
+
+384
+00:14:28,650 --> 00:14:30,010
+these two numbers to be large
+
+385
+00:14:30,020 --> 00:14:31,230
+if P1 is small, as we
+
+386
+00:14:31,240 --> 00:14:34,140
+said we want the norm of theta to be large.
+
+387
+00:14:34,150 --> 00:14:36,640
+And similarly for our
+
+388
+00:14:36,650 --> 00:14:39,740
+negative example, we need P2
+
+389
+00:14:39,750 --> 00:14:41,340
+times the norm of
+
+390
+00:14:41,350 --> 00:14:45,150
+theta to be
+
+391
+00:14:45,160 --> 00:14:47,750
+less than or equal to minus one.
+
+392
+00:14:47,760 --> 00:14:48,700
+And we saw in this
+
+393
+00:14:48,710 --> 00:14:50,250
+example already that P2
+
+394
+00:14:50,260 --> 00:14:52,030
+is going pretty small negative number,
+
+395
+00:14:52,040 --> 00:14:53,410
+and so the only way for
+
+396
+00:14:53,420 --> 00:14:54,520
+that to happen as well is
+
+397
+00:14:54,530 --> 00:14:57,000
+for the norm of theta to be
+
+398
+00:14:57,010 --> 00:14:59,780
+large, but what
+
+399
+00:14:59,790 --> 00:15:01,280
+we are doing in the optimization
+
+400
+00:15:01,290 --> 00:15:02,530
+objective is we are
+
+401
+00:15:02,540 --> 00:15:04,160
+trying to find a setting
+
+402
+00:15:04,170 --> 00:15:05,540
+of parameters where the norm
+
+403
+00:15:05,550 --> 00:15:07,820
+of theta is small, and so
+
+404
+00:15:07,830 --> 00:15:09,320
+you know, so this doesn't
+
+405
+00:15:09,330 --> 00:15:10,600
+seem like such a good direction
+
+406
+00:15:10,610 --> 00:15:14,440
+for the parameter vector and theta.
+
+407
+00:15:14,450 --> 00:15:17,010
+In contrast, just look at a different decision boundary.
+
+408
+00:15:17,040 --> 00:15:20,500
+Here, let's say, this SVM chooses
+
+409
+00:15:20,510 --> 00:15:22,780
+that decision boundary.
+
+410
+00:15:22,870 --> 00:15:24,410
+Now the is going to be very different.
+
+411
+00:15:24,420 --> 00:15:26,180
+If that is the decision boundary,
+
+412
+00:15:26,190 --> 00:15:27,440
+here is the
+
+413
+00:15:27,450 --> 00:15:29,200
+corresponding direction for theta.
+
+414
+00:15:29,210 --> 00:15:30,990
+So, with the direction
+
+415
+00:15:31,000 --> 00:15:32,290
+boundary you know, that
+
+416
+00:15:32,300 --> 00:15:34,460
+vertical line that corresponds
+
+417
+00:15:34,470 --> 00:15:36,180
+to it is possible to
+
+418
+00:15:36,190 --> 00:15:38,060
+show using linear algebra that
+
+419
+00:15:38,070 --> 00:15:39,450
+the way to get that green decision
+
+420
+00:15:39,460 --> 00:15:41,380
+boundary is have the vector of theta be
+
+421
+00:15:41,390 --> 00:15:43,600
+at 90 degrees to it,
+
+422
+00:15:43,610 --> 00:15:44,550
+and now if you look
+
+423
+00:15:44,560 --> 00:15:45,700
+at the projection of your
+
+424
+00:15:45,710 --> 00:15:48,790
+data onto the vector
+
+425
+00:15:48,800 --> 00:15:50,000
+x, lets say its before
+
+426
+00:15:50,010 --> 00:15:52,880
+this example is my example of x1. So when
+
+427
+00:15:52,890 --> 00:15:55,400
+I project this on to x,
+
+428
+00:15:55,410 --> 00:16:00,610
+or onto theta, what I find is that this is P1.
+
+429
+00:16:00,650 --> 00:16:03,740
+That length there is P1.
+
+430
+00:16:03,750 --> 00:16:06,250
+The other example, that
+
+431
+00:16:06,260 --> 00:16:08,830
+example is and I
+
+432
+00:16:08,840 --> 00:16:11,400
+do the same projection and
+
+433
+00:16:11,410 --> 00:16:12,770
+what I find is that this
+
+434
+00:16:12,780 --> 00:16:15,600
+length here is a
+
+435
+00:16:15,610 --> 00:16:18,820
+P2 really that is going to be less than 0.
+
+436
+00:16:18,830 --> 00:16:20,470
+And you notice that now
+
+437
+00:16:20,480 --> 00:16:23,800
+P1 and P2, these lengths
+
+438
+00:16:23,810 --> 00:16:24,770
+of the projections are going to
+
+439
+00:16:24,780 --> 00:16:27,430
+be much bigger, and so
+
+440
+00:16:27,440 --> 00:16:28,880
+if we still need to enforce
+
+441
+00:16:28,890 --> 00:16:30,790
+these constraints that P1 of
+
+442
+00:16:30,800 --> 00:16:33,220
+the norm of theta is phase
+
+443
+00:16:33,230 --> 00:16:36,570
+number one because P1 is so much bigger now.
+
+444
+00:16:36,580 --> 00:16:40,610
+The normal can be smaller.
+
+445
+00:16:41,960 --> 00:16:43,200
+And so, what this means is
+
+446
+00:16:43,210 --> 00:16:44,720
+that by choosing the decision
+
+447
+00:16:44,730 --> 00:16:46,000
+boundary shown on the right
+
+448
+00:16:46,010 --> 00:16:47,840
+instead of on the left, the
+
+449
+00:16:47,850 --> 00:16:49,070
+SVM can make the
+
+450
+00:16:49,080 --> 00:16:50,830
+norm of the parameters theta
+
+451
+00:16:50,840 --> 00:16:52,540
+much smaller. So, if we can
+
+452
+00:16:52,550 --> 00:16:54,250
+make the norm of theta smaller and
+
+453
+00:16:54,260 --> 00:16:55,580
+therefore make the squared norm of
+
+454
+00:16:55,590 --> 00:16:57,200
+theta smaller, which is
+
+455
+00:16:57,210 --> 00:16:58,700
+why the SVM
+
+456
+00:16:58,710 --> 00:17:02,420
+would choose this hypothesis on the right instead.
+
+457
+00:17:02,800 --> 00:17:05,570
+And this is how
+
+458
+00:17:05,580 --> 00:17:07,490
+the SVM gives rise
+
+459
+00:17:07,500 --> 00:17:10,690
+to this large margin certification effect.
+
+460
+00:17:10,700 --> 00:17:11,810
+Mainly, if you look
+
+461
+00:17:11,820 --> 00:17:13,480
+at this green line, if you look at this green
+
+462
+00:17:13,490 --> 00:17:15,060
+hypothesis we want the
+
+463
+00:17:15,070 --> 00:17:17,180
+projections of my positive
+
+464
+00:17:17,190 --> 00:17:19,190
+and negative examples onto theta to be large, and
+
+465
+00:17:19,200 --> 00:17:20,700
+the only way for that to
+
+466
+00:17:20,710 --> 00:17:24,940
+hold true this is if surrounding the green line.
+
+467
+00:17:24,950 --> 00:17:27,870
+There's this large margin, there's
+
+468
+00:17:27,880 --> 00:17:32,960
+this large gap that separates
+
+469
+00:17:33,970 --> 00:17:38,010
+positive and negative examples is
+
+470
+00:17:38,020 --> 00:17:41,070
+really the magnitude of this gap.
+
+471
+00:17:41,080 --> 00:17:43,030
+The magnitude of this margin
+
+472
+00:17:43,040 --> 00:17:45,050
+is exactly the values of
+
+473
+00:17:45,060 --> 00:17:47,880
+P1, P2, P3 and so on.
+
+474
+00:17:47,890 --> 00:17:49,470
+And so by making the margin
+
+475
+00:17:49,480 --> 00:17:51,460
+large, by these tyros P1,
+
+476
+00:17:51,470 --> 00:17:53,820
+P2, P3 and so on that's
+
+477
+00:17:53,830 --> 00:17:55,660
+the SVM can end up with
+
+478
+00:17:55,670 --> 00:17:56,950
+a smaller value for the
+
+479
+00:17:56,960 --> 00:18:00,240
+norm of theta which is what it is trying to do in the objective.
+
+480
+00:18:00,250 --> 00:18:01,950
+And this is why this
+
+481
+00:18:01,960 --> 00:18:03,780
+machine ends up with enlarge
+
+482
+00:18:03,790 --> 00:18:05,630
+margin classifiers because itss
+
+483
+00:18:05,640 --> 00:18:07,710
+trying to maximize the norm
+
+484
+00:18:07,720 --> 00:18:09,050
+of these P1 which is the distance from
+
+485
+00:18:09,060 --> 00:18:11,950
+the training examples to the decision boundary.
+
+486
+00:18:14,360 --> 00:18:17,190
+Finally, we did this whole derivation
+
+487
+00:18:17,200 --> 00:18:18,740
+using this simplification that the
+
+488
+00:18:18,750 --> 00:18:21,850
+parameter theta 0 must be equal to 0.
+
+489
+00:18:21,860 --> 00:18:23,550
+The effect of that as
+
+490
+00:18:23,560 --> 00:18:25,530
+I mentioned briefly, is that if
+
+491
+00:18:25,540 --> 00:18:26,820
+theta 0 is equal to
+
+492
+00:18:26,830 --> 00:18:28,450
+0 what that means
+
+493
+00:18:28,460 --> 00:18:30,190
+is that we are entertaining decision
+
+494
+00:18:30,200 --> 00:18:31,740
+boundaries that pass through the
+
+495
+00:18:31,750 --> 00:18:33,790
+origins of decision boundaries pass through
+
+496
+00:18:33,800 --> 00:18:35,700
+the origin like that, if you
+
+497
+00:18:35,710 --> 00:18:38,070
+allow theta zero to
+
+498
+00:18:38,080 --> 00:18:39,860
+be non 0 then what
+
+499
+00:18:39,870 --> 00:18:41,370
+that means is that you entertain the
+
+500
+00:18:41,380 --> 00:18:43,380
+decision boundaries that did not
+
+501
+00:18:43,390 --> 00:18:46,370
+cross through the origin, like that one I just drew.
+
+502
+00:18:46,380 --> 00:18:48,000
+And I'm not going to do
+
+503
+00:18:48,010 --> 00:18:49,640
+the full derivation that. It
+
+504
+00:18:49,650 --> 00:18:51,050
+turns out that this same
+
+505
+00:18:51,060 --> 00:18:52,770
+large margin proof works in
+
+506
+00:18:52,780 --> 00:18:54,380
+pretty much in exactly the same way.
+
+507
+00:18:54,390 --> 00:18:56,840
+And there's a generalization of this
+
+508
+00:18:56,850 --> 00:18:58,020
+argument that we just went through
+
+509
+00:18:58,030 --> 00:18:59,860
+them long ago through that shows
+
+510
+00:18:59,870 --> 00:19:01,830
+that even when theta
+
+511
+00:19:01,840 --> 00:19:03,950
+0 is non 0, what
+
+512
+00:19:03,960 --> 00:19:08,190
+the SVM is trying to do when you have this optimization objective.
+
+513
+00:19:08,200 --> 00:19:09,710
+Which again corresponds to the
+
+514
+00:19:09,720 --> 00:19:13,070
+case of when C is very large.
+
+515
+00:19:14,010 --> 00:19:15,280
+But it is possible to
+
+516
+00:19:15,290 --> 00:19:16,800
+show that, you know, when theta
+
+517
+00:19:16,810 --> 00:19:18,610
+is not equal to 0 this
+
+518
+00:19:18,620 --> 00:19:20,090
+support vector machine is still
+
+519
+00:19:20,100 --> 00:19:21,630
+finding is really trying
+
+520
+00:19:21,640 --> 00:19:23,030
+to find the large margin
+
+521
+00:19:23,040 --> 00:19:24,620
+separator that between the positive and negative
+
+522
+00:19:24,630 --> 00:19:28,410
+examples. So that
+
+523
+00:19:28,420 --> 00:19:32,560
+explains how this support vector machine is a large margin classifier.
+
+524
+00:19:32,920 --> 00:19:34,180
+In the next video we
+
+525
+00:19:34,190 --> 00:19:35,390
+will start to talk about how
+
+526
+00:19:35,400 --> 00:19:36,700
+to take some of these
+
+527
+00:19:36,710 --> 00:19:38,180
+SVM ideas and start to
+
+528
+00:19:38,190 --> 00:19:39,890
+apply them to build a complex
+
+529
+00:19:39,900 --> 00:19:42,870
+nonlinear classifiers.
+

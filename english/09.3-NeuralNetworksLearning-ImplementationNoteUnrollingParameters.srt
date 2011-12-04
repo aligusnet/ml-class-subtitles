@@ -1,0 +1,882 @@
+1
+00:00:00,250 --> 00:00:01,840
+In the previous video, we talked
+
+2
+00:00:01,850 --> 00:00:03,970
+about how to use back propagation
+
+3
+00:00:03,980 --> 00:00:06,770
+to compute the derivatives of your cost function.
+
+4
+00:00:06,780 --> 00:00:08,020
+In this video, I want
+
+5
+00:00:08,030 --> 00:00:11,210
+to quickly tell you about one implementational detail of
+
+6
+00:00:11,220 --> 00:00:13,660
+unrolling your parameters from
+
+7
+00:00:13,670 --> 00:00:15,600
+matrices into vectors, which we
+
+8
+00:00:15,610 --> 00:00:19,370
+need in order to use the advanced optimization routines.
+
+9
+00:00:20,230 --> 00:00:21,630
+Concretely, let's say
+
+10
+00:00:21,640 --> 00:00:23,650
+you've implemented a cost function
+
+11
+00:00:23,660 --> 00:00:25,410
+that takes this input, you know, parameters
+
+12
+00:00:25,420 --> 00:00:30,040
+theta and returns the cost function and returns derivatives.
+
+13
+00:00:30,050 --> 00:00:31,500
+Then you can pass this to
+
+14
+00:00:31,510 --> 00:00:34,070
+an advanced authorization algorithm by fminunc
+
+15
+00:00:34,080 --> 00:00:34,880
+and fminunc
+
+16
+00:00:34,890 --> 00:00:36,050
+isn't the only one by the way.
+
+17
+00:00:36,060 --> 00:00:39,700
+There are also other advanced authorization algorithms.
+
+18
+00:00:39,710 --> 00:00:41,020
+But what all of them
+
+19
+00:00:41,030 --> 00:00:42,720
+do is take those input
+
+20
+00:00:42,730 --> 00:00:44,480
+pointedly the cost function,
+
+21
+00:00:44,490 --> 00:00:47,000
+and some initial value of theta.
+
+22
+00:00:47,010 --> 00:00:48,720
+And both, and these
+
+23
+00:00:48,730 --> 00:00:51,730
+routines assume that theta and
+
+24
+00:00:51,740 --> 00:00:53,570
+the initial value of theta, that
+
+25
+00:00:53,580 --> 00:00:55,630
+these are parameter vectors, maybe
+
+26
+00:00:55,640 --> 00:00:57,860
+Rn or Rn plus 1.
+
+27
+00:00:57,870 --> 00:01:00,520
+But these are vectors and it
+
+28
+00:01:00,530 --> 00:01:02,140
+also assumes that, you know, your cost
+
+29
+00:01:02,150 --> 00:01:03,950
+function will return as
+
+30
+00:01:03,960 --> 00:01:05,820
+a second return value this
+
+31
+00:01:05,830 --> 00:01:07,630
+gradient which is also Rn
+
+32
+00:01:07,640 --> 00:01:10,830
+and Rn plus 1. So also a vector.
+
+33
+00:01:10,840 --> 00:01:12,030
+This worked fine when we
+
+34
+00:01:12,040 --> 00:01:14,210
+were using logistic progression but
+
+35
+00:01:14,220 --> 00:01:15,270
+now that we're using a neural
+
+36
+00:01:15,280 --> 00:01:17,210
+network our parameters are
+
+37
+00:01:17,220 --> 00:01:18,970
+no longer vectors, but instead
+
+38
+00:01:18,980 --> 00:01:21,300
+they are these matrices where for
+
+39
+00:01:21,310 --> 00:01:22,820
+a full neural network we would
+
+40
+00:01:22,830 --> 00:01:26,690
+have parameter matrices theta 1, theta 2, theta 3
+
+41
+00:01:26,700 --> 00:01:28,670
+that we might represent in Octave
+
+42
+00:01:28,680 --> 00:01:31,440
+as these matrices theta 1, theta 2, theta 3.
+
+43
+00:01:31,450 --> 00:01:33,750
+And similarly these gradient
+
+44
+00:01:33,760 --> 00:01:35,710
+terms that were expected to return.
+
+45
+00:01:35,720 --> 00:01:36,970
+Well, in the previous video we
+
+46
+00:01:36,980 --> 00:01:38,830
+showed how to compute these
+
+47
+00:01:38,840 --> 00:01:40,970
+gradient matrices, which was
+
+48
+00:01:40,980 --> 00:01:42,550
+capital D1, capital D2,
+
+49
+00:01:42,560 --> 00:01:44,070
+capital D3, which we
+
+50
+00:01:44,080 --> 00:01:47,630
+might represent an octave as matrices D1, D2, D3.
+
+51
+00:01:48,080 --> 00:01:49,470
+In this video I want
+
+52
+00:01:49,480 --> 00:01:50,500
+to quickly tell you about the
+
+53
+00:01:50,510 --> 00:01:51,970
+idea of how to take
+
+54
+00:01:51,980 --> 00:01:54,580
+these matrices and unroll them into vectors.
+
+55
+00:01:54,590 --> 00:01:55,900
+So that they end up
+
+56
+00:01:55,910 --> 00:01:57,920
+being in a format suitable for
+
+57
+00:01:57,930 --> 00:02:00,450
+passing into as theta here off for getting
+
+58
+00:02:00,460 --> 00:02:03,210
+out for a gradient there.
+
+59
+00:02:03,220 --> 00:02:04,660
+Concretely, let's say we
+
+60
+00:02:04,670 --> 00:02:06,940
+have a neural network with one
+
+61
+00:02:06,950 --> 00:02:09,000
+input layer with ten units,
+
+62
+00:02:09,010 --> 00:02:10,530
+hidden layer with ten units
+
+63
+00:02:10,540 --> 00:02:12,010
+and one output layer with
+
+64
+00:02:12,020 --> 00:02:13,260
+just one unit, so s1
+
+65
+00:02:13,270 --> 00:02:14,430
+is the number of units in layer one
+
+66
+00:02:14,440 --> 00:02:15,850
+and s2 is the
+
+67
+00:02:15,860 --> 00:02:18,510
+number of units in layer two, and s3 is a number
+
+68
+00:02:18,520 --> 00:02:21,550
+of units in layer three.
+
+69
+00:02:21,560 --> 00:02:23,450
+In this case, the dimension of
+
+70
+00:02:23,460 --> 00:02:25,340
+your matrices theta and
+
+71
+00:02:25,350 --> 00:02:26,560
+D are going to be
+
+72
+00:02:26,570 --> 00:02:28,510
+given by these expressions.
+
+73
+00:02:28,520 --> 00:02:30,620
+For example, theta one
+
+74
+00:02:30,630 --> 00:02:34,410
+is going to a 10 by 11 matrix and so on.
+
+75
+00:02:34,420 --> 00:02:35,940
+So in if you want
+
+76
+00:02:35,950 --> 00:02:38,570
+to convert between these matrices.
+
+77
+00:02:38,580 --> 00:02:39,320
+vectors.
+
+78
+00:02:39,330 --> 00:02:40,820
+What you can do is take
+
+79
+00:02:40,830 --> 00:02:42,340
+your theta 1, theta
+
+80
+00:02:42,350 --> 00:02:44,400
+2, theta 3, and write this
+
+81
+00:02:44,410 --> 00:02:45,600
+piece of code and this will
+
+82
+00:02:45,610 --> 00:02:46,890
+take all the elements of
+
+83
+00:02:46,900 --> 00:02:48,760
+your three theta matrices and
+
+84
+00:02:48,770 --> 00:02:49,850
+take all the elements
+
+85
+00:02:49,860 --> 00:02:51,250
+of theta one, all the
+
+86
+00:02:51,260 --> 00:02:52,390
+elements of theta 2, all the
+
+87
+00:02:52,400 --> 00:02:54,120
+elements of theta 3,
+
+88
+00:02:54,130 --> 00:02:55,760
+and unroll them and put
+
+89
+00:02:55,770 --> 00:02:58,530
+all the elements into a big long vector.
+
+90
+00:02:58,540 --> 00:03:00,950
+Which is thetaVec and similarly
+
+91
+00:03:00,960 --> 00:03:02,820
+the second command would take
+
+92
+00:03:02,830 --> 00:03:04,480
+all of your D matrices and
+
+93
+00:03:04,490 --> 00:03:05,920
+unroll them into a big
+
+94
+00:03:05,930 --> 00:03:07,500
+long vector and call them
+
+95
+00:03:07,510 --> 00:03:09,360
+DVec.
+
+And finally
+
+96
+00:03:09,370 --> 00:03:10,510
+if you want to go back from
+
+97
+00:03:10,520 --> 00:03:14,610
+the vector representations to the matrix representations.
+
+98
+00:03:14,620 --> 00:03:15,830
+What you do to get back
+
+99
+00:03:15,840 --> 00:03:17,930
+to theta one say is take
+
+100
+00:03:17,940 --> 00:03:19,520
+thetaVec and pull
+
+101
+00:03:19,530 --> 00:03:21,460
+out the first 110 elements.
+
+102
+00:03:21,470 --> 00:03:23,380
+So theta 1 has 110
+
+103
+00:03:23,390 --> 00:03:24,710
+elements because it's a
+
+104
+00:03:24,720 --> 00:03:26,800
+10 by 11 matrix so that
+
+105
+00:03:26,810 --> 00:03:28,530
+pulls out the first 110 elements
+
+106
+00:03:28,540 --> 00:03:30,360
+and then you can
+
+107
+00:03:30,370 --> 00:03:33,000
+use the reshape command to reshape those back into theta 1.
+
+108
+00:03:33,010 --> 00:03:34,890
+And similarly, to get
+
+109
+00:03:34,900 --> 00:03:36,270
+back theta 2 you pull
+
+110
+00:03:36,280 --> 00:03:39,660
+out the next 110 elements and reshape it.
+
+111
+00:03:39,670 --> 00:03:41,440
+And for theta 3, you pull out
+
+112
+00:03:41,450 --> 00:03:43,490
+the final eleven elements and run
+
+113
+00:03:43,500 --> 00:03:46,710
+reshape to get back the theta 3.
+
+114
+00:03:48,840 --> 00:03:51,260
+Here's a quick Octave demo of that process.
+
+115
+00:03:51,270 --> 00:03:53,000
+So for this example
+
+116
+00:03:53,010 --> 00:03:55,330
+let's set theta 1 equal
+
+117
+00:03:55,340 --> 00:03:57,660
+to be ones of 10 by
+
+118
+00:03:57,670 --> 00:04:00,350
+11, so it's a matrix of all ones. And
+
+119
+00:04:00,360 --> 00:04:01,740
+just to make this easier seen,
+
+120
+00:04:01,750 --> 00:04:03,270
+let's set that to be 2
+
+121
+00:04:03,280 --> 00:04:05,300
+times ones, 10 by
+
+122
+00:04:05,310 --> 00:04:07,590
+11 and let's
+
+123
+00:04:07,600 --> 00:04:10,280
+set theta 3 equals 3
+
+124
+00:04:10,290 --> 00:04:12,380
+times 1's of 1 by 11.
+
+125
+00:04:12,390 --> 00:04:13,970
+So this is 3
+
+126
+00:04:13,980 --> 00:04:17,760
+separate matrices: theta 1, theta 2, theta 3.
+
+127
+00:04:17,770 --> 00:04:19,660
+We want to put all of these as a vector.
+
+128
+00:04:19,670 --> 00:04:23,370
+ThetaVec equals theta
+
+129
+00:04:23,380 --> 00:04:28,160
+1; theta 2
+
+130
+00:04:28,540 --> 00:04:29,250
+theta 3.
+
+131
+00:04:29,260 --> 00:04:32,530
+Right, that's a colon
+
+132
+00:04:32,540 --> 00:04:35,340
+in the middle and like so
+
+133
+00:04:35,350 --> 00:04:37,580
+and now thetavec is
+
+134
+00:04:37,590 --> 00:04:41,040
+going to be a very long vector.
+
+135
+00:04:41,050 --> 00:04:42,960
+That's 231 elements.
+
+136
+00:04:42,970 --> 00:04:46,280
+If I display it, I find
+
+137
+00:04:46,290 --> 00:04:47,770
+that this very long vector with
+
+138
+00:04:47,780 --> 00:04:48,870
+all the elements of the first
+
+139
+00:04:48,880 --> 00:04:50,080
+matrix, all the elements of
+
+140
+00:04:50,090 --> 00:04:53,470
+the second matrix, then all the elements of the third matrix.
+
+141
+00:04:53,480 --> 00:04:54,920
+And if I want to get back
+
+142
+00:04:54,930 --> 00:04:56,490
+my original matrices, I can
+
+143
+00:04:56,500 --> 00:05:01,390
+do reshape thetaVec.
+
+144
+00:05:01,400 --> 00:05:03,090
+Let's pull out the first 110
+
+145
+00:05:03,100 --> 00:05:06,800
+elements and reshape them to a 10 by 11 matrix.
+
+146
+00:05:06,810 --> 00:05:08,680
+This gives me back theta 1.
+
+147
+00:05:08,690 --> 00:05:10,270
+And if I then pull
+
+148
+00:05:10,280 --> 00:05:12,710
+out the next 110 elements.
+
+149
+00:05:12,720 --> 00:05:14,840
+So that's indices 111 to 220.
+
+150
+00:05:14,850 --> 00:05:17,970
+I get back all of my 2's.
+
+151
+00:05:18,030 --> 00:05:20,830
+And if I go
+
+152
+00:05:20,850 --> 00:05:22,270
+from 221 up to
+
+153
+00:05:22,280 --> 00:05:24,430
+the last element, which is
+
+154
+00:05:24,440 --> 00:05:26,060
+element 231, and reshape to
+
+155
+00:05:26,070 --> 00:05:29,630
+1 by 11, I get back theta 3.
+
+156
+00:05:30,810 --> 00:05:32,940
+To make this process really concrete,
+
+157
+00:05:32,950 --> 00:05:35,310
+here's how we use the unrolling
+
+158
+00:05:35,320 --> 00:05:38,190
+idea to implement our learning algorithm.
+
+159
+00:05:38,200 --> 00:05:39,480
+Let's say that you have some
+
+160
+00:05:39,490 --> 00:05:41,160
+initial value of the parameters
+
+161
+00:05:41,170 --> 00:05:42,940
+theta 1, theta 2, theta 3.
+
+162
+00:05:42,950 --> 00:05:44,010
+What we're going to do
+
+163
+00:05:44,020 --> 00:05:46,280
+is take these and unroll
+
+164
+00:05:46,290 --> 00:05:47,950
+them into a long vector
+
+165
+00:05:47,960 --> 00:05:50,590
+we're gonna call initial theta to
+
+166
+00:05:50,600 --> 00:05:52,350
+pass in to fminunc
+
+167
+00:05:52,360 --> 00:05:56,150
+as this initial setting of the parameters theta.
+
+168
+00:05:56,160 --> 00:05:59,300
+The other thing we need to do is implement the cost function.
+
+169
+00:05:59,310 --> 00:06:02,890
+Here's my implementation of the cost function.
+
+170
+00:06:02,900 --> 00:06:04,150
+The cost function is going to
+
+171
+00:06:04,160 --> 00:06:05,970
+give us input, thetaVec,
+
+172
+00:06:05,980 --> 00:06:07,340
+which is going to be all
+
+173
+00:06:07,350 --> 00:06:08,860
+of my parameters vectors that in
+
+174
+00:06:08,870 --> 00:06:11,950
+the form that's been unrolled into a vector.
+
+175
+00:06:11,960 --> 00:06:12,990
+So the first thing I'm going to
+
+176
+00:06:13,000 --> 00:06:14,090
+do is I'm going to use
+
+177
+00:06:14,100 --> 00:06:17,030
+thetaVec and I'm going to use the reshape functions.
+
+178
+00:06:17,040 --> 00:06:18,310
+So I'll pull out elements from
+
+179
+00:06:18,320 --> 00:06:19,740
+thetaVec and use reshape
+
+180
+00:06:19,750 --> 00:06:21,310
+to get back my
+
+181
+00:06:21,320 --> 00:06:24,110
+original parameter matrices, theta 1, theta 2, theta 3.
+
+182
+00:06:24,120 --> 00:06:26,610
+So these are going to be matrices that I'm going to get.
+
+183
+00:06:26,620 --> 00:06:28,050
+So that gives me a
+
+184
+00:06:28,060 --> 00:06:30,120
+more convenient form in which
+
+185
+00:06:30,130 --> 00:06:31,740
+to use these matrices so that I
+
+186
+00:06:31,750 --> 00:06:33,870
+can run forward propagation and
+
+187
+00:06:33,880 --> 00:06:35,560
+back propagation to compute my
+
+188
+00:06:35,570 --> 00:06:39,640
+derivatives, and to compute my cost function j of theta.
+
+189
+00:06:39,710 --> 00:06:41,110
+And finally, I can then
+
+190
+00:06:41,120 --> 00:06:43,020
+take my derivatives and unroll
+
+191
+00:06:43,030 --> 00:06:45,130
+them, to keeping the elements
+
+192
+00:06:45,140 --> 00:06:48,380
+in the same ordering as I did when I unroll my thetas.
+
+193
+00:06:48,390 --> 00:06:50,020
+But I'm gonna unroll D1, D2,
+
+194
+00:06:50,030 --> 00:06:52,180
+D3, to get gradientVec
+
+195
+00:06:52,190 --> 00:06:55,480
+which is now what my cost function can return.
+
+196
+00:06:55,490 --> 00:06:58,920
+It can return a vector of these derivatives.
+
+197
+00:06:59,150 --> 00:07:00,480
+So, hopefully, you now have
+
+198
+00:07:00,490 --> 00:07:01,880
+a good sense of how to
+
+199
+00:07:01,890 --> 00:07:03,350
+convert back and forth between
+
+200
+00:07:03,360 --> 00:07:05,080
+the matrix representation of the
+
+201
+00:07:05,090 --> 00:07:09,350
+parameters versus the vector representation of the parameters.
+
+202
+00:07:09,360 --> 00:07:10,750
+The advantage of the matrix
+
+203
+00:07:10,760 --> 00:07:12,460
+representation is that when
+
+204
+00:07:12,470 --> 00:07:13,660
+your parameters are stored as
+
+205
+00:07:13,670 --> 00:07:15,820
+matrices it's more convenient when
+
+206
+00:07:15,830 --> 00:07:17,520
+you're doing forward propagation and
+
+207
+00:07:17,530 --> 00:07:19,840
+back propagation and it's easier
+
+208
+00:07:19,850 --> 00:07:21,350
+when your parameters are stored as
+
+209
+00:07:21,360 --> 00:07:23,390
+matrices to take advantage
+
+210
+00:07:23,400 --> 00:07:26,220
+of the, sort of, vectorized implementations.
+
+211
+00:07:26,230 --> 00:07:28,080
+Whereas in contrast the advantage of
+
+212
+00:07:28,090 --> 00:07:30,310
+the vector representation, when you
+
+213
+00:07:30,320 --> 00:07:32,490
+have like thetaVec or DVec is that
+
+214
+00:07:32,500 --> 00:07:34,760
+when you are using the advanced optimization algorithms.
+
+215
+00:07:34,770 --> 00:07:36,750
+Those algorithms tend to
+
+216
+00:07:36,760 --> 00:07:38,080
+assume that you have
+
+217
+00:07:38,090 --> 00:07:41,710
+all of your parameters unrolled into a big long vector.
+
+218
+00:07:41,720 --> 00:07:43,130
+And so with what we just
+
+219
+00:07:43,140 --> 00:07:45,400
+went through, hopefully you can now quickly
+
+220
+00:07:45,410 --> 00:07:48,520
+convert between the two as needed.
+

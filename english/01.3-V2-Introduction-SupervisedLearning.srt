@@ -1,0 +1,1512 @@
+1
+00:00:00,150 --> 00:00:01,300
+In this video, I'm going to
+
+2
+00:00:01,310 --> 00:00:02,590
+define what is probably the
+
+3
+00:00:02,600 --> 00:00:03,890
+most common type of machine
+
+4
+00:00:03,900 --> 00:00:06,870
+learning problem, which is Supervised Learning.
+
+5
+00:00:06,880 --> 00:00:08,400
+I'll define Supervised Learning more
+
+6
+00:00:08,410 --> 00:00:10,510
+formally later, but it's probably
+
+7
+00:00:10,520 --> 00:00:12,060
+best to explain, or start
+
+8
+00:00:12,070 --> 00:00:13,360
+with an example of what it
+
+9
+00:00:13,370 --> 00:00:16,790
+is and we'll do the formal definition later.
+
+10
+00:00:17,580 --> 00:00:19,630
+Let's say you want to predict housing prices.
+
+11
+00:00:19,640 --> 00:00:21,210
+A while back, a student
+
+12
+00:00:21,220 --> 00:00:23,260
+collected data sets from
+
+13
+00:00:23,270 --> 00:00:25,790
+the city of Portland, Oregon,
+
+14
+00:00:25,800 --> 00:00:26,950
+and let's say you plot
+
+15
+00:00:26,960 --> 00:00:28,900
+the data set and it looks like this.
+
+16
+00:00:28,910 --> 00:00:31,220
+Here on the horizontal axis, the
+
+17
+00:00:31,230 --> 00:00:32,730
+size of different houses in square
+
+18
+00:00:32,740 --> 00:00:34,070
+feet, and on the vertical
+
+19
+00:00:34,080 --> 00:00:35,730
+axis the prices of
+
+20
+00:00:35,740 --> 00:00:39,160
+different houses in thousands of dollars.
+
+21
+00:00:39,170 --> 00:00:41,620
+So, given this data,
+
+22
+00:00:41,630 --> 00:00:43,060
+let's say you have a friend
+
+23
+00:00:43,070 --> 00:00:44,290
+who owns a house
+
+24
+00:00:44,300 --> 00:00:47,020
+that is, say, 750 square
+
+25
+00:00:47,030 --> 00:00:48,700
+feet and they're hoping
+
+26
+00:00:48,710 --> 00:00:49,700
+to sell the house and they
+
+27
+00:00:49,710 --> 00:00:52,400
+want to know how much they can get for the house.
+
+28
+00:00:52,410 --> 00:00:54,990
+So how can a learning algorithm help you?
+
+29
+00:00:55,000 --> 00:00:56,270
+One thing a learning algorithm might
+
+30
+00:00:56,280 --> 00:00:59,590
+be able to do is put a straight line through the data.
+
+31
+00:00:59,600 --> 00:01:00,710
+So I'll fit a straight line to
+
+32
+00:01:00,720 --> 00:01:02,890
+the data and based
+
+33
+00:01:02,900 --> 00:01:05,460
+on that, it looks like
+
+34
+00:01:05,470 --> 00:01:06,840
+maybe the house can be
+
+35
+00:01:06,850 --> 00:01:09,270
+sold for maybe about $150,000.
+
+36
+00:01:09,280 --> 00:01:12,160
+But maybe this isn't the
+
+37
+00:01:12,170 --> 00:01:13,300
+only learning algorithm you can
+
+38
+00:01:13,310 --> 00:01:16,060
+use and there might be a better one.
+
+39
+00:01:16,070 --> 00:01:17,760
+For example, instead of fitting
+
+40
+00:01:17,770 --> 00:01:18,900
+a straight line to the data,
+
+41
+00:01:18,910 --> 00:01:20,280
+we might decide that it's better
+
+42
+00:01:20,290 --> 00:01:22,170
+to fit a quadratic function or
+
+43
+00:01:22,180 --> 00:01:24,310
+a second order polynomial to this
+
+44
+00:01:24,320 --> 00:01:25,790
+data, and if you
+
+45
+00:01:25,800 --> 00:01:27,030
+do that and make a
+
+46
+00:01:27,040 --> 00:01:28,990
+prediction here, then it
+
+47
+00:01:29,000 --> 00:01:30,720
+looks like, well, maybe they
+
+48
+00:01:30,730 --> 00:01:32,580
+can sell the house for
+
+49
+00:01:32,590 --> 00:01:33,850
+closer to $200,000.
+
+50
+00:01:33,860 --> 00:01:36,090
+One of the things
+
+51
+00:01:36,100 --> 00:01:37,810
+we'll talk about later is how
+
+52
+00:01:37,820 --> 00:01:39,250
+to choose and how to decide,
+
+53
+00:01:39,260 --> 00:01:40,380
+do you want to fit a
+
+54
+00:01:40,390 --> 00:01:41,860
+straight line to the data, or
+
+55
+00:01:41,870 --> 00:01:44,060
+do you want fit the quadratic function to the data?
+
+56
+00:01:44,070 --> 00:01:45,430
+And it is no fair picking
+
+57
+00:01:45,440 --> 00:01:49,160
+whichever one gives your friend the better house to sell.
+
+58
+00:01:49,170 --> 00:01:52,760
+But each of these would be a fine example of a learning algorithm.
+
+59
+00:01:52,770 --> 00:01:53,820
+So, this is an
+
+60
+00:01:53,830 --> 00:01:57,750
+example of a Supervised Learning algorithm.
+
+61
+00:01:57,760 --> 00:02:00,690
+And the term "Supervised Learning" refers
+
+62
+00:02:00,700 --> 00:02:02,280
+to the fact that we gave
+
+63
+00:02:02,290 --> 00:02:03,990
+the algorithm a data set
+
+64
+00:02:04,000 --> 00:02:07,110
+in which the  "right answers" were given.
+
+65
+00:02:07,120 --> 00:02:08,160
+That is, we gave it
+
+66
+00:02:08,170 --> 00:02:10,010
+a data set of houses in
+
+67
+00:02:10,020 --> 00:02:12,490
+which for every example in
+
+68
+00:02:12,500 --> 00:02:14,390
+this data set, we told
+
+69
+00:02:14,400 --> 00:02:15,670
+it what is the right
+
+70
+00:02:15,680 --> 00:02:17,240
+price or what was the actual
+
+71
+00:02:17,250 --> 00:02:19,330
+price that that house sold for.
+
+72
+00:02:19,340 --> 00:02:20,720
+And the task of
+
+73
+00:02:20,730 --> 00:02:22,370
+the algorithm was to just
+
+74
+00:02:22,380 --> 00:02:24,160
+produce more of these right
+
+75
+00:02:24,170 --> 00:02:25,610
+answers, such as for
+
+76
+00:02:25,620 --> 00:02:29,450
+this new house you know, that your friend may be trying to sell.
+
+77
+00:02:29,460 --> 00:02:31,550
+To define the terminology, this
+
+78
+00:02:31,560 --> 00:02:34,760
+is also called a regression problem.
+
+79
+00:02:34,770 --> 00:02:36,190
+And by regression problem, I
+
+80
+00:02:36,200 --> 00:02:37,500
+mean we're trying to predict a
+
+81
+00:02:37,510 --> 00:02:41,200
+continuous value output, namely the price.
+
+82
+00:02:41,210 --> 00:02:42,710
+So technically, I guess, prices can
+
+83
+00:02:42,720 --> 00:02:44,040
+be rounded off to the nearest
+
+84
+00:02:44,050 --> 00:02:47,250
+cent, so maybe prices are actually discrete value.
+
+85
+00:02:47,260 --> 00:02:48,180
+But usually we think of the
+
+86
+00:02:48,190 --> 00:02:50,030
+price of a house as a real number or
+
+87
+00:02:50,040 --> 00:02:53,170
+as a scale of value, as a continuous value number.
+
+88
+00:02:53,180 --> 00:02:54,730
+And the term regression refers to
+
+89
+00:02:54,740 --> 00:02:55,540
+the fact that we are trying
+
+90
+00:02:55,550 --> 00:02:58,970
+to predict this sort of continuous values attribute.
+
+91
+00:02:58,980 --> 00:03:01,890
+Here is another Supervised Learning example.
+
+92
+00:03:01,900 --> 00:03:04,500
+Some friends and I actually worked on this earlier.
+
+93
+00:03:04,510 --> 00:03:05,260
+Let's say you want to look
+
+94
+00:03:05,270 --> 00:03:06,570
+at medical records and try
+
+95
+00:03:06,580 --> 00:03:08,150
+to predict that a breast cancer
+
+96
+00:03:08,160 --> 00:03:10,190
+is malignant or benign.
+
+97
+00:03:10,200 --> 00:03:11,690
+If someone discovers a breast
+
+98
+00:03:11,700 --> 00:03:13,100
+tumor, a lump in their
+
+99
+00:03:13,110 --> 00:03:15,350
+breast, a malignant tumor
+
+100
+00:03:15,360 --> 00:03:16,620
+is a tumor that is
+
+101
+00:03:16,630 --> 00:03:18,570
+harmful and dangerous, and
+
+102
+00:03:18,580 --> 00:03:22,120
+a benign tumor is a tumor that's harmless.
+
+103
+00:03:22,130 --> 00:03:24,700
+So, obviously people care a lot about this.
+
+104
+00:03:24,710 --> 00:03:26,340
+Let's say you collect a data set
+
+105
+00:03:26,350 --> 00:03:28,090
+and suppose in your data
+
+106
+00:03:28,100 --> 00:03:29,480
+set you have, on your
+
+107
+00:03:29,490 --> 00:03:32,020
+horizontal axis the size
+
+108
+00:03:32,030 --> 00:03:33,580
+of the tumor, and on the
+
+109
+00:03:33,590 --> 00:03:34,880
+vertical axis, I'm going
+
+110
+00:03:34,890 --> 00:03:36,660
+to plot one or zero,
+
+111
+00:03:36,670 --> 00:03:38,430
+yes or no, whether or not
+
+112
+00:03:38,440 --> 00:03:40,040
+these are examples of tumors
+
+113
+00:03:40,050 --> 00:03:41,900
+we've seen before are malignant just
+
+114
+00:03:41,910 --> 00:03:46,370
+one or zero, or not malignant or benign.
+
+115
+00:03:46,380 --> 00:03:47,500
+So let's say your data
+
+116
+00:03:47,510 --> 00:03:48,790
+set looks like this where we
+
+117
+00:03:48,800 --> 00:03:51,750
+saw a tumor of this size that turned out to be benign.
+
+118
+00:03:51,760 --> 00:03:53,150
+One of this size, one of
+
+119
+00:03:53,160 --> 00:03:57,180
+this size, and so on.
+
+120
+00:03:57,190 --> 00:03:59,360
+And sadly, we also saw a few malignant tumors.
+
+121
+00:03:59,370 --> 00:04:00,980
+So one of that size, one
+
+122
+00:04:00,990 --> 00:04:02,750
+of that size, one of
+
+123
+00:04:02,760 --> 00:04:05,740
+that size, so on.
+
+124
+00:04:05,750 --> 00:04:07,770
+So this example I have five
+
+125
+00:04:07,780 --> 00:04:10,560
+examples of benign tumors
+
+126
+00:04:10,570 --> 00:04:11,980
+shown down here, and five
+
+127
+00:04:11,990 --> 00:04:14,110
+examples of malignant tumors
+
+128
+00:04:14,120 --> 00:04:17,990
+shown with a vertical axis value of one.
+
+129
+00:04:18,000 --> 00:04:19,210
+And let's name a friend
+
+130
+00:04:19,220 --> 00:04:20,830
+who tragically has a breast
+
+131
+00:04:20,840 --> 00:04:22,680
+tumor and let's say
+
+132
+00:04:22,690 --> 00:04:24,520
+her breast tumor size is
+
+133
+00:04:24,530 --> 00:04:28,030
+maybe somewhere around this value.
+
+134
+00:04:28,040 --> 00:04:29,640
+The machine learning question is: can
+
+135
+00:04:29,650 --> 00:04:30,850
+you estimate what is the
+
+136
+00:04:30,860 --> 00:04:32,140
+probability, what is the
+
+137
+00:04:32,150 --> 00:04:35,980
+chance that a tumor is malignant versus benign?
+
+138
+00:04:36,110 --> 00:04:37,030
+To introduce a bit more
+
+139
+00:04:37,040 --> 00:04:38,560
+terminology this is an
+
+140
+00:04:38,570 --> 00:04:41,460
+example of a classification
+
+141
+00:04:42,000 --> 00:04:42,580
+problem.
+
+142
+00:04:42,590 --> 00:04:44,290
+The term classification refers to
+
+143
+00:04:44,300 --> 00:04:45,450
+the fact that here we are
+
+144
+00:04:45,460 --> 00:04:47,150
+trying to predict a discrete value
+
+145
+00:04:47,160 --> 00:04:49,850
+output, zero or one,
+
+146
+00:04:49,860 --> 00:04:51,950
+malignant or benign.
+
+147
+00:04:52,010 --> 00:04:53,460
+And it turns out that
+
+148
+00:04:53,470 --> 00:04:55,520
+in classification problems sometimes you
+
+149
+00:04:55,530 --> 00:04:57,950
+can have more than two values
+
+150
+00:04:57,960 --> 00:05:00,910
+for the, two possible values for the output.
+
+151
+00:05:00,920 --> 00:05:03,130
+As a complete example maybe there
+
+152
+00:05:03,140 --> 00:05:05,480
+are three types of breast cancers
+
+153
+00:05:05,490 --> 00:05:06,790
+and so you may try
+
+154
+00:05:06,800 --> 00:05:08,870
+is predicted this be value of 0, 1, 2, or 3.
+
+155
+00:05:08,880 --> 00:05:11,340
+Where 0 may mean benign,
+
+156
+00:05:11,350 --> 00:05:13,950
+benign tumor so no
+
+157
+00:05:13,960 --> 00:05:15,860
+cancer and 1 may
+
+158
+00:05:15,870 --> 00:05:17,450
+mean type 1 cancer.
+
+159
+00:05:17,460 --> 00:05:19,470
+I guess three types of cancer
+
+160
+00:05:19,480 --> 00:05:20,930
+whether the type one means and
+
+161
+00:05:20,940 --> 00:05:22,140
+two may mean the second type
+
+162
+00:05:22,150 --> 00:05:23,750
+of cancer and three may
+
+163
+00:05:23,760 --> 00:05:25,570
+mean the third type of cancer,
+
+164
+00:05:25,580 --> 00:05:26,710
+but this would also be a
+
+165
+00:05:26,720 --> 00:05:28,450
+classification problem because, so
+
+166
+00:05:28,460 --> 00:05:30,650
+the despite value set
+
+167
+00:05:30,660 --> 00:05:32,550
+of outputs, because only to
+
+168
+00:05:32,560 --> 00:05:34,210
+no cancer or cancer type
+
+169
+00:05:34,220 --> 00:05:36,580
+one, or cancer type two, or cancer type three.
+
+170
+00:05:36,590 --> 00:05:37,910
+In complication problem, there 's
+
+171
+00:05:37,920 --> 00:05:41,540
+just another way to plot this data.
+
+172
+00:05:41,550 --> 00:05:42,550
+Let me show you what I mean.
+
+173
+00:05:42,560 --> 00:05:46,850
+We're going to use a slightly different set of symbols to plot this data.
+
+174
+00:05:46,860 --> 00:05:48,260
+So if tumor size is
+
+175
+00:05:48,270 --> 00:05:49,470
+going to be the attribute that
+
+176
+00:05:49,480 --> 00:05:51,500
+I'm going to use to predict malignancy
+
+177
+00:05:51,510 --> 00:05:53,850
+or benignness, I can also draw my data like this.
+
+178
+00:05:53,860 --> 00:05:55,280
+I'm going to use different
+
+179
+00:05:55,290 --> 00:05:57,280
+symbols to denote my benign
+
+180
+00:05:57,290 --> 00:06:00,630
+and malignant or my negative and positive examples.
+
+181
+00:06:00,640 --> 00:06:02,080
+So, instead of drawing crosses, I
+
+182
+00:06:02,090 --> 00:06:03,790
+am now going to draws o's
+
+183
+00:06:03,800 --> 00:06:06,670
+for the benign tumors.
+
+184
+00:06:08,310 --> 00:06:09,310
+Like so.
+
+185
+00:06:09,320 --> 00:06:11,050
+And I'm great to keep using
+
+186
+00:06:11,060 --> 00:06:13,930
+x's to denote my
+
+187
+00:06:13,940 --> 00:06:14,640
+malignant tumors.
+
+188
+00:06:14,650 --> 00:06:16,150
+Okay?
+
+189
+00:06:16,680 --> 00:06:17,880
+I hope this makes sense.
+
+190
+00:06:17,890 --> 00:06:19,730
+All I did was I took,
+
+191
+00:06:19,740 --> 00:06:21,440
+you know, these, my data set
+
+192
+00:06:21,450 --> 00:06:23,260
+on top and I just mapped
+
+193
+00:06:23,270 --> 00:06:26,270
+it down to this
+
+194
+00:06:26,280 --> 00:06:28,840
+real line like so and
+
+195
+00:06:28,850 --> 00:06:30,410
+started to use different symbols,
+
+196
+00:06:30,420 --> 00:06:33,190
+circles and crosses, to denote
+
+197
+00:06:33,200 --> 00:06:35,980
+malignant versus benign examples.
+
+198
+00:06:36,130 --> 00:06:37,740
+Now in this example,
+
+199
+00:06:37,750 --> 00:06:39,390
+we use only one feature or
+
+200
+00:06:39,400 --> 00:06:41,330
+one attribute, namely, the
+
+201
+00:06:41,340 --> 00:06:42,800
+tumor size, in order to
+
+202
+00:06:42,810 --> 00:06:46,710
+predict whether tumor is malignant or benign.
+
+203
+00:06:46,720 --> 00:06:48,260
+In other machine learning problems when
+
+204
+00:06:48,270 --> 00:06:49,760
+we have more than one feature,
+
+205
+00:06:49,770 --> 00:06:52,960
+more than one attribute. Here's an example.
+
+206
+00:06:52,970 --> 00:06:54,150
+Let's say that instead of
+
+207
+00:06:54,160 --> 00:06:55,640
+just knowing the tumor size, we
+
+208
+00:06:55,650 --> 00:06:56,800
+know both the age of the
+
+209
+00:06:56,810 --> 00:06:59,250
+patient and the tumor size.
+
+210
+00:06:59,260 --> 00:07:00,780
+In that case, maybe your data
+
+211
+00:07:00,790 --> 00:07:02,460
+set would look like this,
+
+212
+00:07:02,470 --> 00:07:03,780
+where I may have a
+
+213
+00:07:03,790 --> 00:07:06,320
+set of patients With those
+
+214
+00:07:06,330 --> 00:07:08,570
+edges and that tumor size,
+
+215
+00:07:08,580 --> 00:07:11,050
+they look like this, and difference
+
+216
+00:07:11,060 --> 00:07:13,200
+of the patients that look
+
+217
+00:07:13,210 --> 00:07:17,270
+a little different, whose tumors
+
+218
+00:07:17,280 --> 00:07:19,510
+turn out out to be malignant
+
+219
+00:07:19,520 --> 00:07:22,510
+as denoted by the causes.
+
+220
+00:07:23,340 --> 00:07:24,430
+So, let's say you have a
+
+221
+00:07:24,440 --> 00:07:26,820
+friend who tragically has a
+
+222
+00:07:26,830 --> 00:07:29,340
+tumor, and maybe their
+
+223
+00:07:29,350 --> 00:07:34,300
+tumor size and edge falls around there.
+
+224
+00:07:34,470 --> 00:07:35,590
+So, given a data set like
+
+225
+00:07:35,600 --> 00:07:37,180
+this, what the learning algorithm
+
+226
+00:07:37,190 --> 00:07:38,690
+may do is build a
+
+227
+00:07:38,700 --> 00:07:40,370
+straight line to the data
+
+228
+00:07:40,380 --> 00:07:42,050
+to try to separate
+
+229
+00:07:42,060 --> 00:07:44,400
+out the malignant tumors from
+
+230
+00:07:44,410 --> 00:07:45,650
+the benign ones, and so
+
+231
+00:07:45,660 --> 00:07:47,850
+the learning algorithm may decide
+
+232
+00:07:47,860 --> 00:07:49,180
+to build a straight line
+
+233
+00:07:49,190 --> 00:07:50,310
+that to separate out the two
+
+234
+00:07:50,320 --> 00:07:53,260
+causes of tumors and, you
+
+235
+00:07:53,270 --> 00:07:54,960
+know, with this, hopefully we can
+
+236
+00:07:54,970 --> 00:07:56,520
+decide that your friend's tumor
+
+237
+00:07:56,530 --> 00:07:58,510
+is more likely, if it's
+
+238
+00:07:58,520 --> 00:08:00,190
+over there, that hopefully the
+
+239
+00:08:00,200 --> 00:08:01,750
+learning algorithm will say that your
+
+240
+00:08:01,760 --> 00:08:04,140
+friends tumor falls on this
+
+241
+00:08:04,150 --> 00:08:05,770
+benign side and is
+
+242
+00:08:05,780 --> 00:08:07,000
+therefore more likely to be
+
+243
+00:08:07,010 --> 00:08:09,010
+benign than xx in this
+
+244
+00:08:09,020 --> 00:08:10,880
+example we had two features,
+
+245
+00:08:10,890 --> 00:08:11,740
+namely the age of the
+
+246
+00:08:11,750 --> 00:08:13,200
+patient and the size
+
+247
+00:08:13,210 --> 00:08:15,360
+of the tumor in other
+
+248
+00:08:15,370 --> 00:08:17,220
+machines reporting problems, we
+
+249
+00:08:17,230 --> 00:08:18,880
+will often have more features
+
+250
+00:08:18,890 --> 00:08:20,040
+and my friends that work on
+
+251
+00:08:20,050 --> 00:08:21,370
+this problem they actually use other
+
+252
+00:08:21,380 --> 00:08:23,000
+features like this which is
+
+253
+00:08:23,010 --> 00:08:26,010
+clump thickness, clump thickness of the breast tumor.
+
+254
+00:08:26,020 --> 00:08:27,040
+Uniformity to the cell
+
+255
+00:08:27,050 --> 00:08:28,930
+size of the tumor, uniformity of
+
+256
+00:08:28,940 --> 00:08:30,500
+the cell shape of the tumor
+
+257
+00:08:30,510 --> 00:08:33,340
+and so on and other features as well.
+
+258
+00:08:33,350 --> 00:08:34,710
+And it turns out one
+
+259
+00:08:34,720 --> 00:08:36,960
+of the most interesting learning algorithms
+
+260
+00:08:36,970 --> 00:08:38,410
+that we will see in this pass is
+
+261
+00:08:38,420 --> 00:08:39,910
+a learning algorithm that can deal
+
+262
+00:08:39,920 --> 00:08:41,700
+with not just two
+
+263
+00:08:41,710 --> 00:08:42,730
+or three or five features,
+
+264
+00:08:42,740 --> 00:08:46,050
+but an infinite number of features.
+
+265
+00:08:46,060 --> 00:08:48,070
+On this slide are listed
+
+266
+00:08:48,080 --> 00:08:50,070
+a total of five different features,
+
+267
+00:08:50,080 --> 00:08:52,810
+right; two on the axis and three more up here.
+
+268
+00:08:52,820 --> 00:08:54,310
+It turns out for some learning
+
+269
+00:08:54,320 --> 00:08:55,690
+problems what you really want
+
+270
+00:08:55,700 --> 00:08:56,810
+is not to use like three
+
+271
+00:08:56,820 --> 00:08:58,500
+or five features, but instead you
+
+272
+00:08:58,510 --> 00:09:00,280
+want to use an infinite number
+
+273
+00:09:00,290 --> 00:09:01,960
+of features an infinite number
+
+274
+00:09:01,970 --> 00:09:03,180
+of attributes, so that your
+
+275
+00:09:03,190 --> 00:09:05,110
+learning algorithm has lots of
+
+276
+00:09:05,120 --> 00:09:07,080
+attributes or features to use
+
+277
+00:09:07,090 --> 00:09:09,380
+with which to make our predictions.
+
+278
+00:09:09,390 --> 00:09:12,410
+So, how do you deal with an infinite number of features?
+
+279
+00:09:12,420 --> 00:09:13,420
+And so how do you
+
+280
+00:09:13,430 --> 00:09:16,320
+restore an infinite number of things on a computer?
+
+281
+00:09:16,330 --> 00:09:19,690
+Your computer runs on a memory.
+
+282
+00:09:19,700 --> 00:09:21,410
+As it turns out that when
+
+283
+00:09:21,420 --> 00:09:21,920
+we talk about an algorithm called the support vector
+
+284
+00:09:21,930 --> 00:09:22,740
+machine, there will be a
+
+285
+00:09:22,750 --> 00:09:24,790
+need to mathematically trick that
+
+286
+00:09:24,800 --> 00:09:26,340
+will allow a computer to
+
+287
+00:09:26,350 --> 00:09:28,780
+deal with an infinite number of features.
+
+288
+00:09:28,790 --> 00:09:31,880
+Imagine that I did just write down, you know, two features here.
+
+289
+00:09:31,890 --> 00:09:33,510
+I think it's 3 features on the right.
+
+290
+00:09:33,520 --> 00:09:34,550
+But imagine that I wrote
+
+291
+00:09:34,560 --> 00:09:36,580
+down a infinitely long list,
+
+292
+00:09:36,590 --> 00:09:38,460
+I just kept writing more and more and more features.
+
+293
+00:09:38,470 --> 00:09:41,010
+Like an infinitely long list of features.
+
+294
+00:09:41,020 --> 00:09:45,190
+Turns out we'll give it that come with an algorithm taken to your order.
+
+295
+00:09:45,290 --> 00:09:47,630
+So, just a recap. In
+
+296
+00:09:47,640 --> 00:09:49,430
+this class, we'll talk about Supervised
+
+297
+00:09:49,440 --> 00:09:50,950
+Learning and the idea
+
+298
+00:09:50,960 --> 00:09:52,820
+is that, in Supervised Learning
+
+299
+00:09:52,830 --> 00:09:53,960
+in every example in our
+
+300
+00:09:53,970 --> 00:09:55,590
+data set we are told
+
+301
+00:09:55,600 --> 00:09:57,480
+what is the "correct answer"
+
+302
+00:09:57,490 --> 00:09:58,840
+that we would have quite liked
+
+303
+00:09:58,850 --> 00:10:00,090
+the algorithms to predict a
+
+304
+00:10:00,100 --> 00:10:01,780
+better example, such as
+
+305
+00:10:01,790 --> 00:10:03,750
+the price of the house or whether
+
+306
+00:10:03,760 --> 00:10:06,430
+a tumor is malignant or benign.
+
+307
+00:10:06,440 --> 00:10:07,760
+We also talked about the
+
+308
+00:10:07,770 --> 00:10:09,500
+regression problem and by
+
+309
+00:10:09,510 --> 00:10:10,810
+regression, that means that
+
+310
+00:10:10,820 --> 00:10:11,990
+our goal is to predict a
+
+311
+00:10:12,000 --> 00:10:13,810
+continuous valued output, and
+
+312
+00:10:13,820 --> 00:10:15,690
+we talked about the classification
+
+313
+00:10:15,700 --> 00:10:17,020
+problem where the goal
+
+314
+00:10:17,030 --> 00:10:18,370
+is to predict a discrete
+
+315
+00:10:18,380 --> 00:10:19,880
+value output.
+
+316
+00:10:19,890 --> 00:10:21,940
+Give us a quick wrap up question.
+
+317
+00:10:23,070 --> 00:10:25,000
+Suppose you're running a company and
+
+318
+00:10:25,010 --> 00:10:27,090
+you want to develop learning algorithms
+
+319
+00:10:27,100 --> 00:10:29,410
+to address each of two problems.
+
+320
+00:10:29,420 --> 00:10:31,270
+In the first problem you have
+
+321
+00:10:31,280 --> 00:10:34,110
+a large inventory of identical items.
+
+322
+00:10:34,120 --> 00:10:36,270
+So imagine that you have
+
+323
+00:10:36,280 --> 00:10:37,950
+thousands of copies of some
+
+324
+00:10:37,960 --> 00:10:39,730
+identical items to sell, and
+
+325
+00:10:39,740 --> 00:10:41,010
+you want to predict how many
+
+326
+00:10:41,020 --> 00:10:42,930
+of these items you sell over the next three months.
+
+327
+00:10:42,940 --> 00:10:45,660
+In the second
+
+328
+00:10:45,670 --> 00:10:47,620
+problem, problem two, you
+
+329
+00:10:47,630 --> 00:10:49,670
+have lots of users and
+
+330
+00:10:49,680 --> 00:10:51,440
+you want to write software to
+
+331
+00:10:51,450 --> 00:10:53,990
+examine each individual of
+
+332
+00:10:54,000 --> 00:10:55,710
+your customer's accounts, each one
+
+333
+00:10:55,720 --> 00:10:57,470
+of your customer's accounts, and for
+
+334
+00:10:57,480 --> 00:10:59,380
+each account, decide whether or
+
+335
+00:10:59,390 --> 00:11:02,890
+not the account has been hacked or compromised.
+
+336
+00:11:02,900 --> 00:11:04,560
+So for each of these problems,
+
+337
+00:11:04,570 --> 00:11:05,850
+should they be treated as a
+
+338
+00:11:05,860 --> 00:11:07,710
+classification problem, or as
+
+339
+00:11:07,720 --> 00:11:09,490
+a regression problem?
+
+340
+00:11:09,500 --> 00:11:11,170
+When the video pauses, please
+
+341
+00:11:11,180 --> 00:11:13,300
+use your mouse to select whichever
+
+342
+00:11:13,310 --> 00:11:14,880
+of these four options on
+
+343
+00:11:14,890 --> 00:11:18,660
+the left you think is the correct answer.
+
+344
+00:11:20,920 --> 00:11:24,380
+So hopefully you got that this is the answer.
+
+345
+00:11:24,390 --> 00:11:25,610
+For problem one, I would
+
+346
+00:11:25,620 --> 00:11:27,170
+treat this as a regression
+
+347
+00:11:27,180 --> 00:11:28,850
+problem because if I have,
+
+348
+00:11:28,860 --> 00:11:30,840
+you know, thousands of items, well
+
+349
+00:11:30,850 --> 00:11:32,170
+I would probably just treat this
+
+350
+00:11:32,180 --> 00:11:33,730
+as a real value, as a
+
+351
+00:11:33,740 --> 00:11:36,740
+continuous value, and treat
+
+352
+00:11:36,750 --> 00:11:38,110
+therefore the number of
+
+353
+00:11:38,120 --> 00:11:41,500
+items I sell as a continuous value.
+
+354
+00:11:41,510 --> 00:11:43,060
+And for the second problem, I
+
+355
+00:11:43,070 --> 00:11:45,020
+would treat that as a classification
+
+356
+00:11:45,030 --> 00:11:47,040
+problem because I might
+
+357
+00:11:47,050 --> 00:11:49,060
+say set the value
+
+358
+00:11:49,070 --> 00:11:50,110
+I want to predict, to be
+
+359
+00:11:50,120 --> 00:11:51,910
+zero to denote the
+
+360
+00:11:51,920 --> 00:11:54,410
+account has not been hacked,
+
+361
+00:11:54,440 --> 00:11:56,170
+and set the value one to
+
+362
+00:11:56,180 --> 00:11:59,200
+denote an account that has been hacked into.
+
+363
+00:11:59,210 --> 00:12:00,340
+So just like, you know, breast
+
+364
+00:12:00,350 --> 00:12:01,860
+cancer is right, zero is benign,
+
+365
+00:12:01,870 --> 00:12:03,200
+one is malignant, so I might
+
+366
+00:12:03,210 --> 00:12:04,590
+set, this be 0 or
+
+367
+00:12:04,600 --> 00:12:05,720
+1 depending on whether it's been
+
+368
+00:12:05,730 --> 00:12:07,280
+hacked and have an algorithm
+
+369
+00:12:07,290 --> 00:12:10,110
+try to predict each one
+
+370
+00:12:10,120 --> 00:12:12,590
+of these two discreet values, and
+
+371
+00:12:12,600 --> 00:12:13,740
+because there's a small number
+
+372
+00:12:13,750 --> 00:12:15,010
+of discreet values I would
+
+373
+00:12:15,020 --> 00:12:18,360
+therefore treat it as a classification problem.
+
+374
+00:12:18,660 --> 00:12:20,220
+So, that's it for
+
+375
+00:12:20,230 --> 00:12:22,090
+Supervised Learning and in
+
+376
+00:12:22,100 --> 00:12:23,930
+the next video, I'll talk about
+
+377
+00:12:23,940 --> 00:12:25,630
+Unsupervised Learning, which is
+
+378
+00:12:25,640 --> 00:12:29,220
+the other major category of learning algorithm.
+

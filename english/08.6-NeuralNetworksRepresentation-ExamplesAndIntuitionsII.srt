@@ -1,0 +1,1028 @@
+1
+00:00:00,420 --> 00:00:01,690
+In this video, I'd like you
+
+2
+00:00:01,700 --> 00:00:03,380
+to work in through our example
+
+3
+00:00:03,390 --> 00:00:04,720
+to show how a neural
+
+4
+00:00:04,730 --> 00:00:08,640
+network can compute complex nonlinear hypotheses.
+
+5
+00:00:10,110 --> 00:00:11,480
+In the last video, we saw
+
+6
+00:00:11,490 --> 00:00:13,010
+how a neural network can
+
+7
+00:00:13,020 --> 00:00:14,410
+be used to compute the functions
+
+8
+00:00:14,420 --> 00:00:16,220
+x1 and x2 and the
+
+9
+00:00:16,230 --> 00:00:18,740
+function x1 or x2 when
+
+10
+00:00:18,750 --> 00:00:20,860
+x1 and x2 are binary.
+
+11
+00:00:20,870 --> 00:00:23,220
+That is, when they take on values of 0, 1.
+
+12
+00:00:23,230 --> 00:00:24,610
+We can also have a
+
+13
+00:00:24,620 --> 00:00:27,320
+network to compute negation, that
+
+14
+00:00:27,330 --> 00:00:30,270
+is to compute the function  "not x1".
+
+15
+00:00:30,280 --> 00:00:31,880
+Let me just write
+
+16
+00:00:31,890 --> 00:00:33,960
+down the ways associated with this network.
+
+17
+00:00:33,970 --> 00:00:35,440
+We have only one input feature, x1
+
+18
+00:00:35,450 --> 00:00:36,610
+in this case and the
+
+19
+00:00:36,620 --> 00:00:38,670
+bias unit plus 1 and
+
+20
+00:00:38,680 --> 00:00:41,060
+if I associate this with
+
+21
+00:00:41,070 --> 00:00:43,110
+the weights +10 and
+
+22
+00:00:43,120 --> 00:00:46,070
+-20 then my hypotheses is computing this.
+
+23
+00:00:46,080 --> 00:00:47,870
+H of x equals sigmoid of
+
+24
+00:00:47,880 --> 00:00:50,380
+10 minus 20 times x1
+
+25
+00:00:50,390 --> 00:00:51,930
+so when x1 is
+
+26
+00:00:51,940 --> 00:00:52,950
+equal to 0, my
+
+27
+00:00:52,960 --> 00:00:55,150
+hypothesis will be computing
+
+28
+00:00:55,160 --> 00:00:57,960
+g of 10 minus
+
+29
+00:00:57,970 --> 00:01:00,080
+20 times 0 which is just 10.
+
+30
+00:01:00,090 --> 00:01:02,430
+And so that's approximately
+
+31
+00:01:02,440 --> 00:01:03,490
+1, and when is x is
+
+32
+00:01:03,500 --> 00:01:04,370
+equal to 1 this will
+
+33
+00:01:04,380 --> 00:01:06,200
+be g of  -10, which
+
+34
+00:01:06,210 --> 00:01:09,540
+is therefore approximately equal to 0.
+
+35
+00:01:09,550 --> 00:01:10,440
+And if you look at what
+
+36
+00:01:10,450 --> 00:01:12,220
+these values are, that's essentially
+
+37
+00:01:12,230 --> 00:01:14,550
+the "not x1" function.
+
+38
+00:01:14,560 --> 00:01:16,690
+So to include negations, the
+
+39
+00:01:16,700 --> 00:01:19,070
+general idea is to put
+
+40
+00:01:19,080 --> 00:01:20,640
+a large negative weight in front
+
+41
+00:01:20,650 --> 00:01:23,090
+of the variable you want to negate.
+
+42
+00:01:23,100 --> 00:01:25,580
+So if it's -20, multiplied by
+
+43
+00:01:25,590 --> 00:01:27,220
+x1 and, you know, that's the general
+
+44
+00:01:27,230 --> 00:01:28,310
+idea of how you end
+
+45
+00:01:28,320 --> 00:01:30,690
+up negating x1.
+
+46
+00:01:30,700 --> 00:01:32,570
+And so, in an example that
+
+47
+00:01:32,580 --> 00:01:33,470
+I hope you will figure out
+
+48
+00:01:33,480 --> 00:01:35,270
+yourself, if you want
+
+49
+00:01:35,280 --> 00:01:36,570
+to compute a function like this:
+
+50
+00:01:36,580 --> 00:01:39,080
+"not x1 and not x2"
+
+51
+00:01:39,090 --> 00:01:40,380
+you know, while part of that would
+
+52
+00:01:40,390 --> 00:01:42,280
+probably be putting large negative
+
+53
+00:01:42,290 --> 00:01:44,490
+weights in front of x1
+
+54
+00:01:44,500 --> 00:01:45,570
+and x2, but it should
+
+55
+00:01:45,580 --> 00:01:47,480
+be feasible to get a
+
+56
+00:01:47,490 --> 00:01:50,410
+neural network with just
+
+57
+00:01:50,420 --> 00:01:52,980
+one output unit to compute this as well.
+
+58
+00:01:52,990 --> 00:01:53,670
+All right?
+
+59
+00:01:53,680 --> 00:01:55,290
+So, this large fill
+
+60
+00:01:55,300 --> 00:01:56,580
+function "not x1 and not
+
+61
+00:01:56,590 --> 00:01:58,200
+x2" is going to
+
+62
+00:01:58,210 --> 00:02:00,770
+be equal to 1
+
+63
+00:02:00,780 --> 00:02:07,340
+if, and only if, x1
+
+64
+00:02:07,350 --> 00:02:10,410
+equals x2 equals zero, right?
+
+65
+00:02:10,420 --> 00:02:11,670
+So this is a logical function, this
+
+66
+00:02:11,680 --> 00:02:14,520
+is not x1, that means x1 must be zero and not x2.
+
+67
+00:02:14,530 --> 00:02:17,790
+That means x2 must be equal to zero as well.
+
+68
+00:02:17,800 --> 00:02:19,440
+So this logical function is
+
+69
+00:02:19,450 --> 00:02:20,530
+equal to 1 if, and only
+
+70
+00:02:20,540 --> 00:02:23,900
+if, both x1 and x2 are equal to zero.
+
+71
+00:02:23,910 --> 00:02:25,700
+And hopefully, you should be
+
+72
+00:02:25,710 --> 00:02:26,940
+able to figure out how to make a
+
+73
+00:02:26,950 --> 00:02:28,630
+small neural network to compute
+
+74
+00:02:28,640 --> 00:02:31,330
+this logical function as well.
+
+75
+00:02:33,430 --> 00:02:34,810
+Now, taking the three pieces
+
+76
+00:02:34,820 --> 00:02:37,390
+that we have put together, the
+
+77
+00:02:37,400 --> 00:02:38,900
+network for computing x1 and
+
+78
+00:02:38,910 --> 00:02:40,950
+x2 and the network for
+
+79
+00:02:40,960 --> 00:02:42,330
+computing not x1 and
+
+80
+00:02:42,340 --> 00:02:44,610
+not x2 and one last
+
+81
+00:02:44,620 --> 00:02:46,560
+network for computing x1 or
+
+82
+00:02:46,570 --> 00:02:47,750
+x2, we should be
+
+83
+00:02:47,760 --> 00:02:49,830
+able to put these three pieces together
+
+84
+00:02:49,840 --> 00:02:51,460
+to compute this x1, XNOR
+
+85
+00:02:51,470 --> 00:02:53,850
+x2 function.
+
+86
+00:02:53,860 --> 00:02:55,090
+And just to remind you, if
+
+87
+00:02:55,100 --> 00:02:58,070
+this was x1, x2, this
+
+88
+00:02:58,080 --> 00:02:59,080
+function that we want to
+
+89
+00:02:59,090 --> 00:03:01,510
+compute would have negative examples
+
+90
+00:03:01,520 --> 00:03:02,820
+here and here and we'd
+
+91
+00:03:02,830 --> 00:03:04,720
+have positive examples there and there.
+
+92
+00:03:04,730 --> 00:03:06,560
+And so clearly this, you know, we'll
+
+93
+00:03:06,570 --> 00:03:08,930
+need a nonlinear decision boundary
+
+94
+00:03:08,940 --> 00:03:12,040
+in order to separate the positive and negative examples.
+
+95
+00:03:12,950 --> 00:03:14,250
+Let's draw the network.
+
+96
+00:03:14,260 --> 00:03:16,560
+I'm going to take my input
+
+97
+00:03:16,570 --> 00:03:19,140
+plus 1, x1, x2, and create
+
+98
+00:03:19,150 --> 00:03:20,650
+my first hidden unit here.
+
+99
+00:03:20,660 --> 00:03:22,760
+I'm going to call this a(2)1
+
+100
+00:03:22,770 --> 00:03:24,500
+because that's my first hidden unit.
+
+101
+00:03:24,510 --> 00:03:25,910
+And I'm going to copy
+
+102
+00:03:25,920 --> 00:03:27,730
+the weights over from the Red
+
+103
+00:03:27,740 --> 00:03:30,810
+Network, x1 and x2 networks.
+
+104
+00:03:30,820 --> 00:03:32,640
+So now minus 30, 20, 20.
+
+105
+00:03:32,650 --> 00:03:36,410
+Next, let me create
+
+106
+00:03:36,420 --> 00:03:37,920
+a second hidden unit, which
+
+107
+00:03:37,930 --> 00:03:40,340
+I'm going to call a(2)2 that
+
+108
+00:03:40,350 --> 00:03:43,540
+is the second hidden unit of layer two.
+
+109
+00:03:43,550 --> 00:03:44,730
+And I'm going to copy over the
+
+110
+00:03:44,740 --> 00:03:46,160
+Cyan Network in the
+
+111
+00:03:46,170 --> 00:03:47,120
+middle, so I'm going
+
+112
+00:03:47,130 --> 00:03:50,140
+to have the weights 10, minus 20,
+
+113
+00:03:50,150 --> 00:03:52,140
+minus 20.
+
+114
+00:03:52,150 --> 00:03:56,160
+And so, let's pull some of the truth table values.
+
+115
+00:03:56,170 --> 00:03:57,580
+For the Red Network, we know
+
+116
+00:03:57,590 --> 00:03:59,680
+that was computing the x1 and x2.
+
+117
+00:03:59,690 --> 00:04:01,030
+And so this is
+
+118
+00:04:01,040 --> 00:04:02,530
+going to be approximately 0, 0,
+
+119
+00:04:02,540 --> 00:04:06,530
+0, 1, depending on the values of x1 and x2.
+
+120
+00:04:07,040 --> 00:04:10,580
+And for a (2)2, that's the Cyan Network.
+
+121
+00:04:10,590 --> 00:04:12,230
+Well that we know the function not x1
+
+122
+00:04:12,240 --> 00:04:13,630
+and not x2 then outputs 1,
+
+123
+00:04:13,640 --> 00:04:15,690
+0, 0, 0 for the
+
+124
+00:04:15,700 --> 00:04:18,470
+4 values of x1 and x2.
+
+125
+00:04:18,480 --> 00:04:19,800
+Finally, I'm going to
+
+126
+00:04:19,810 --> 00:04:21,480
+create my output note, my
+
+127
+00:04:21,490 --> 00:04:24,850
+output unit that is a(3)1.
+
+128
+00:04:24,860 --> 00:04:26,580
+This is one more output h
+
+129
+00:04:26,590 --> 00:04:28,380
+of x and I'm
+
+130
+00:04:28,390 --> 00:04:30,310
+going to copy over the OR
+
+131
+00:04:30,320 --> 00:04:32,850
+Network for that and I'm going to
+
+132
+00:04:32,860 --> 00:04:34,800
+need a plus one bias unit here.
+
+133
+00:04:34,810 --> 00:04:36,310
+So, draw that in and I'm
+
+134
+00:04:36,320 --> 00:04:38,940
+going to copy over the weights from the Green Networks.
+
+135
+00:04:38,950 --> 00:04:41,250
+So, it's minus 10, 20, 20
+
+136
+00:04:42,370 --> 00:04:45,960
+and we know earlier that this computes the OR function.
+
+137
+00:04:46,660 --> 00:04:49,700
+So, let's go on the truth table entries.
+
+138
+00:04:50,300 --> 00:04:51,710
+For the first entry is 0
+
+139
+00:04:51,720 --> 00:04:54,130
+or 1, which is gonna be
+
+140
+00:04:54,140 --> 00:04:55,790
+1 then next 0 or
+
+141
+00:04:55,800 --> 00:04:57,340
+0, which is 0,
+
+142
+00:04:57,350 --> 00:04:58,950
+0, or 0, which is 0,
+
+143
+00:04:58,960 --> 00:05:00,590
+1 or 0 and that all
+
+144
+00:05:00,600 --> 00:05:02,630
+is to 1 and thus, h
+
+145
+00:05:02,640 --> 00:05:04,970
+of x is equal to 1
+
+146
+00:05:04,980 --> 00:05:06,770
+when either both x1 and
+
+147
+00:05:06,780 --> 00:05:08,580
+x2 are 0 or when x1 and
+
+148
+00:05:08,590 --> 00:05:10,890
+x2 are both 1. And
+
+149
+00:05:10,900 --> 00:05:12,670
+concretely, h of x
+
+150
+00:05:12,680 --> 00:05:15,550
+outputs 1 exactly at these
+
+151
+00:05:15,560 --> 00:05:17,220
+two locations and it outputs
+
+152
+00:05:17,230 --> 00:05:19,560
+0 otherwise and thus,
+
+153
+00:05:19,570 --> 00:05:21,200
+with this neural network, which
+
+154
+00:05:21,210 --> 00:05:23,190
+has an input layer, one
+
+155
+00:05:23,200 --> 00:05:24,870
+hidden layer and one output
+
+156
+00:05:24,880 --> 00:05:26,090
+layer, we end up
+
+157
+00:05:26,100 --> 00:05:29,110
+with a nonlinear decision boundary that
+
+158
+00:05:29,120 --> 00:05:31,630
+computes this XNOR function.
+
+159
+00:05:31,640 --> 00:05:33,700
+And the more general intuition is
+
+160
+00:05:33,710 --> 00:05:34,980
+that in the input
+
+161
+00:05:34,990 --> 00:05:36,050
+layer, we just had our raw
+
+162
+00:05:36,060 --> 00:05:37,600
+inputs then we had
+
+163
+00:05:37,610 --> 00:05:39,670
+a hidden layer, which computed some
+
+164
+00:05:39,680 --> 00:05:41,240
+slightly more complex functions of
+
+165
+00:05:41,250 --> 00:05:42,420
+the inputs that is shown
+
+166
+00:05:42,430 --> 00:05:43,540
+here, these are slightly more
+
+167
+00:05:43,550 --> 00:05:45,240
+complex functions, and then by
+
+168
+00:05:45,250 --> 00:05:46,630
+adding yet another layer, we end
+
+169
+00:05:46,640 --> 00:05:50,530
+up with an even more complex nonlinear function.
+
+170
+00:05:50,550 --> 00:05:51,440
+And this is the sort of
+
+171
+00:05:51,450 --> 00:05:54,090
+intuition about why Neural
+
+172
+00:05:54,100 --> 00:05:55,830
+Networks can compute pretty complicated
+
+173
+00:05:55,840 --> 00:05:57,330
+functions that when you
+
+174
+00:05:57,340 --> 00:05:58,900
+have multiple layers, you have, you know,
+
+175
+00:05:58,910 --> 00:06:00,380
+relatively simple function of
+
+176
+00:06:00,390 --> 00:06:02,150
+the inputs, and the second layer,
+
+177
+00:06:02,160 --> 00:06:03,330
+but the third layer can build
+
+178
+00:06:03,340 --> 00:06:04,810
+on that to compute even more
+
+179
+00:06:04,820 --> 00:06:06,780
+complex functions and then
+
+180
+00:06:06,790 --> 00:06:10,230
+the layer after that can compute even more complex functions.
+
+181
+00:06:10,340 --> 00:06:11,790
+To wrap up this video, I
+
+182
+00:06:11,800 --> 00:06:13,470
+want to show you a fun example of
+
+183
+00:06:13,480 --> 00:06:14,870
+an application of a neural
+
+184
+00:06:14,880 --> 00:06:17,250
+network that captures this intuition
+
+185
+00:06:17,260 --> 00:06:19,890
+of the deeper layers computing more complex features.
+
+186
+00:06:19,900 --> 00:06:21,190
+I want to show you
+
+187
+00:06:21,200 --> 00:06:22,920
+a video that I got from
+
+188
+00:06:22,930 --> 00:06:24,840
+a good friend of mine, Yon Khun.
+
+189
+00:06:24,850 --> 00:06:26,600
+Yon is a professor at
+
+190
+00:06:26,610 --> 00:06:28,220
+New York University, at NYU,
+
+191
+00:06:28,230 --> 00:06:29,460
+and he was one of
+
+192
+00:06:29,470 --> 00:06:31,120
+the early pioneers of neural
+
+193
+00:06:31,130 --> 00:06:32,920
+network research and sort
+
+194
+00:06:32,930 --> 00:06:34,920
+of a legend in the field
+
+195
+00:06:34,930 --> 00:06:36,550
+now and his ideas are
+
+196
+00:06:36,560 --> 00:06:38,970
+used in all sorts of products
+
+197
+00:06:38,980 --> 00:06:41,460
+and applications throughout the world now.
+
+198
+00:06:41,470 --> 00:06:42,370
+So, I want to show you
+
+199
+00:06:42,380 --> 00:06:43,730
+a video from some of his
+
+200
+00:06:43,740 --> 00:06:44,970
+early work in which he
+
+201
+00:06:44,980 --> 00:06:46,990
+was using a neural network
+
+202
+00:06:47,000 --> 00:06:51,360
+to recognize handwriting - to do handwritten digit recognition.
+
+203
+00:06:51,370 --> 00:06:52,710
+You might remember early in this
+
+204
+00:06:52,720 --> 00:06:53,720
+class, at the start of this
+
+205
+00:06:53,730 --> 00:06:55,450
+class, I said that one of
+
+206
+00:06:55,460 --> 00:06:57,130
+early successes of neural networks
+
+207
+00:06:57,140 --> 00:06:58,310
+was trying to use it
+
+208
+00:06:58,320 --> 00:07:00,840
+to read zip codes, to help
+
+209
+00:07:00,850 --> 00:07:03,870
+us, you know, send mail along. So, to read postal codes.
+
+210
+00:07:03,880 --> 00:07:05,240
+So, this is one of the attempts.
+
+211
+00:07:05,250 --> 00:07:06,640
+So, this is one of the
+
+212
+00:07:06,650 --> 00:07:09,310
+algorithms used to try to address that problem.
+
+213
+00:07:09,320 --> 00:07:11,050
+In the video I'll show you
+
+214
+00:07:11,060 --> 00:07:12,900
+this area here is the
+
+215
+00:07:12,910 --> 00:07:14,970
+input area that shows a
+
+216
+00:07:14,980 --> 00:07:16,550
+handwritten character shown to the
+
+217
+00:07:16,560 --> 00:07:19,480
+network. This column here
+
+218
+00:07:19,490 --> 00:07:21,450
+shows a visualization of
+
+219
+00:07:21,460 --> 00:07:23,890
+the features computed by so that the
+
+220
+00:07:23,900 --> 00:07:24,820
+first hidden layer of the
+
+221
+00:07:24,830 --> 00:07:26,390
+network and so the first
+
+222
+00:07:26,400 --> 00:07:28,710
+hidden layer, you know, this visualization shows
+
+223
+00:07:28,720 --> 00:07:32,350
+different features, different edges and lines and so on detected.
+
+224
+00:07:32,360 --> 00:07:35,520
+This is a visualization of the next hidden layer.
+
+225
+00:07:35,530 --> 00:07:36,760
+It's kind of harder to see
+
+226
+00:07:36,770 --> 00:07:38,720
+how to understand deeper hidden
+
+227
+00:07:38,730 --> 00:07:40,450
+layers and that's the visualization
+
+228
+00:07:40,460 --> 00:07:42,130
+of what the next hidden layer is computing.
+
+229
+00:07:42,140 --> 00:07:44,170
+You probably have a hard time
+
+230
+00:07:44,180 --> 00:07:45,690
+seeing what's going on, you know,
+
+231
+00:07:45,700 --> 00:07:47,630
+much beyond the first hidden layer,
+
+232
+00:07:47,640 --> 00:07:49,250
+but then finally, all of
+
+233
+00:07:49,260 --> 00:07:51,420
+these learned features get
+
+234
+00:07:51,430 --> 00:07:53,250
+fed to the output layer
+
+235
+00:07:53,260 --> 00:07:55,020
+and shown over here is
+
+236
+00:07:55,030 --> 00:07:56,790
+the final answers, the final
+
+237
+00:07:56,800 --> 00:07:59,380
+predictive value for what
+
+238
+00:07:59,390 --> 00:08:03,120
+handwritten digit the neural network things that is being shown.
+
+239
+00:08:03,130 --> 00:08:05,770
+So, let's take a look at the video.
+
+240
+00:09:42,060 --> 00:09:45,870
+So, I hope
+
+241
+00:09:50,610 --> 00:09:52,250
+you enjoyed the video and that
+
+242
+00:09:52,260 --> 00:09:53,660
+this hopefully gave you some
+
+243
+00:09:53,670 --> 00:09:55,440
+intuition about the sorts
+
+244
+00:09:55,450 --> 00:09:57,310
+of pretty complicated functions neural
+
+245
+00:09:57,320 --> 00:09:58,730
+networks can learn in which
+
+246
+00:09:58,740 --> 00:10:00,660
+it takes this input this image,
+
+247
+00:10:00,670 --> 00:10:01,610
+just takes this input the
+
+248
+00:10:01,620 --> 00:10:03,300
+raw pixels and the first
+
+249
+00:10:03,310 --> 00:10:04,760
+end of the layer computes some set
+
+250
+00:10:04,770 --> 00:10:05,730
+of features, the next end
+
+251
+00:10:05,740 --> 00:10:07,320
+of the layer computes even more complex
+
+252
+00:10:07,330 --> 00:10:09,550
+features and even more complex features
+
+253
+00:10:09,560 --> 00:10:10,770
+and these features can then be
+
+254
+00:10:10,780 --> 00:10:12,930
+used by essentially the final
+
+255
+00:10:12,940 --> 00:10:15,800
+layer of logistic regression classifiers
+
+256
+00:10:15,810 --> 00:10:17,870
+to make accurate predictions about what
+
+257
+00:10:17,880 --> 00:10:20,690
+are the numbers that the network sees.
+

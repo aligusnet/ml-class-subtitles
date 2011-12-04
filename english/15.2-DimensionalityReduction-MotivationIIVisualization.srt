@@ -1,0 +1,604 @@
+1
+00:00:00,130 --> 00:00:01,460
+In the last video, we talked
+
+2
+00:00:01,470 --> 00:00:03,520
+about dimensionality reduction for
+
+3
+00:00:03,530 --> 00:00:05,820
+the purpose of compressing the data.
+
+4
+00:00:05,830 --> 00:00:06,900
+In this video, I'd like
+
+5
+00:00:06,910 --> 00:00:08,860
+to tell you about a second application
+
+6
+00:00:08,870 --> 00:00:13,430
+of dimensionality reduction and that is to visualize the data.
+
+7
+00:00:13,440 --> 00:00:14,550
+For a lot of machine learning
+
+8
+00:00:14,560 --> 00:00:16,210
+applications, it really helps
+
+9
+00:00:16,220 --> 00:00:17,980
+us to develop effective learning
+
+10
+00:00:17,990 --> 00:00:20,600
+algorithms, if we can understand our data better.
+
+11
+00:00:20,610 --> 00:00:22,090
+If there is some way of visualizing
+
+12
+00:00:22,100 --> 00:00:24,070
+the data better, and so,
+
+13
+00:00:24,080 --> 00:00:25,980
+dimensionality reduction offers us,
+
+14
+00:00:25,990 --> 00:00:28,690
+often, another useful tool to do so.
+
+15
+00:00:28,700 --> 00:00:30,790
+Let's start with an example.
+
+16
+00:00:30,840 --> 00:00:31,710
+Let's say we've collected a large
+
+17
+00:00:31,720 --> 00:00:33,830
+data set of many statistics
+
+18
+00:00:33,840 --> 00:00:36,020
+and facts about different countries around the world.
+
+19
+00:00:36,030 --> 00:00:38,080
+So, maybe the first feature, X1
+
+20
+00:00:38,090 --> 00:00:39,710
+is the country's GDP, or the
+
+21
+00:00:39,720 --> 00:00:41,840
+Gross Domestic Product, and
+
+22
+00:00:41,850 --> 00:00:43,590
+X2 is a per capita, meaning
+
+23
+00:00:43,600 --> 00:00:46,070
+the per person GDP, X3
+
+24
+00:00:46,080 --> 00:00:48,520
+human development index, life
+
+25
+00:00:48,530 --> 00:00:51,550
+expectancy, X5, X6 and so on.
+
+26
+00:00:51,560 --> 00:00:52,870
+And we may have a huge data set
+
+27
+00:00:52,880 --> 00:00:54,280
+like this, where, you know,
+
+28
+00:00:54,290 --> 00:00:57,640
+maybe 50 features for
+
+29
+00:00:57,650 --> 00:01:01,160
+every country, and we have a huge set of countries.
+
+30
+00:01:01,310 --> 00:01:02,800
+So is there something
+
+31
+00:01:02,810 --> 00:01:05,480
+we can do to try to understand our data better?
+
+32
+00:01:05,490 --> 00:01:07,840
+I've given this huge table of numbers.
+
+33
+00:01:07,850 --> 00:01:11,500
+How do you visualize this data?
+
+34
+00:01:11,510 --> 00:01:12,590
+If you have 50 features, it's
+
+35
+00:01:12,600 --> 00:01:15,470
+very difficult to plot 50-dimensional
+
+36
+00:01:15,620 --> 00:01:16,460
+data.
+
+37
+00:01:16,470 --> 00:01:20,560
+What is a good way to examine this data?
+
+38
+00:01:20,750 --> 00:01:22,950
+Using dimensionality reduction, what
+
+39
+00:01:22,960 --> 00:01:25,190
+we can do is, instead of
+
+40
+00:01:25,200 --> 00:01:27,420
+having each country represented by
+
+41
+00:01:27,430 --> 00:01:30,450
+this featured vector, xi, which
+
+42
+00:01:30,460 --> 00:01:33,400
+is 50-dimensional, so instead
+
+43
+00:01:33,410 --> 00:01:35,320
+of, say, having a country
+
+44
+00:01:35,330 --> 00:01:37,370
+like Canada, instead of
+
+45
+00:01:37,380 --> 00:01:39,310
+having 50 numbers to represent the features
+
+46
+00:01:39,320 --> 00:01:41,230
+of Canada, let's say we
+
+47
+00:01:41,240 --> 00:01:42,890
+can come up with a different feature
+
+48
+00:01:42,900 --> 00:01:45,310
+representation that is these
+
+49
+00:01:45,320 --> 00:01:49,150
+z vectors, that is in R2.
+
+50
+00:01:49,590 --> 00:01:50,900
+If that's the case, if we
+
+51
+00:01:50,910 --> 00:01:52,220
+can have just a pair of
+
+52
+00:01:52,230 --> 00:01:53,780
+numbers, z1 and z2 that
+
+53
+00:01:53,790 --> 00:01:55,630
+somehow, summarizes my 50
+
+54
+00:01:55,640 --> 00:01:56,800
+numbers, maybe what we
+
+55
+00:01:56,810 --> 00:01:58,180
+can do  [xx] is to plot
+
+56
+00:01:58,190 --> 00:01:59,960
+these countries in R2 and
+
+57
+00:01:59,970 --> 00:02:01,580
+use that to try to
+
+58
+00:02:01,590 --> 00:02:03,940
+understand the space in
+
+59
+00:02:03,950 --> 00:02:05,890
+[xx] of features of different
+
+60
+00:02:05,900 --> 00:02:08,510
+countries [xx]  the better and
+
+61
+00:02:08,520 --> 00:02:10,770
+so, here, what you
+
+62
+00:02:10,780 --> 00:02:12,060
+can do is reduce the
+
+63
+00:02:12,070 --> 00:02:14,840
+data from 50
+
+64
+00:02:14,850 --> 00:02:17,460
+D, from 50 dimensions
+
+65
+00:02:17,470 --> 00:02:18,730
+to 2D, so you can
+
+66
+00:02:18,740 --> 00:02:20,160
+plot this as a 2
+
+67
+00:02:20,170 --> 00:02:21,600
+dimensional plot, and, when
+
+68
+00:02:21,610 --> 00:02:23,260
+you do that, it turns out
+
+69
+00:02:23,270 --> 00:02:24,270
+that, if you look at the
+
+70
+00:02:24,280 --> 00:02:26,710
+output of the Dimensionality Reduction algorithms,
+
+71
+00:02:26,720 --> 00:02:28,910
+It usually doesn't astride a
+
+72
+00:02:28,920 --> 00:02:32,700
+physical meaning to these new features you want [xx] to.
+
+73
+00:02:32,710 --> 00:02:36,710
+It's often up to us to figure out you know, roughly what these features means.
+
+74
+00:02:36,810 --> 00:02:39,740
+But, And if you plot those features, here is what you might find.
+
+75
+00:02:39,750 --> 00:02:41,750
+So, here, every country
+
+76
+00:02:41,760 --> 00:02:43,810
+is represented by a point
+
+77
+00:02:43,820 --> 00:02:44,980
+ZI, which is an R2
+
+78
+00:02:44,990 --> 00:02:46,780
+and so each of those.
+
+79
+00:02:46,790 --> 00:02:48,040
+Dots, and this figure
+
+80
+00:02:48,050 --> 00:02:49,190
+represents a country, and so,
+
+81
+00:02:49,200 --> 00:02:51,190
+here's Z1 and here's
+
+82
+00:02:51,200 --> 00:02:54,080
+Z2, and [xx] [xx] of these.
+
+83
+00:02:54,090 --> 00:02:55,670
+So, you might find,
+
+84
+00:02:55,680 --> 00:02:57,680
+for example, That the horizontial
+
+85
+00:02:57,690 --> 00:03:00,260
+axis the Z1 axis
+
+86
+00:03:00,270 --> 00:03:02,250
+corresponds roughly to the
+
+87
+00:03:02,260 --> 00:03:05,220
+overall country size, or
+
+88
+00:03:05,230 --> 00:03:07,790
+the overall economic activity of a country.
+
+89
+00:03:07,800 --> 00:03:10,740
+So the overall GDP, overall
+
+90
+00:03:10,750 --> 00:03:14,340
+economic size of a country.
+
+91
+00:03:14,350 --> 00:03:15,910
+Whereas the vertical axis in our
+
+92
+00:03:15,920 --> 00:03:18,380
+data might correspond to the
+
+93
+00:03:18,390 --> 00:03:22,280
+per person GDP.
+
+94
+00:03:22,290 --> 00:03:24,150
+Or the per person well being,
+
+95
+00:03:24,160 --> 00:03:31,020
+or the per person economic activity, and,
+
+96
+00:03:31,030 --> 00:03:32,560
+you might find that, given these
+
+97
+00:03:32,570 --> 00:03:34,030
+50 features, you know, these
+
+98
+00:03:34,040 --> 00:03:35,790
+are really the 2 main dimensions
+
+99
+00:03:35,800 --> 00:03:38,160
+of the deviation, and so, out
+
+100
+00:03:38,170 --> 00:03:39,810
+here you may have a country
+
+101
+00:03:39,820 --> 00:03:41,490
+like the U.S.A., which
+
+102
+00:03:41,500 --> 00:03:43,680
+is a relatively large GDP,
+
+103
+00:03:43,690 --> 00:03:45,260
+you know, is a very
+
+104
+00:03:45,270 --> 00:03:46,700
+large GDP and a relatively
+
+105
+00:03:46,710 --> 00:03:49,460
+high per-person GDP as well.
+
+106
+00:03:49,470 --> 00:03:51,400
+Whereas here you might have
+
+107
+00:03:51,410 --> 00:03:53,960
+a country like Singapore, which
+
+108
+00:03:53,970 --> 00:03:55,380
+actually has a very
+
+109
+00:03:55,390 --> 00:03:57,020
+high per person GDP as well,
+
+110
+00:03:57,030 --> 00:03:58,090
+but because Singapore is a much
+
+111
+00:03:58,100 --> 00:04:01,020
+smaller country the overall
+
+112
+00:04:01,030 --> 00:04:03,450
+economy size of Singapore
+
+113
+00:04:03,460 --> 00:04:06,260
+is much smaller than the US.
+
+114
+00:04:06,270 --> 00:04:08,280
+And, over here, you would
+
+115
+00:04:08,290 --> 00:04:12,010
+have countries where individuals
+
+116
+00:04:12,020 --> 00:04:13,420
+are unfortunately some are less
+
+117
+00:04:13,430 --> 00:04:15,810
+well off, maybe shorter life expectancy,
+
+118
+00:04:15,820 --> 00:04:18,280
+less health care, less economic
+
+119
+00:04:18,290 --> 00:04:19,690
+maturity that's why smaller
+
+120
+00:04:19,700 --> 00:04:22,270
+countries, whereas a point
+
+121
+00:04:22,280 --> 00:04:24,440
+like this will correspond to
+
+122
+00:04:24,450 --> 00:04:26,150
+a country that has a
+
+123
+00:04:26,160 --> 00:04:28,080
+fair, has a substantial amount of
+
+124
+00:04:28,090 --> 00:04:30,510
+economic activity, but where individuals
+
+125
+00:04:30,520 --> 00:04:32,590
+tend to be somewhat less well off.
+
+126
+00:04:32,600 --> 00:04:33,830
+So you might find that
+
+127
+00:04:33,840 --> 00:04:35,670
+the axes Z1 and Z2
+
+128
+00:04:35,680 --> 00:04:37,660
+can help you to most succinctly
+
+129
+00:04:37,670 --> 00:04:39,110
+capture really what are the
+
+130
+00:04:39,120 --> 00:04:41,350
+two main dimensions of the variations
+
+131
+00:04:41,360 --> 00:04:43,420
+amongst different countries.
+
+132
+00:04:43,430 --> 00:04:45,390
+Such as the overall economic
+
+133
+00:04:45,400 --> 00:04:47,380
+activity of the country projected
+
+134
+00:04:47,390 --> 00:04:49,080
+by the size of the
+
+135
+00:04:49,090 --> 00:04:51,310
+country's overall economy as well
+
+136
+00:04:51,320 --> 00:04:54,030
+as the per-person individual
+
+137
+00:04:54,040 --> 00:04:56,790
+well-being, measured by per-person
+
+138
+00:04:56,960 --> 00:04:59,970
+GDP, per-person healthcare, and things like that.
+
+139
+00:05:00,930 --> 00:05:02,280
+So that's how you can
+
+140
+00:05:02,290 --> 00:05:04,530
+use dimensionality reduction, in
+
+141
+00:05:04,540 --> 00:05:06,460
+order to reduce data from
+
+142
+00:05:06,470 --> 00:05:08,140
+50 dimensions or whatever, down
+
+143
+00:05:08,150 --> 00:05:09,670
+to two dimensions, or maybe
+
+144
+00:05:09,680 --> 00:05:11,370
+down to three dimensions, so that
+
+145
+00:05:11,380 --> 00:05:14,830
+you can plot it and understand your data better.
+
+146
+00:05:14,840 --> 00:05:16,430
+In the next video, we'll start
+
+147
+00:05:16,440 --> 00:05:18,190
+to develop a specific algorithm,
+
+148
+00:05:18,200 --> 00:05:20,000
+called PCA, or Principal Component
+
+149
+00:05:20,010 --> 00:05:21,540
+Analysis, which will allow
+
+150
+00:05:21,550 --> 00:05:23,810
+us to do this and also
+
+151
+00:05:23,820 --> 00:05:28,190
+do the earlier application I talked about of compressing the data.
+

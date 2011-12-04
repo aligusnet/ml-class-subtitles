@@ -1,0 +1,684 @@
+1
+00:00:00,220 --> 00:00:01,700
+In the previous video, we talked
+
+2
+00:00:01,710 --> 00:00:02,640
+about the form of the
+
+3
+00:00:02,650 --> 00:00:05,150
+hypothesis for linear regression
+
+4
+00:00:05,160 --> 00:00:07,880
+with multiple features or with multiple variables.
+
+5
+00:00:07,890 --> 00:00:09,280
+In this video, let's talk about
+
+6
+00:00:09,290 --> 00:00:12,320
+how to fit the parameters of that hypothesis.
+
+7
+00:00:12,330 --> 00:00:14,220
+In particular, how to
+
+8
+00:00:14,230 --> 00:00:16,060
+use gradient descent for linear
+
+9
+00:00:16,070 --> 00:00:18,880
+regression with multiple features.
+
+10
+00:00:20,250 --> 00:00:22,550
+To quickly summarize our notation, this
+
+11
+00:00:22,560 --> 00:00:25,420
+is our formal hypothesis in multivariate
+
+12
+00:00:25,430 --> 00:00:27,520
+linear regression where we've
+
+13
+00:00:27,530 --> 00:00:31,930
+adopted the convention that x zero equals one.
+
+14
+00:00:32,340 --> 00:00:34,370
+The parameters of this model
+
+15
+00:00:34,380 --> 00:00:36,390
+are theta zero through theta
+
+16
+00:00:36,400 --> 00:00:37,680
+n, but instead of
+
+17
+00:00:37,690 --> 00:00:38,970
+thinking of this as n
+
+18
+00:00:38,980 --> 00:00:40,480
+separate parameters, which is
+
+19
+00:00:40,490 --> 00:00:42,380
+valued, I'm instead going to think
+
+20
+00:00:42,390 --> 00:00:45,740
+of parameters as theta where
+
+21
+00:00:45,750 --> 00:00:50,210
+theta here is a n+1 dimensional vector.
+
+22
+00:00:51,830 --> 00:00:53,300
+So I'm just going to think of the parameter.
+
+23
+00:00:53,310 --> 00:00:55,200
+The parameters of this
+
+24
+00:00:55,210 --> 00:00:58,630
+model as itself being a vector.
+
+25
+00:00:58,640 --> 00:01:02,070
+A cost function as J of theta it's zero through theta.
+
+26
+00:01:02,080 --> 00:01:05,550
+And it's given by this usual subscript.
+
+27
+00:01:05,560 --> 00:01:07,650
+Instead of thinking of
+
+28
+00:01:07,660 --> 00:01:09,290
+J as a function
+
+29
+00:01:09,300 --> 00:01:10,690
+of these and plus one number,
+
+30
+00:01:10,700 --> 00:01:12,320
+so I'm going to more
+
+31
+00:01:12,330 --> 00:01:14,000
+commonly write J as just
+
+32
+00:01:14,010 --> 00:01:15,870
+a function of the parameter
+
+33
+00:01:15,880 --> 00:01:19,730
+vector theta so that theta here is a vector.
+
+34
+00:01:22,660 --> 00:01:25,240
+Here's what gradient descent looks like.
+
+35
+00:01:25,250 --> 00:01:27,140
+We're going to repeatedly update each
+
+36
+00:01:27,150 --> 00:01:28,790
+parameter theta J according to
+
+37
+00:01:28,800 --> 00:01:32,800
+theta J minus alpha times this derivative term.
+
+38
+00:01:32,810 --> 00:01:34,390
+And once again we write
+
+39
+00:01:34,400 --> 00:01:36,530
+this as J of theta,
+
+40
+00:01:36,540 --> 00:01:37,920
+so theta J is updated
+
+41
+00:01:37,930 --> 00:01:39,540
+as theta J minus the learning
+
+42
+00:01:39,550 --> 00:01:41,870
+rate alpha times the derivative,
+
+43
+00:01:41,880 --> 00:01:44,120
+a partial derivative of the
+
+44
+00:01:44,130 --> 00:01:45,630
+cost function with respect to
+
+45
+00:01:45,640 --> 00:01:48,730
+the parameter theta J. Let's
+
+46
+00:01:48,740 --> 00:01:49,850
+see what this looks like when
+
+47
+00:01:49,860 --> 00:01:51,490
+we implement gradient descent and
+
+48
+00:01:51,500 --> 00:01:53,040
+in particular, let's go see
+
+49
+00:01:53,050 --> 00:01:56,400
+what that partial derivative looks like.
+
+50
+00:01:56,410 --> 00:01:58,020
+Here's what we have previously for
+
+51
+00:01:58,030 --> 00:01:59,690
+gradient descent for when we have
+
+52
+00:01:59,700 --> 00:02:02,830
+only one feature when N equals one.
+
+53
+00:02:02,840 --> 00:02:04,760
+We had two separate update rules
+
+54
+00:02:04,770 --> 00:02:06,750
+for the two parameters theta zero
+
+55
+00:02:06,760 --> 00:02:08,720
+and theta one and we
+
+56
+00:02:08,730 --> 00:02:10,460
+will update theta zero according
+
+57
+00:02:10,470 --> 00:02:12,690
+to this equation on top,
+
+58
+00:02:12,700 --> 00:02:15,480
+where this term here is
+
+59
+00:02:15,490 --> 00:02:16,740
+the partial derivative of the
+
+60
+00:02:16,750 --> 00:02:18,250
+cost function with respect to
+
+61
+00:02:18,260 --> 00:02:19,650
+the parameter of theta zero
+
+62
+00:02:19,660 --> 00:02:20,850
+and some of them, we had
+
+63
+00:02:20,860 --> 00:02:22,340
+an update room for
+
+64
+00:02:22,350 --> 00:02:24,240
+theta one and when we
+
+65
+00:02:24,250 --> 00:02:25,680
+had only one feature, we
+
+66
+00:02:25,690 --> 00:02:27,850
+used to write XI for
+
+67
+00:02:27,860 --> 00:02:29,700
+a one feature now of
+
+68
+00:02:29,710 --> 00:02:31,740
+course we call this feature
+
+69
+00:02:31,750 --> 00:02:36,510
+X subscript one, if we only had one feature.
+
+70
+00:02:36,520 --> 00:02:39,730
+So that was the old algorithm for the case of one feature.
+
+71
+00:02:39,740 --> 00:02:40,990
+Let's take a look at gradient
+
+72
+00:02:41,000 --> 00:02:42,890
+descent for when the number
+
+73
+00:02:42,900 --> 00:02:44,220
+of features n may be
+
+74
+00:02:44,230 --> 00:02:46,660
+much larger than one.
+
+75
+00:02:46,670 --> 00:02:47,950
+Here's what we have for gradient
+
+76
+00:02:47,960 --> 00:02:49,180
+descent and for the case of
+
+77
+00:02:49,190 --> 00:02:52,130
+when we had N equals one feature.
+
+78
+00:02:52,140 --> 00:02:54,010
+We had two separate update rules
+
+79
+00:02:54,020 --> 00:02:55,970
+for the parameters theta zero
+
+80
+00:02:55,980 --> 00:02:57,550
+and theta one and hopefully, these
+
+81
+00:02:57,560 --> 00:03:00,210
+look familiar to you and
+
+82
+00:03:00,220 --> 00:03:02,310
+this term here was of
+
+83
+00:03:02,320 --> 00:03:04,360
+course, the partial derivative
+
+84
+00:03:04,370 --> 00:03:06,360
+of the cost function with respect
+
+85
+00:03:06,370 --> 00:03:08,380
+to the parameter of theta 0
+
+86
+00:03:08,390 --> 00:03:09,540
+and similarly, we had a
+
+87
+00:03:09,550 --> 00:03:12,460
+different update rule for the parameter of theta 1.
+
+88
+00:03:12,470 --> 00:03:13,910
+There's a one-rule difference
+
+89
+00:03:13,920 --> 00:03:15,440
+which is and when we previously
+
+90
+00:03:15,450 --> 00:03:17,970
+had only one feature, we
+
+91
+00:03:17,980 --> 00:03:20,630
+would call that feature X I,
+
+92
+00:03:20,640 --> 00:03:21,780
+but now in our new
+
+93
+00:03:21,790 --> 00:03:23,120
+notation we will of course
+
+94
+00:03:23,130 --> 00:03:25,520
+call this X superscript I
+
+95
+00:03:25,530 --> 00:03:29,060
+subscript one to denote our one feature.
+
+96
+00:03:29,070 --> 00:03:31,870
+So that was for only one feature.
+
+97
+00:03:31,880 --> 00:03:33,230
+Let's look at the new algorithm
+
+98
+00:03:33,240 --> 00:03:34,430
+for we have more than one
+
+99
+00:03:34,440 --> 00:03:35,710
+feature when the number of
+
+100
+00:03:35,720 --> 00:03:38,180
+features N may be much larger
+
+101
+00:03:38,980 --> 00:03:40,210
+than one.
+
+102
+00:03:40,220 --> 00:03:42,440
+We get this update rule for gradient descent and
+
+103
+00:03:42,450 --> 00:03:43,580
+maybe for those of you that
+
+104
+00:03:43,590 --> 00:03:45,890
+know calculus, if you take
+
+105
+00:03:45,900 --> 00:03:48,010
+the definition of the cost function
+
+106
+00:03:48,020 --> 00:03:50,350
+and take the partial derivative of
+
+107
+00:03:50,360 --> 00:03:52,880
+the cost function J with respect
+
+108
+00:03:52,890 --> 00:03:54,630
+to the parameter theta J,
+
+109
+00:03:54,640 --> 00:03:56,620
+you find that that partial derivative
+
+110
+00:03:56,630 --> 00:03:58,300
+is exactly that term that
+
+111
+00:03:58,310 --> 00:04:00,240
+I've just drawn the blue box
+
+112
+00:04:00,250 --> 00:04:02,000
+around, and if you
+
+113
+00:04:02,010 --> 00:04:03,590
+implement this you will get
+
+114
+00:04:03,600 --> 00:04:05,550
+a working implementation of gradient
+
+115
+00:04:05,560 --> 00:04:09,210
+descent for multivariate regression.
+
+116
+00:04:09,220 --> 00:04:10,060
+The last thing I'm gonna do
+
+117
+00:04:10,070 --> 00:04:11,170
+on the slide is give you
+
+118
+00:04:11,180 --> 00:04:12,610
+a sense of why
+
+119
+00:04:12,620 --> 00:04:14,080
+some new and old
+
+120
+00:04:14,090 --> 00:04:15,810
+algorithms are, you know,
+
+121
+00:04:15,820 --> 00:04:17,080
+sort of the same thing or why they're
+
+122
+00:04:17,090 --> 00:04:19,190
+both similar algorithms and
+
+123
+00:04:19,200 --> 00:04:21,920
+why they're both gradient descent algorithms.
+
+124
+00:04:22,150 --> 00:04:23,490
+Let's consider a case where we
+
+125
+00:04:23,500 --> 00:04:25,130
+have two features, or maybe
+
+126
+00:04:25,140 --> 00:04:26,640
+more than two features so we
+
+127
+00:04:26,650 --> 00:04:28,090
+have three update rules for
+
+128
+00:04:28,100 --> 00:04:30,150
+the parameters theta zero, theta
+
+129
+00:04:30,160 --> 00:04:33,870
+one, theta two, and maybe other values of theta as well.
+
+130
+00:04:33,880 --> 00:04:35,200
+If you look at the update rule
+
+131
+00:04:35,210 --> 00:04:37,170
+for theta zero, what you
+
+132
+00:04:37,180 --> 00:04:40,910
+find is that this update
+
+133
+00:04:40,920 --> 00:04:43,190
+rule here is the
+
+134
+00:04:43,200 --> 00:04:44,840
+same as the update rule
+
+135
+00:04:44,850 --> 00:04:47,890
+that we had previously for the case N equals one.
+
+136
+00:04:47,900 --> 00:04:49,140
+And the reason that they are
+
+137
+00:04:49,150 --> 00:04:50,600
+equivalent is of course
+
+138
+00:04:50,610 --> 00:04:52,850
+because in our notational convention
+
+139
+00:04:52,860 --> 00:04:54,800
+we had this X0 equals
+
+140
+00:04:54,810 --> 00:04:57,230
+1 convention, which is
+
+141
+00:04:57,240 --> 00:04:58,990
+why these two terms that I have drawn
+
+142
+00:04:59,000 --> 00:05:02,870
+magenta boxes around are equivalent.
+
+143
+00:05:02,880 --> 00:05:03,840
+Similarly, if you look at
+
+144
+00:05:03,850 --> 00:05:05,550
+the rule for theta one, you
+
+145
+00:05:05,560 --> 00:05:08,000
+find that this term here
+
+146
+00:05:08,010 --> 00:05:09,830
+is equivalent to the
+
+147
+00:05:09,840 --> 00:05:11,910
+term we previously had or
+
+148
+00:05:11,920 --> 00:05:13,360
+the equation, the update where
+
+149
+00:05:13,370 --> 00:05:14,860
+we previously had for theta
+
+150
+00:05:14,870 --> 00:05:16,640
+1 where of course, we're
+
+151
+00:05:16,650 --> 00:05:17,800
+just, you know, using this new
+
+152
+00:05:17,810 --> 00:05:19,630
+notation x subscript 1
+
+153
+00:05:19,640 --> 00:05:22,420
+to denote our new
+
+154
+00:05:22,430 --> 00:05:24,010
+notation for denoting the first
+
+155
+00:05:24,020 --> 00:05:25,490
+feature and now that
+
+156
+00:05:25,500 --> 00:05:27,130
+we have more than one feature,
+
+157
+00:05:27,140 --> 00:05:29,330
+we can have similar update
+
+158
+00:05:29,340 --> 00:05:30,980
+rules for the other
+
+159
+00:05:30,990 --> 00:05:34,400
+parameters like theta two and so on.
+
+160
+00:05:34,410 --> 00:05:36,570
+There's a lot going
+
+161
+00:05:36,580 --> 00:05:37,700
+on the slide, so I
+
+162
+00:05:37,710 --> 00:05:39,040
+definitely encourage you if you
+
+163
+00:05:39,050 --> 00:05:41,090
+need to, to pause the video and
+
+164
+00:05:41,100 --> 00:05:42,140
+look at all the math and the
+
+165
+00:05:42,150 --> 00:05:43,370
+slide slowly to make sure
+
+166
+00:05:43,380 --> 00:05:44,820
+you understand everything that's going
+
+167
+00:05:44,830 --> 00:05:46,860
+on here, but if you
+
+168
+00:05:46,870 --> 00:05:48,470
+implement the algorithm that
+
+169
+00:05:48,480 --> 00:05:50,190
+in written up here then
+
+170
+00:05:50,200 --> 00:05:52,120
+you have a working implementation
+
+171
+00:05:52,130 --> 00:05:55,640
+of linear regression with multiple features.
+
